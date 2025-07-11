@@ -328,54 +328,6 @@ const TileGrid = styled.div`
   }
 `;
 
-/***** SINGLE TILE *****************************************************/
-const TileLink = styled(Link)`
-  position: relative;
-  display: block;
-  border-radius: 1rem;
-  overflow: hidden;
-  height: 100%;
-  width: 100%;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-  transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1),
-    filter 0.45s;
-
-  video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  /* ───────── Left & right “monitors” ───────── */
-  &:nth-child(1) {
-    transform-origin: right center;
-    transform: rotateY(22deg);
-    filter: brightness(0.9);
-  }
-  &:nth-child(3) {
-    transform-origin: left center;
-    transform: rotateY(-22deg);
-    filter: brightness(0.9);
-  }
-  /* Centre tile pops forward slightly to continue the curve */
-  &:nth-child(2) {
-    transform: translateZ(30px);
-  }
-
-  /* Hover: flatten & zoom for focus */
-  &:hover {
-    transform: translateZ(40px) rotateY(0deg) scale(1.05);
-    filter: brightness(1);
-    z-index: 2; /* rise above the neighbours */
-  }
-
-  /* Disable transforms on mobile for legibility */
-  @media (max-width: 900px) {
-    transform: none !important;
-    filter: none !important;
-  }
-`;
-
 const Overlay = styled.div`
   position: absolute;
   inset: 0;
@@ -395,6 +347,57 @@ const Overlay = styled.div`
     color: #d1d9e6;
   }
 `;
+
+/***** SINGLE TILE *****************************************************/
+const TileLink = styled(Link)`
+  position: relative;
+  display: block;
+  border-radius: 1rem;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1),
+    filter 0.45s;
+
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  video, ${Overlay} { border-radius: inherit; }
+
+  /* ───────── Left & right “monitors” ───────── */
+  &:nth-child(1) {
+    transform-origin: right center;
+    transform: rotateY(22deg);
+    filter: brightness(0.9);
+  }
+  &:nth-child(3) {
+    transform-origin: left center;
+    transform: rotateY(-22deg);
+    filter: brightness(0.9);
+  }
+  /* Centre tile pops forward slightly to continue the curve */
+  &:nth-child(2) {
+    transform: translateZ(30px) translateY(12px);
+  }
+
+  /* Hover: flatten & zoom for focus */
+  &:hover {
+    transform: translateZ(40px) rotateY(0deg) scale(1.05);
+    filter: brightness(1);
+    z-index: 2; /* rise above the neighbours */
+  }
+
+  /* Disable transforms on mobile for legibility */
+  @media (max-width: 900px) {
+    transform: none !important;
+    filter: none !important;
+  }
+`;
+
+
 
 const Section = styled.section`
   padding: 6rem 1rem;
