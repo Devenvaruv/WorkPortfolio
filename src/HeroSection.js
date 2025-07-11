@@ -1,24 +1,30 @@
-// App.jsx — React (no Next.js) single‑page setup with React Router v6
+// --------------------------------------------------------------------
+//  App.jsx — React (no Next.js) single‑page setup with React Router v6
 // --------------------------------------------------------------------
 // 1. `npm i react-router-dom styled-components`
 // 2. Put this as src/App.jsx (or split into separate files as preferred).
 // 3. In index.js: `import App from "./App";` + `<BrowserRouter><App/></BrowserRouter>`
 //
-// The file defines:
-//   • GlobalStyle
-//   • Header (sticky, shared)
-//   • HeroSection with interactive video tiles
-//   • Placeholder pages (FullStack, ComputerVision, VR)
-//   • Router + routes
+// This version adds a fake 3‑monitor 3‑D effect:
+//   • CSS perspective on the grid
+//   • Side tiles rotated on the Y‑axis (+ brightness drop)
+//   • Centre tile pushed out with translateZ for curvature illusion
+//   • Tiles flatten, zoom and rise on hover
+//   • On small screens (< 900 px) it disables all 3‑D transforms
 // --------------------------------------------------------------------
 import React, { useEffect, useRef, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+} from "react-router-dom";
 import styled, { css, createGlobalStyle } from "styled-components";
 
 /******************** Global Styles ***********************************/
 const GlobalStyle = createGlobalStyle`
   html{scroll-behavior:smooth;}
-  body{margin:0;font-family:Inter,sans-serif;background:#fff;color:#0d1117;}
+  body{margin:0;font-family:Inter,sans-serif;background:#0d1117;color:#f0f3f6;}
   *,*:before,*:after{box-sizing:border-box;}
 `;
 
@@ -76,16 +82,11 @@ const HeroSection = () => {
     <HeroWrapper id="home">
       <BGLayer $paused={paused || prefersReduced} />
       <HeroInner>
-        {/* <h1>Research‑Driven Solutions in Software, AI & VR</h1> */}
-        {/* <p>From web portals to computer‑vision pipelines and immersive VR training.</p> */}
         <TileGrid>
           {TILES.map((t) => (
             <HeroTile key={t.title} data={t} paused={paused || prefersReduced} />
           ))}
         </TileGrid>
-        {/* <button onClick={() => setPaused((p) => !p)}>
-          {paused || prefersReduced ? "Play Animations" : "Pause Animations"}
-        </button> */}
       </HeroInner>
     </HeroWrapper>
   );
@@ -101,7 +102,11 @@ const HeroTile = ({ data, paused }) => {
   };
 
   return (
-    <TileLink to={path} onMouseEnter={play} onMouseLeave={() => ref.current.pause()}>
+    <TileLink
+      to={path}
+      onMouseEnter={play}
+      onMouseLeave={() => ref.current.pause()}
+    >
       <video
         ref={ref}
         poster={poster}
@@ -134,9 +139,18 @@ const VR = () => <PageShell title="Virtual Reality" />;
 const Landing = () => (
   <>
     <HeroSection />
-    <Section id="projects"><h2>Projects</h2><p>…</p></Section>
-    <Section id="about" $alt><h2>About Us</h2><p>…</p></Section>
-    <Section id="contact"><h2>Contact</h2><p>Email us → contact@usfteam.com</p></Section>
+    <Section id="projects">
+      <h2>Projects</h2>
+      <p>…</p>
+    </Section>
+    <Section id="about" $alt>
+      <h2>About Us</h2>
+      <p>…</p>
+    </Section>
+    <Section id="contact">
+      <h2>Contact</h2>
+      <p>Email us → contact@usfteam.com</p>
+    </Section>
   </>
 );
 
@@ -213,83 +227,178 @@ const NavBar = styled.header`
   }
 `;
 
-const Brand = styled(Link)`font-weight:700;font-size:1.25rem;color:inherit;text-decoration:none;`;
+const Brand = styled(Link)`
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: inherit;
+  text-decoration: none;
+`;
 const Hamburger = styled.button`
-  display:none;background:none;border:none;font-size:1.5rem;color:inherit;cursor:pointer;
-  @media(max-width:768px){display:block;}
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: inherit;
+  cursor: pointer;
+  @media (max-width: 768px) {
+    display: block;
+  }
 `;
 const NavLinks = styled.nav`
-  display:flex;gap:1.5rem;align-items:center;
-  a{color:inherit;text-decoration:none;position:relative;font-size:.95rem;}
-  a:hover{opacity:.85;}
-  @media(max-width:768px){
-    position:absolute;top:64px;right:0;background:rgba(13,17,23,.95);
-    flex-direction:column;padding:1rem 2rem;transform:${({$open})=>$open?"translateX(0)":"translateX(120%)"};transition:.3s;}
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  a {
+    color: inherit;
+    text-decoration: none;
+    position: relative;
+    font-size: 0.95rem;
+  }
+  a:hover {
+    opacity: 0.85;
+  }
+  @media (max-width: 768px) {
+    position: absolute;
+    top: 64px;
+    right: 0;
+    background: rgba(13, 17, 23, 0.95);
+    flex-direction: column;
+    padding: 1rem 2rem;
+    transform: ${({ $open }) => ($open ? "translateX(0)" : "translateX(120%)")};
+    transition: 0.3s;
+  }
 `;
 const Anchor = styled(Link)``;
 
 const HeroWrapper = styled.section`
   position: relative;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.85);
+  background: #111;
   color: #fff;
   display: flex;
   flex-direction: column;
 `;
 
-
 const BGLayer = styled.div`
-  position:absolute;inset:0;background:url("/images/particle-bg.svg") center/cover repeat;opacity:.15;
-  animation:drift 60s linear infinite;pointer-events:none;${({$paused})=>$paused&&css`animation-play-state:paused;`};
-  @keyframes drift{from{transform:translateX(0)}to{transform:translateX(-50%)} }
+  position: absolute;
+  inset: 0;
+  background: url("/images/particle-bg.svg") center / cover repeat;
+  opacity: 0.15;
+  animation: drift 60s linear infinite;
+  pointer-events: none;
+  ${({ $paused }) =>
+    $paused &&
+    css`
+      animation-play-state: paused;
+    `};
+  @keyframes drift {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
 `;
 
-
 const HeroInner = styled.div`
-  flex: 1; // takes all vertical space under header
+  flex: 1; /* takes all vertical space under header */
   display: flex;
   flex-direction: column;
-  justify-content: center; // centers content vertically
+  justify-content: center; /* centers content vertically */
   padding: 2rem;
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;
 `;
 
-
-
+/***** 3‑D GRID *********************************************************/
 const TileGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr;
   gap: 1.5rem;
   flex: 1;
   align-items: stretch;
+  perspective: 1200px; /* 3‑D camera distance */
+
+  /* Turn off fancy stuff on narrow screens */
+  @media (max-width: 900px) {
+    perspective: none;
+  }
 `;
 
+/***** SINGLE TILE *****************************************************/
 const TileLink = styled(Link)`
   position: relative;
   display: block;
   border-radius: 1rem;
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-  transition: transform 0.3s;
-
-  height: 100%;                // ← MATCH PARENT GRID CELL
+  height: 100%;
   width: 100%;
-
-  aspect-ratio: auto;          // ← remove fixed aspect ratio
-
-  &:hover {
-    transform: scale(1.03);
-  }
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1),
+    filter 0.45s;
 
   video {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
+
+  /* ───────── Left & right “monitors” ───────── */
+  &:nth-child(1) {
+    transform-origin: right center;
+    transform: rotateY(22deg);
+    filter: brightness(0.9);
+  }
+  &:nth-child(3) {
+    transform-origin: left center;
+    transform: rotateY(-22deg);
+    filter: brightness(0.9);
+  }
+  /* Centre tile pops forward slightly to continue the curve */
+  &:nth-child(2) {
+    transform: translateZ(30px);
+  }
+
+  /* Hover: flatten & zoom for focus */
+  &:hover {
+    transform: translateZ(40px) rotateY(0deg) scale(1.05);
+    filter: brightness(1);
+    z-index: 2; /* rise above the neighbours */
+  }
+
+  /* Disable transforms on mobile for legibility */
+  @media (max-width: 900px) {
+    transform: none !important;
+    filter: none !important;
+  }
 `;
 
-const Overlay = styled.div`position:absolute;inset:0;background:rgba(0,0,0,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center;h3{margin:0;font-size:1.5rem;}span{font-size:.9rem;color:#d1d9e6;}`;
+const Overlay = styled.div`
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
+  h3 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  span {
+    font-size: 0.9rem;
+    color: #d1d9e6;
+  }
+`;
 
-const Section = styled.section`padding:6rem 1rem;max-width:1100px;margin:0 auto;background:${({$alt})=>$alt?"#f4f6f8":"#fff"};`;
+const Section = styled.section`
+  padding: 6rem 1rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  background: ${({ $alt }) => ($alt ? "#f4f6f8" : "#fff")};
+`;
