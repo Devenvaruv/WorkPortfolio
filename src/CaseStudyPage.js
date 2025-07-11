@@ -129,7 +129,7 @@ const StatsCard = styled.dl`
 const CTA = styled.a`
   display: inline-block;
   margin-top: 2rem;
-  background: #238636;
+  background: #1f6feb;
   color: #fff;
   padding: 0.8rem 1.4rem;
   border-radius: 0.5rem;
@@ -137,6 +137,7 @@ const CTA = styled.a`
   text-decoration: none;
   &:hover {
     filter: brightness(1.1);
+    background: #388bfd;
   }
 `;
 
@@ -169,6 +170,18 @@ export default function CaseStudyPage({
 }) {
   const [posterLoaded, setPosterLoaded] = useState(false);
   const firstSectionId = sections[0]?.id || "top";
+
+  const [fullscreen, setFullscreen] = useState(false);
+  const [videoRef, setVideoRef] = useState(null);
+
+  const openFullscreen = () => setFullscreen(true);
+  const closeFullscreen = () => {
+    setFullscreen(false);
+    if (videoRef) {
+      videoRef.pause();
+      videoRef.currentTime = 0;
+    }
+  };
 
   const items =
     navItems || sections.map(({ id, heading }) => ({ id, heading }));
@@ -238,14 +251,18 @@ export default function CaseStudyPage({
       {/* ── Right rail (hero + sticky stats) ──────────────── */}
       <MediaRail>
         {isVideo ? (
-          <Hero
-            src={hero}
-            poster={hero + "#t=0.1"}
-            muted
-            playsInline
-            onCanPlayThrough={() => setPosterLoaded(true)}
-            style={{ filter: posterLoaded ? "none" : "grayscale(1)" }}
-          />
+          <HeroWrapper onClick={openFullscreen}>
+            <Hero
+              src={hero}
+              poster={"/images/vr-shot1.png"}
+              muted
+              playsInline
+              preload="none"
+              style={{ filter: posterLoaded ? "none" : "grayscale(1)" }}
+              onCanPlayThrough={() => setPosterLoaded(true)}
+            />
+            <PlayButton>▶</PlayButton>
+          </HeroWrapper>
         ) : (
           <HeroImg src={hero} alt="preview" />
         )}
@@ -260,6 +277,18 @@ export default function CaseStudyPage({
         </StatsCard>
       </MediaRail>
 
+      {fullscreen && (
+        <FullscreenOverlay onClick={closeFullscreen}>
+          <FullscreenVideo
+            ref={(ref) => setVideoRef(ref)}
+            src={hero}
+            autoPlay
+            controls
+          />
+          <CloseBtn onClick={closeFullscreen}>✕</CloseBtn>
+        </FullscreenOverlay>
+      )}
+
       {/* breadcrumb */}
       {(next || prev) && (
         <NavBar>
@@ -270,6 +299,80 @@ export default function CaseStudyPage({
     </Wrapper>
   );
 }
+
+const HeroWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  cursor: pointer;
+
+  &:hover button {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+`;
+
+const PlayButton = styled.button`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  font-size: 2.5rem;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background 0.2s ease;
+  cursor: pointer;
+  z-index: 10;
+
+  &:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.1);
+  }
+`;
+
+
+
+const FullscreenOverlay = styled.div`
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const FullscreenVideo = styled.video`
+  width: 90%;
+  height: auto;
+  max-height: 90vh;
+  background: #000;
+`;
+
+const CloseBtn = styled.button`
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 10000;
+  padding: 0.25em 0.6em;
+  border-radius: 0.4em;
+  transition: background 0.2s ease;
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+`;
 
 /* ------------------------- Sample Data ------------------------- */
 export const fullStack = {
