@@ -13,14 +13,13 @@
 //   • On small screens (< 900 px) it disables all 3‑D transforms
 // --------------------------------------------------------------------
 import React, { useEffect, useRef, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import styled, { css, createGlobalStyle } from "styled-components";
-
+import CaseStudyPage, {
+  fullStack,
+  computerVision,
+  vrTraining,
+} from "./CaseStudyPage";
 /******************** Global Styles ***********************************/
 const GlobalStyle = createGlobalStyle`
   html{scroll-behavior:smooth;}
@@ -36,7 +35,7 @@ const Header = () => {
       <Brand to="/">USF Team</Brand>
       <div>
         <NavLinks $open={open} onClick={() => setOpen(false)}>
-          <Anchor to="/#projects">Projects</Anchor>
+          {/* <Anchor to="/#projects">Projects</Anchor> */}
           <Anchor to="/#about">About</Anchor>
           <Anchor to="/#contact">Contact</Anchor>
           <a href="mailto:contact@usfteam.com">Hire Us</a>
@@ -84,7 +83,11 @@ const HeroSection = () => {
       <HeroInner>
         <TileGrid>
           {TILES.map((t) => (
-            <HeroTile key={t.title} data={t} paused={paused || prefersReduced} />
+            <HeroTile
+              key={t.title}
+              data={t}
+              paused={paused || prefersReduced}
+            />
           ))}
         </TileGrid>
       </HeroInner>
@@ -139,17 +142,22 @@ const VR = () => <PageShell title="Virtual Reality" />;
 const Landing = () => (
   <>
     <HeroSection />
-    <Section id="projects">
-      <h2>Projects</h2>
-      <p>…</p>
-    </Section>
-    <Section id="about" $alt>
+    <Section id="about">
       <h2>About Us</h2>
-      <p>…</p>
+      <p>
+        We’re a research-driven crew of graduate technologists who turn ideas
+        into production-grade software, real-time vision pipelines and immersive
+        VR learning tools. From proof-of-concept to deployment, we cover the
+        full stack so you can focus on impact.
+      </p>
     </Section>
     <Section id="contact">
       <h2>Contact</h2>
-      <p>Email us → contact@usfteam.com</p>
+      <p>
+        📧 <a href="mailto:contact@usfteam.com">contact@usfteam.com</a>
+        <br />
+        📍 Based in San Francisco — serving teams worldwide
+      </p>
     </Section>
   </>
 );
@@ -162,9 +170,12 @@ export default function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/full-stack" element={<FullStack />} />
-        <Route path="/computer-vision" element={<ComputerVision />} />
-        <Route path="/vr" element={<VR />} />
+        <Route path="/full-stack" element={<CaseStudyPage {...fullStack} />} />
+        <Route
+          path="/computer-vision"
+          element={<CaseStudyPage {...computerVision} />}
+        />
+        <Route path="/vr" element={<CaseStudyPage {...vrTraining} />} />
       </Routes>
     </Router>
   );
@@ -357,15 +368,17 @@ const TileLink = styled(Link)`
   height: 100%;
   width: 100%;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-  transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1),
-    filter 0.45s;
+  transition: transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.45s;
 
   video {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
-  video, ${Overlay} { border-radius: inherit; }
+  video,
+  ${Overlay} {
+    border-radius: inherit;
+  }
 
   /* ───────── Left & right “monitors” ───────── */
   &:nth-child(1) {
@@ -397,11 +410,9 @@ const TileLink = styled(Link)`
   }
 `;
 
-
-
 const Section = styled.section`
   padding: 6rem 1rem;
   max-width: 1100px;
   margin: 0 auto;
-  background: ${({ $alt }) => ($alt ? "#f4f6f8" : "#fff")};
+  background: ${({ $alt }) => ($alt ? "#161b22" : "#0d1117")};
 `;
