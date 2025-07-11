@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import HeroSection from './HeroSection';
+
+const tiles = [
+  {
+    title: "Full‑Stack",
+    subtitle: "End‑to‑end product builds",
+    poster: "/images/poster-fullstack.jpg",
+    video: "/videos/fullstack-loop.mp4",
+    href: "/full-stack"
+  },
+  {
+    title: "Computer Vision",
+    subtitle: "ML pipelines for smart perception",
+    poster: "/images/poster-cv.jpg",
+    video: "/videos/cv-loop.mp4",
+    href: "/computer-vision"
+  },
+  {
+    title: "VR Training",
+    subtitle: "Immersive learning environments",
+    poster: "/images/poster-vr.jpg",
+    video: "/videos/vr-loop.mp4",
+    href: "/vr-training"
+  }
+];
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      < HeroSection tiles={tiles} />
     </div>
   );
 }
