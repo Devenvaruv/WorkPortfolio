@@ -15,11 +15,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import styled, { css, createGlobalStyle } from "styled-components";
-import CaseStudyPage, {
+import CaseStudyProject, {
   fullStack,
   computerVision,
   vrTraining,
-} from "./CaseStudyPage";
+} from "./CaseStudyProject";
+import CaseStudyPage from "./CaseStudyPage";
 /******************** Global Styles ***********************************/
 const GlobalStyle = createGlobalStyle`
   html{scroll-behavior:smooth;}
@@ -46,7 +47,6 @@ const Header = () => {
   );
 };
 
-/******************** Hero + Tiles ************************************/
 const TILES = [
   {
     title: "Full‑Stack",
@@ -56,7 +56,7 @@ const TILES = [
     path: "/full-stack",
   },
   {
-    title: "Computer Vision",
+    title: "AI",
     subtitle: "Real‑time ML",
     poster: "/images/poster-cv.jpg",
     video: "https://storage.googleapis.com/videobucker/newplaceholder.mp4",
@@ -170,12 +170,10 @@ export default function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/full-stack" element={<CaseStudyPage {...fullStack} />} />
+        <Route path="/full-stack" element={<CaseStudyPage projects={fullStack} />} />
         <Route
-          path="/computer-vision"
-          element={<CaseStudyPage {...computerVision} />}
-        />
-        <Route path="/vr" element={<CaseStudyPage {...vrTraining} />} />
+          path="/computer-vision" element={<CaseStudyPage projects={[computerVision]} />} />
+        <Route path="/vr" element={<CaseStudyPage projects={[vrTraining]} />} />
       </Routes>
     </Router>
   );
@@ -313,12 +311,12 @@ const BGLayer = styled.div`
 `;
 
 const HeroInner = styled.div`
-  flex: 1; /* takes all vertical space under header */
+  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* centers content vertically */
-  padding: 2rem;
-  max-width: 1400px;
+  justify-content: center;
+  max-width: 100%;
+  padding: 2rem max(5rem, 5vw);
   margin: 0 auto;
   width: 100%;
 `;
@@ -327,7 +325,7 @@ const HeroInner = styled.div`
 const TileGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 1fr;
+  grid-template-rows: 0.90fr;
   gap: 1.5rem;
   flex: 1;
   align-items: stretch;
