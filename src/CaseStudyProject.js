@@ -1,87 +1,126 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 
-/* ------------------------- Sample Data ------------------------- */
 export const fullStack = [
   {
-    title: "Full-Stack Portal",
-    hero: "https://storage.googleapis.com/videobucker/newplaceholder.mp4",
+    title: "Here2Stay Interest Form",
+    hero: "videos/full-stack-preview.mp4",
     sections: [
       {
         id: "overview",
         heading: "Overview",
-        body: `A responsive web portal that lets analysts discover and request data assets.\nBuilt with a service-oriented architecture so each domain team owns its own micro‑backend.`,
+        body: "Launched in July 2023, Here2Stay Interest Form is a responsive web portal developed by a University of San Francisco (USF) team for the East Bay Permanent Real Estate Cooperative (EBPREC):contentReference[oaicite:0]{index=0}. It aims to prevent residential and small business displacement in Deep East Oakland by streamlining outreach and access to resources:contentReference[oaicite:1]{index=1}. The portal digitized a previously manual intake process, offering both a comprehensive multi-page form and a lightweight quick form for events to capture community interest:contentReference[oaicite:2]{index=2}:contentReference[oaicite:3]{index=3}. Available in English and Spanish, it also features an AI-powered chatbot (using a Pinecone vector database with a RAG approach) that offers accurate, context-based support to users at any time:contentReference[oaicite:4]{index=4}. All submissions automatically populate 18 structured Google Sheets (9 read-only, 9 editable) categorized by referral source, eliminating manual data entry and helping the EBPREC team efficiently organize and follow up on community needs:contentReference[oaicite:5]{index=5}.",
       },
       {
-        id: "results",
+        id: "features",
+        heading: "Features",
+        body: "For users, the portal provides a guided multi-page form for a smooth experience and a lightweight form for quick submissions at community events:contentReference[oaicite:6]{index=6}. Users can toggle the interface to Spanish for broader accessibility:contentReference[oaicite:7]{index=7}, and each submission triggers an immediate resource packet emailed to them based on their selected interests:contentReference[oaicite:8]{index=8}. The platform also includes a community events calendar to highlight upcoming workshops:contentReference[oaicite:9]{index=9}, as well as a generative AI chatbot that offers on-demand help by retrieving relevant answers from a curated database of local resources:contentReference[oaicite:10]{index=10}. On the backend, all entries flow into Google Sheets automatically (18 total sheets segmented by referral source) for organized, no-touch data management:contentReference[oaicite:11]{index=11}. The EBPREC team can easily update the chatbot’s knowledge base and has full access to the system’s code and configuration, ensuring transparency and allowing independent improvements over time:contentReference[oaicite:12]{index=12}.",
+      },
+      {
+        id: "Technical Highlights",
+        heading: "Technical Highlights",
+        body: "The platform is built on Next.js with Tailwind CSS and leverages Google Sheets (via the Sheets API) for data storage and management:contentReference[oaicite:13]{index=13}. Form submissions are automatically routed into 18 specific Google Sheets (9 read-only, 9 editable) based on the user's referral source, eliminating manual data handling:contentReference[oaicite:14]{index=14}. An AI-powered chatbot is integrated using Pinecone (a vector database) and OpenAI’s GPT models. It employs a retrieval-augmented generation (RAG) workflow: user queries are rephrased by the AI, relevant resource content is fetched from the vector index, and context-specific answers are generated with contact details and links:contentReference[oaicite:15]{index=15}. The chatbot supports bilingual interaction (English and Spanish) and can be easily updated with new information (for example, staff can upload a PDF to refresh its knowledge base):contentReference[oaicite:16]{index=16}. Other technical features include an email notification system (via Nodemailer) for instant follow-ups and a sub-1-second average response time for chatbot answers, ensuring a smooth user experience:contentReference[oaicite:17]{index=17}.",
+      },
+      {
+        id: "Community Impact",
+        heading: "Community Impact",
+        body: "This project makes it easier for East Oakland residents to access the help and resources they need to avoid displacement:contentReference[oaicite:18]{index=18}. By offering a simple form and an always-available chatbot, residents can quickly find information on housing assistance, financial aid, tenant rights, and more in one centralized place, saving time, reducing confusion, and breaking down barriers to assistance:contentReference[oaicite:19]{index=19}. For example, someone searching for affordable housing can use the chatbot to get a concise list of vetted resources and contacts, instead of spending hours navigating various websites or offices:contentReference[oaicite:20]{index=20}. The bilingual support and integration with local community events ensure that language or technological barriers do not prevent people from getting the help they need:contentReference[oaicite:21]{index=21}. Ultimately, the Here2Stay platform enables EBPREC and its partners to focus on directly assisting residents, while building a more connected community that is empowered to stay and thrive in Deep East Oakland:contentReference[oaicite:22]{index=22}.",
+      },
+      {
+        id: "Results",
         heading: "Results",
-        body: `Onboarded 12K monthly users in six months.\nReduced data request lead‑time from 3 days to 15 minutes.`,
+        body: "Since launch, the Here2Stay portal has been serving roughly 100 users per month, transforming a formerly manual intake into a fast, efficient digital system. The redesigned multi-page form and the new lightweight version have improved completion rates—especially on mobile devices and at community events:contentReference[oaicite:23]{index=23}:contentReference[oaicite:24]{index=24}. By automating data entry and immediate follow-ups, the platform frees up staff time for direct outreach, and its Spanish-language support has significantly broadened EBPREC's engagement with non-English-speaking residents:contentReference[oaicite:25]{index=25}. The AI chatbot also provides nearly instant answers (under 1 second), giving people critical information when they need it. Overall, this project has streamlined EBPREC's outreach efforts, increased community participation, and helped deliver vital resources more effectively to those at risk of displacement.",
       },
     ],
     stats: [
-      { label: "Launch", value: "May 2023" },
-      { label: "Monthly users", value: "12 k" },
-      { label: "Stack", value: "Next.js • FastAPI" },
-      { label: "Latency", value: "99 ms" },
-      { label: "Core win", value: "+19 pt retention" },
+      { label: "Launch", value: "June 2023" },
+      { label: "Monthly users", value: "~100" },
+      {
+        label: "Stack",
+        value:
+          "Next.js • Tailwind CSS • Google Sheets API • Pinecone • OpenAI • Nodemailer",
+      },
+      { label: "Chatbot Latency", value: "<1 second" },
+      { label: "Languages Supported", value: "English & Spanish" },
     ],
-    ctaLabel: "View repo",
-    ctaHref: "https://github.com/example/fullstack",
+    ctaLabel: "View Website",
+    ctaHref: "https://interest-form.vercel.app/",
   },
   {
-    title: "yoyoyoyoyoyoyl",
+    title: "Oakland Data Explorer",
     hero: "https://storage.googleapis.com/videobucker/newplaceholder.mp4",
     sections: [
       {
         id: "overview",
         heading: "Overview",
-        body: `A responsive web portal that lets analysts discover and request data assets.\nBuilt with a service-oriented architecture so each domain team owns its own micro‑backend.`,
+        body: "Interactive web dashboard that visualises nine years (2016-2024) of satellite imagery and environmental metrics for Oakland, CA. Users can explore temporal changes, toggle vegetation masks, and analyse correlations between green-space density, traffic, and air-quality data.",
       },
       {
-        id: "results",
-        heading: "Results",
-        body: `Onboarded 12K monthly users in six months.\nReduced data request lead‑time from 3 days to 15 minutes.`,
+        id: "functionality",
+        heading: "Key Functionality",
+        body: "• Animated landing navigation (Demo / Map / Charts / About Us)\n• Year-slider to compare imagery across time\n• Mask-toggle to switch between raw and vegetation-highlighted images\n• Location grid → detailed map view with contextual side-panel\n• Real-time theme switch (dark / light)\n• Accessible UI with keyboard navigation and ARIA labels",
       },
+      {
+      id: "architecture",
+      heading: "Architecture",
+      body: "Micro-frontend style split into three folders:\n1. **frontend-service** – layout, routing, theme state\n2. **visualization-service** – map components, 3-D menu, charts\n3. **data-service** – fetch / transform satellite imagery & metrics\nBuilt with Next.js 14, React 18, TypeScript, Tailwind CSS, Framer Motion, shadcn/ui and hosted assets on Google Cloud Storage."
+    },
+    {
+      id: "data",
+      heading: "Data & Analysis",
+      body: "• Satellite imagery for Downtown & West Oakland + extra grid cells\n• Vegetation coverage calculated per-tile (green density 6.19 – 18.39 %)\n• Air-quality (PM2.5) vs traffic pattern correlations\n• Population density overlays for urban-planning insight"
+    },
+    {
+      "id": "results",
+      "heading": "Results",
+      "body": "• **Awarded $400** at USF Innovation Summit 2025 for the Geo-Spatial Analysis Bot poster.\n• Adopted by the **City of Oakland** planning team as a prototype for rapid environmental insight.\n• Demonstrates:\n  – Green-space growth/decline visualisation\n  – Traffic-vs-vegetation and air-quality trend analysis\n  – Population-shift tracking over a nine-year span.\n• Sparked community feedback and feature requests for a Version 2 during the summit."
+    }
     ],
     stats: [
-      { label: "Launch", value: "May 2023" },
-      { label: "Monthly users", value: "12 k" },
-      { label: "Stack", value: "Next.js • FastAPI" },
-      { label: "Latency", value: "99 ms" },
-      { label: "Core win", value: "+19 pt retention" },
+      { label: "Launch", value: "May 2025" },
+      { label: "Data span", value: "2012 - 2025" },
+      { label: "Locations", value: "Oakland" },
+      { label: "Green density", value: "6.19 - 18.39 %" },
+      { label: "Stack",value: "Next.js 14 • TypeScript • Tailwind" },
+
     ],
     ctaLabel: "View repo",
-    ctaHref: "https://github.com/example/fullstack",
+    ctaHref: "https://github.com/devenvaruv",
   },
 ];
 
 export const computerVision = {
-  title: "Edge Computer Vision",
-  hero: "https://storage.googleapis.com/videobucker/newplaceholder.mp4",
+  title: "Automated Road Mapping",
+  hero: "videos/AI-preview.mp4",
   sections: [
     {
       id: "overview",
       heading: "Overview",
-      body: "Deploys a custom YOLO model to low‑power edge boxes.",
+      body: "This project automated the mapping of road infrastructure for Boone County by using computer vision to replace manual image labeling. Multiple custom YOLO models were trained to detect road features like lane lines, shoulders, barriers, street lights, and more across roughly ten asset classes.",
+    },
+    {
+      id: "solution",
+      heading: "Solution",
+      body: "Using labeled road imagery and the Roboflow platform, we trained three specialized YOLO-based models for different feature types. We applied extensive data augmentation and iterative fine-tuning to boost accuracy, addressing issues like class confusion with techniques such as anchor tuning and label smoothing. The detection pipeline outputs both segmentation masks and bounding boxes, which are automatically converted into JSON/CSV formats for easy integration. A React web application was also developed to visualize the model’s detections on stitched 360° road imagery for quality assurance.",
     },
     {
       id: "results",
       heading: "Results",
-      body: "+0.4 s safety alerts, 60 FPS realtime.",
+      body: "The AI pipeline improved mean average precision by over 20%, achieving above 0.80 mAP on key classes (e.g. lane markings, road shoulders, and barriers). This significantly reduced the need for manual labeling, speeding up the mapping process while maintaining high accuracy. The system reliably detects infrastructure in varied conditions—from poor lighting to occluded or rural scenes—ensuring a robust solution for the client.",
     },
   ],
   stats: [
     { label: "Launch", value: "Feb 2024" },
-    { label: "FPS", value: "60" },
-    { label: "Model", value: "YOLOv8" },
-    { label: "Devices", value: "Jetson NX" },
-    { label: "Core value", value: "Safety alerts" },
+    { label: "Assets Detected", value: "14 classes" },
+    { label: "Accuracy (mAP)", value: "91%" },
+    { label: "Models", value: "3 custom YOLO models" },
+    { label: "Stack", value: "Python • React • Roboflow" },
   ],
 };
 
 export const vrTraining = {
   title: "Immersive VR Training",
-  hero: "https://storage.googleapis.com/videobucker/newplaceholder.mp4",
+  hero: "videos/vr-preview.mp4",
   sections: [
     {
       id: "overview",
@@ -105,17 +144,14 @@ export const vrTraining = {
   ctaHref: "mailto:contact@usfteam.com",
 };
 
-/* ------------------------- Layout Grid ------------------------- */
 const Wrapper = styled.main`
   max-width: 100%;
   margin: 0 auto;
-  padding: 0rem 6rem 4vw 4rem;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 26rem;
   gap: 3rem;
 `;
 
-/* ------------------------- Left Nav Rail ----------------------- */
 const NavRail = styled.nav`
   position: sticky;
   top: 6rem;
@@ -155,7 +191,7 @@ const Content = styled.div`
 
   p {
     line-height: 1.65;
-    color: #d0d7de;
+    color: #c9d1d9;
     margin: 0 0 1.25rem 0;
     font-size: 1.05rem;
   }
@@ -426,10 +462,9 @@ export default function CaseStudyProject({
           <HeroWrapper onClick={() => setFullscreenIdx(true)}>
             <Hero
               src={hero}
-              poster="/images/vr-shot1.png"
               muted
               playsInline
-              preload="none"
+              preload="metadata"
               style={{ filter: posterLoaded ? "none" : "grayscale(1)" }}
               onCanPlayThrough={() => setPosterLoaded(true)}
             />

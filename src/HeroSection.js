@@ -1,48 +1,86 @@
-// --------------------------------------------------------------------
-//  App.jsx — React (no Next.js) single‑page setup with React Router v6
-// --------------------------------------------------------------------
-// 1. `npm i react-router-dom styled-components`
-// 2. Put this as src/App.jsx (or split into separate files as preferred).
-// 3. In index.js: `import App from "./App";` + `<BrowserRouter><App/></BrowserRouter>`
-//
-// This version adds a fake 3‑monitor 3‑D effect:
-//   • CSS perspective on the grid
-//   • Side tiles rotated on the Y‑axis (+ brightness drop)
-//   • Centre tile pushed out with translateZ for curvature illusion
-//   • Tiles flatten, zoom and rise on hover
-//   • On small screens (< 900 px) it disables all 3‑D transforms
-// --------------------------------------------------------------------
 import React, { useEffect, useRef, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useLocation,
+} from "react-router-dom";
 import styled, { css, createGlobalStyle } from "styled-components";
-import CaseStudyProject, {
-  fullStack,
-  computerVision,
-  vrTraining,
-} from "./CaseStudyProject";
+import { fullStack, computerVision, vrTraining } from "./CaseStudyProject";
 import CaseStudyPage from "./CaseStudyPage";
-/******************** Global Styles ***********************************/
+
 const GlobalStyle = createGlobalStyle`
   html{scroll-behavior:smooth;}
   body{margin:0;font-family:Inter,sans-serif;background:#0d1117;color:#f0f3f6;}
   *,*:before,*:after{box-sizing:border-box;}
 `;
 
-/******************** Shared Header ***********************************/
 const Header = () => {
-  const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [projOpen, setProjOpen] = useState(false);
+  const dropRef = useRef(null);
+  const location = useLocation();
+
+  const projects = [
+    ...fullStack.map((proj, idx) => ({
+      label: proj.title,
+      path: `/full-stack#p${idx}-${proj.sections[0].id}`,
+    })),
+    { label: computerVision.title, path: "/computer-vision" },
+    { label: vrTraining.title, path: "/vr" },
+  ];
+
+  useEffect(() => {
+    const close = (e) =>
+      dropRef.current &&
+      !dropRef.current.contains(e.target) &&
+      setProjOpen(false);
+    window.addEventListener("mousedown", close);
+    return () => window.removeEventListener("mousedown", close);
+  }, []);
+
+  useEffect(() => {
+    setMenuOpen(false);
+    setProjOpen(false);
+  }, [location]);
+
   return (
-    <NavBar>
+    <NavBar ref={dropRef}>
       <Brand to="/">USF Team</Brand>
-      <div>
-        <NavLinks $open={open} onClick={() => setOpen(false)}>
-          {/* <Anchor to="/#projects">Projects</Anchor> */}
-          <Anchor to="/#about">About</Anchor>
-          <Anchor to="/#contact">Contact</Anchor>
-          <a href="mailto:contact@usfteam.com">Hire Us</a>
-        </NavLinks>
-      </div>
-      <Hamburger onClick={() => setOpen(!open)}>☰</Hamburger>
+
+      <NavLinks $open={menuOpen}>
+        <ProjectsWrap>
+          <ProjectsBtn $open={projOpen} onClick={() => setProjOpen(!projOpen)}>
+            Projects
+            <Caret viewBox="0 0 10 6">
+              <path
+                d="M1 1l4 4 4-4"
+                stroke="currentColor"
+                strokeWidth="1.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </Caret>
+          </ProjectsBtn>
+
+          <Menu $open={projOpen}>
+            {projects.map(({ label, path }) => (
+              <li key={path}>
+                <Link to={path} onClick={() => setProjOpen(false)}>
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </Menu>
+        </ProjectsWrap>
+
+        <Anchor to="/#about">About</Anchor>
+        <Anchor to="/#contact">Contact</Anchor>
+        
+      </NavLinks>
+
+      <Hamburger onClick={() => setMenuOpen(!menuOpen)}>☰</Hamburger>
     </NavBar>
   );
 };
@@ -52,21 +90,21 @@ const TILES = [
     title: "Full‑Stack",
     subtitle: "End‑to‑end builds",
     poster: "/images/poster-fullstack.jpg",
-    video: "https://storage.googleapis.com/videobucker/newplaceholder.mp4",
+    video: "/videos/full-stack.mp4",
     path: "/full-stack",
   },
   {
     title: "AI",
     subtitle: "Real‑time ML",
     poster: "/images/poster-cv.jpg",
-    video: "https://storage.googleapis.com/videobucker/newplaceholder.mp4",
+    video: "/videos/AI-stack.mp4",
     path: "/computer-vision",
   },
   {
     title: "VR",
     subtitle: "Immersive learning",
     poster: "/images/poster-vr.jpg",
-    video: "https://storage.googleapis.com/videobucker/newplaceholder.mp4",
+    video: "/videos/vr-stack.mp4",
     path: "/vr",
   },
 ];
@@ -98,6 +136,7 @@ const HeroSection = () => {
 const HeroTile = ({ data, paused }) => {
   const { title, subtitle, poster, video, path } = data;
   const ref = useRef(null);
+
   const play = () => {
     if (paused) return;
     const v = ref.current;
@@ -112,12 +151,11 @@ const HeroTile = ({ data, paused }) => {
     >
       <video
         ref={ref}
-        poster={poster}
-        data-src={paused ? undefined : video}
+        data-src={video}
         muted
         loop
         playsInline
-        preload="none"
+        preload="metadata"
       />
       <Overlay>
         <h3>{title}</h3>
@@ -138,7 +176,6 @@ const FullStack = () => <PageShell title="Full‑Stack Development" />;
 const ComputerVision = () => <PageShell title="Computer Vision" />;
 const VR = () => <PageShell title="Virtual Reality" />;
 
-/******************** Landing page with sections **********************/
 const Landing = () => (
   <>
     <HeroSection />
@@ -162,7 +199,6 @@ const Landing = () => (
   </>
 );
 
-/******************** Main App & Router *******************************/
 export default function App() {
   return (
     <Router>
@@ -170,16 +206,20 @@ export default function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/full-stack" element={<CaseStudyPage projects={fullStack} />} />
         <Route
-          path="/computer-vision" element={<CaseStudyPage projects={[computerVision]} />} />
+          path="/full-stack"
+          element={<CaseStudyPage projects={fullStack} />}
+        />
+        <Route
+          path="/computer-vision"
+          element={<CaseStudyPage projects={[computerVision]} />}
+        />
         <Route path="/vr" element={<CaseStudyPage projects={[vrTraining]} />} />
       </Routes>
     </Router>
   );
 }
 
-/******************** Hooks *******************************************/
 const usePrefersReducedMotion = () => {
   const [pref, setPref] = useState(false);
   useEffect(() => {
@@ -216,7 +256,6 @@ const useLazyVideoLoad = (disabled) => {
   }, [disabled]);
 };
 
-/******************** Styled Components *******************************/
 const NavBar = styled.header`
   position: sticky;
   top: 0;
@@ -224,6 +263,9 @@ const NavBar = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 1rem 1.5rem;
   background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(8px);
@@ -241,6 +283,8 @@ const Brand = styled(Link)`
   font-size: 1.25rem;
   color: inherit;
   text-decoration: none;
+  position: absolute;
+  left: 1.5rem;
 `;
 const Hamburger = styled.button`
   display: none;
@@ -249,6 +293,8 @@ const Hamburger = styled.button`
   font-size: 1.5rem;
   color: inherit;
   cursor: pointer;
+  position: absolute;
+  right: 1.5rem;
   @media (max-width: 768px) {
     display: block;
   }
@@ -257,6 +303,7 @@ const NavLinks = styled.nav`
   display: flex;
   gap: 1.5rem;
   align-items: center;
+  justify-content: center;
   a {
     color: inherit;
     text-decoration: none;
@@ -279,6 +326,59 @@ const NavLinks = styled.nav`
 `;
 const Anchor = styled(Link)``;
 
+const ProjectsWrap = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+const ProjectsBtn = styled.button`
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.95rem;
+  color: inherit;
+  transition: opacity 0.2s;
+  &:hover {
+    opacity: 0.85;
+  }
+  svg {
+    width: 0.6rem;
+    height: 0.6rem;
+    transition: transform 0.2s;
+    ${({ $open }) => $open && "transform: rotate(180deg);"}
+  }
+`;
+const Caret = styled.svg`
+  pointer-events: none;
+`;
+const Menu = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0.4rem 0;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 12rem;
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 0.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  opacity: ${({ $open }) => ($open ? 1 : 0)};
+  transform: translateY(${({ $open }) => ($open ? "0" : "-8px")});
+  pointer-events: ${({ $open }) => ($open ? "auto" : "none")};
+  transition: opacity 0.18s, transform 0.18s;
+  a {
+    display: block;
+    padding: 0.55rem 1rem;
+    font-size: 0.9rem;
+    color: #c9d1d9;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #fff;
+  }
+`;
 const HeroWrapper = styled.section`
   position: relative;
   height: 100vh;
@@ -321,11 +421,10 @@ const HeroInner = styled.div`
   width: 100%;
 `;
 
-/***** 3‑D GRID *********************************************************/
 const TileGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 0.90fr;
+  grid-template-rows: 0.9fr;
   gap: 1.5rem;
   flex: 1;
   align-items: stretch;
@@ -340,7 +439,7 @@ const TileGrid = styled.div`
 const Overlay = styled.div`
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -350,14 +449,15 @@ const Overlay = styled.div`
   h3 {
     margin: 0;
     font-size: 1.5rem;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
   }
   span {
     font-size: 0.9rem;
-    color: #d1d9e6;
+    color: #e2e8f1ff;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
   }
 `;
 
-/***** SINGLE TILE *****************************************************/
 const TileLink = styled(Link)`
   position: relative;
   display: block;
