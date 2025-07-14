@@ -16,6 +16,23 @@ const GlobalStyle = createGlobalStyle`
   *,*:before,*:after{box-sizing:border-box;}
 `;
 
+const ScrollToHash = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const el = document.querySelector(location.hash);
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 0);
+      }
+    }
+  }, [location.pathname, location.hash]);
+
+  return null;
+};
+
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [projOpen, setProjOpen] = useState(false);
@@ -77,7 +94,6 @@ const Header = () => {
 
         <Anchor to="/#about">About</Anchor>
         <Anchor to="/#contact">Contact</Anchor>
-        
       </NavLinks>
 
       <Hamburger onClick={() => setMenuOpen(!menuOpen)}>☰</Hamburger>
@@ -180,20 +196,31 @@ const Landing = () => (
   <>
     <HeroSection />
     <Section id="about">
-      <h2>About Us</h2>
+      <h2>About Us</h2>
       <p>
-        We’re a research-driven crew of graduate technologists who turn ideas
-        into production-grade software, real-time vision pipelines and immersive
-        VR learning tools. From proof-of-concept to deployment, we cover the
-        full stack so you can focus on impact.
+        We are a team of research‑driven graduate technologists at the
+        University of San Francisco, focused on building impactful digital
+        solutions — from real-time AI systems to immersive VR training tools.
+      </p>
+      <p>
+        Our work spans full-stack applications, machine learning pipelines, and
+        simulation-based learning experiences, all tailored to solve real-world
+        problems with scalable technology.
       </p>
     </Section>
-    <Section id="contact">
+
+    <Section id="contact" $alt>
       <h2>Contact</h2>
       <p>
-        📧 <a href="mailto:contact@usfteam.com">contact@usfteam.com</a>
+        📧 <a href="mailto:dvvaru@dons.usfca.edu">dvvaru@dons.usfca.edu</a>
         <br />
-        📍 Based in San Francisco — serving teams worldwide
+        🌍 San Francisco, California
+        <br />
+        🔗{" "}
+        <a href="https://www.linkedin.com/in/deven-varu-027318155/">
+          LinkedIn
+        </a>{" "}
+        | <a href="https://github.com/devenvaruv">GitHub</a>
       </p>
     </Section>
   </>
@@ -203,6 +230,7 @@ export default function App() {
   return (
     <Router>
       <GlobalStyle />
+      <ScrollToHash />
       <Header />
       <Routes>
         <Route path="/" element={<Landing />} />
@@ -509,8 +537,25 @@ const TileLink = styled(Link)`
 `;
 
 const Section = styled.section`
-  padding: 6rem 1rem;
-  max-width: 1100px;
+  padding: 6rem 2rem;
+  max-width: 900px;
   margin: 0 auto;
-  background: ${({ $alt }) => ($alt ? "#161b22" : "#0d1117")};
+  
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #30363d;
+    padding-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #c9d1d9;
+  }
+
+  a {
+    color: #58a6ff;
+    text-decoration: underline;
+  }
 `;
