@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Deven Varu - AI Engineer</title>
+  <desc id="desc">Warm dark Open Graph image for Deven Varu's AI engineering portfolio.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#11100e"/>
+      <stop offset="1" stop-color="#1d1a16"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="70" y="82" width="1060" height="466" rx="14" fill="none" stroke="rgba(245,239,228,.16)"/>
+  <text x="90" y="150" fill="#d2b36b" font-family="Share Tech Mono, monospace" font-size="28">AI Engineer / San Francisco Bay Area</text>
+  <text x="88" y="288" fill="#f5efe4" font-family="Lexend Giga, Lexend, sans-serif" font-size="78" font-weight="700">Deven Varu</text>
+  <text x="92" y="370" fill="#e1d8ca" font-family="Lexend, sans-serif" font-size="38" font-weight="500">Agents, voice AI, developer tools,</text>
+  <text x="92" y="426" fill="#e1d8ca" font-family="Lexend, sans-serif" font-size="38" font-weight="500">and computer vision pipelines.</text>
+  <line x1="92" y1="486" x2="460" y2="486" stroke="#d2b36b" stroke-width="4"/>
+</svg>

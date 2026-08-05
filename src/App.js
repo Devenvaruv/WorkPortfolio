@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { awards, experience, profile, projects, skillGroups } from "./portfolioData";
+import { profilePageSchema, safeJsonLd } from "./seo";
 
 const featuredTitles = ["InterviewWithAI", "Codex Session Visualizer"];
 const additionalOrder = [
@@ -14,6 +15,7 @@ const additionalOrder = [
 ];
 
 function App() {
+  const prefersReducedMotion = usePrefersReducedMotion();
   const featuredProjects = featuredTitles
     .map((title) => projects.find((project) => project.title === title))
     .filter(Boolean);
@@ -24,11 +26,12 @@ function App() {
   return (
     <>
       <GlobalStyle />
+      <JsonLd data={profilePageSchema()} />
       <SiteShell>
         <Header>
           <Brand href="#top">{profile.name}</Brand>
           <Nav aria-label="Primary navigation">
-            <a href="#projects">Projects</a>
+            <a href="/projects/">Projects</a>
             <a href="#experience">Experience</a>
             <a href="#skills">About / Skills</a>
             <a href="#contact">Contact</a>
@@ -41,7 +44,7 @@ function App() {
               <IntroLine>
                 {profile.title} in the {profile.location}
               </IntroLine>
-              <h1>{profile.name}</h1>
+              <h1 aria-label={`${profile.name} - ${profile.title}`}>{profile.name}</h1>
               <Lead>
                 I build AI products and developer tools across agents,
                 voice, and computer vision.
@@ -62,7 +65,11 @@ function App() {
             </HeroCopy>
 
             <HeroMedia aria-label="Featured project preview">
-              <MediaPreview project={featuredProjects[0]} $hero />
+              <MediaPreview
+                project={featuredProjects[0]}
+                $hero
+                prefersReducedMotion={prefersReducedMotion}
+              />
             </HeroMedia>
           </Hero>
 
@@ -94,7 +101,10 @@ function App() {
             <FeaturedList>
               {featuredProjects.map((project, index) => (
                 <FeaturedProject key={project.title} $reverse={index % 2 === 1}>
-                  <MediaPreview project={project} />
+                  <MediaPreview
+                    project={project}
+                    prefersReducedMotion={prefersReducedMotion}
+                  />
                   <ProjectCopy>
                     <ProjectNumber>{String(index + 1).padStart(2, "0")}</ProjectNumber>
                     <h3>{project.title}</h3>
@@ -105,11 +115,16 @@ function App() {
                       ))}
                     </DetailList>
                     <TechLine>{project.stack.slice(0, 5).join(" / ")}</TechLine>
-                    {project.url && (
-                      <ProjectLink href={project.url} target="_blank" rel="noreferrer">
-                        {projectLinkLabel(project)}
+                    <ProjectLinks>
+                      <ProjectLink href={`/projects/${project.slug}/`}>
+                        {caseStudyLinkLabel(project)}
                       </ProjectLink>
-                    )}
+                      {project.url && (
+                        <ProjectLink href={project.url} target="_blank" rel="noreferrer">
+                          {projectLinkLabel(project)}
+                        </ProjectLink>
+                      )}
+                    </ProjectLinks>
                   </ProjectCopy>
                 </FeaturedProject>
               ))}
@@ -134,17 +149,27 @@ function App() {
                     project.title === "Catalog Intelligence Automation"
                   }
                 >
-                  {project.media && <InlineMedia project={project} />}
+                  {project.media && (
+                    <InlineMedia
+                      project={project}
+                      prefersReducedMotion={prefersReducedMotion}
+                    />
+                  )}
                   <AdditionalText>
                     <h3>{project.title}</h3>
                     <p>{project.summary}</p>
                     <ContextLine>{project.impact[0]}</ContextLine>
                     <TechLine>{project.stack.slice(0, 4).join(" / ")}</TechLine>
-                    {project.url && (
-                      <ProjectLink href={project.url} target="_blank" rel="noreferrer">
-                        {projectLinkLabel(project)}
+                    <ProjectLinks>
+                      <ProjectLink href={`/projects/${project.slug}/`}>
+                        {caseStudyLinkLabel(project)}
                       </ProjectLink>
-                    )}
+                      {project.url && (
+                        <ProjectLink href={project.url} target="_blank" rel="noreferrer">
+                          {projectLinkLabel(project)}
+                        </ProjectLink>
+                      )}
+                    </ProjectLinks>
                   </AdditionalText>
                 </AdditionalProject>
               ))}
@@ -219,7 +244,31 @@ function App() {
   );
 }
 
-function MediaPreview({ project, $hero }) {
+function JsonLd({ data }) {
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: safeJsonLd(data) }}
+    />
+  );
+}
+
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(mediaQuery.matches);
+
+    const onChange = () => setReduced(mediaQuery.matches);
+    mediaQuery.addEventListener("change", onChange);
+    return () => mediaQuery.removeEventListener("change", onChange);
+  }, []);
+
+  return reduced;
+}
+
+function MediaPreview({ project, $hero, prefersReducedMotion }) {
   if (!project) return null;
 
   if (project.media) {
@@ -228,10 +277,11 @@ function MediaPreview({ project, $hero }) {
         <video
           src={project.media}
           muted
-          autoPlay
-          loop
+          autoPlay={!prefersReducedMotion}
+          loop={!prefersReducedMotion}
           playsInline
           preload="metadata"
+          aria-label={`${project.title} project media preview`}
         />
       </MediaFrame>
     );
@@ -247,16 +297,17 @@ function MediaPreview({ project, $hero }) {
   );
 }
 
-function InlineMedia({ project }) {
+function InlineMedia({ project, prefersReducedMotion }) {
   return (
     <InlineFrame>
       <video
         src={project.media}
         muted
-        autoPlay
-        loop
+        autoPlay={!prefersReducedMotion}
+        loop={!prefersReducedMotion}
         playsInline
         preload="metadata"
+        aria-label={`${project.title} project media preview`}
       />
     </InlineFrame>
   );
@@ -273,7 +324,30 @@ function projectLinkLabel(project) {
   return "View project";
 }
 
+function caseStudyLinkLabel(project) {
+  if (project.slug === "road-asset-detection") {
+    return "Read the road asset detection case study";
+  }
+  return `View ${project.title} case study`;
+}
+
 const GlobalStyle = createGlobalStyle`
+  @font-face {
+    font-family: "Lexend";
+    src: url("/fonts/Lexend-VariableFont_wght.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Lexend Giga";
+    src: url("/fonts/LexendGiga-VariableFont_wght.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+
   @font-face {
     font-family: "Share Tech Mono";
     src: url("/fonts/ShareTechMono-Regular.ttf") format("truetype");
@@ -295,7 +369,9 @@ const GlobalStyle = createGlobalStyle`
     --faint: #a79b8d;
     --accent: #d2b36b;
     --accent-soft: rgba(201, 169, 99, 0.14);
-    --mono: "Share Tech Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    --font-display: "Lexend Giga", "Lexend", ui-sans-serif, system-ui, sans-serif;
+    --font-body: "Lexend", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-mono: "Share Tech Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   }
 
   * {
@@ -312,7 +388,7 @@ const GlobalStyle = createGlobalStyle`
     overflow-x: hidden;
     background: var(--bg);
     color: var(--text);
-    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: var(--font-body);
     letter-spacing: 0;
   }
 
@@ -419,9 +495,12 @@ const HeroCopy = styled.div`
   h1 {
     margin: 0.65rem 0 1rem;
     color: var(--text);
-    font-size: clamp(3.5rem, 9vw, 7rem);
-    line-height: 0.98;
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 5.2vw, 5.1rem);
+    font-weight: 700;
+    line-height: 1;
     letter-spacing: 0;
+    white-space: nowrap;
   }
 
   p {
@@ -443,7 +522,7 @@ const HeroCopy = styled.div`
 const IntroLine = styled.p`
   margin: 0 !important;
   color: var(--accent) !important;
-  font-family: var(--mono);
+  font-family: var(--font-mono);
   font-size: 1rem !important;
   line-height: 1.45 !important;
 `;
@@ -451,9 +530,10 @@ const IntroLine = styled.p`
 const Lead = styled.p`
   max-width: 16ch !important;
   color: var(--text) !important;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.7rem, 3.5vw, 3.1rem) !important;
-  line-height: 1.08 !important;
+  font-family: var(--font-body);
+  font-size: clamp(1.55rem, 3vw, 2.65rem) !important;
+  font-weight: 600;
+  line-height: 1.12 !important;
 `;
 
 const HeroActions = styled.div`
@@ -583,9 +663,9 @@ const SectionHeading = styled.div`
   h2 {
     margin: 0;
     color: var(--text);
-    font-family: Georgia, "Times New Roman", serif;
+    font-family: var(--font-body);
     font-size: clamp(2rem, 4vw, 3.25rem);
-    font-weight: 500;
+    font-weight: 700;
     line-height: 1.04;
     letter-spacing: 0;
   }
@@ -661,7 +741,7 @@ const ProjectCopy = styled.div`
 
 const ProjectNumber = styled.span`
   color: var(--accent);
-  font-family: var(--mono);
+  font-family: var(--font-mono);
   font-size: 0.95rem;
   font-weight: 400;
 `;
@@ -685,7 +765,7 @@ const TechLine = styled.p`
   margin: 0.9rem 0 0 !important;
   max-width: 100%;
   color: var(--faint) !important;
-  font-family: var(--mono);
+  font-family: var(--font-mono);
   font-size: 0.92rem !important;
   line-height: 1.55 !important;
 `;
@@ -696,7 +776,7 @@ const ProjectLink = styled.a`
   gap: 0.35rem;
   margin-top: 1.15rem;
   color: var(--accent);
-  font-family: var(--mono);
+  font-family: var(--font-mono);
   font-weight: 750;
   text-decoration-color: rgba(201, 169, 99, 0.45);
   text-underline-offset: 0.32em;
@@ -712,6 +792,18 @@ const ProjectLink = styled.a`
 
   &:visited {
     color: #e0c47e;
+  }
+`;
+
+const ProjectLinks = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+  margin-top: 1.15rem;
+
+  ${ProjectLink} {
+    margin-top: 0;
   }
 `;
 
@@ -765,7 +857,7 @@ const PlaceholderDetail = styled.span`
   display: block;
   max-width: 34ch;
   color: var(--muted);
-  font-family: var(--mono);
+  font-family: var(--font-mono);
   font-size: 0.9rem;
   line-height: 1.55;
 `;
@@ -878,7 +970,7 @@ const TimelineItem = styled.article`
 
 const TimelineDate = styled.span`
   color: var(--accent);
-  font-family: var(--mono);
+  font-family: var(--font-mono);
   font-weight: 400;
 `;
 
@@ -925,7 +1017,7 @@ const SkillRow = styled.article`
   h3 {
     margin: 0;
     color: var(--accent);
-    font-family: var(--mono);
+    font-family: var(--font-mono);
     font-size: 1rem;
     font-weight: 400;
   }
