@@ -1,4 +1,4 @@
-import { profile, projects, skillGroups } from "./portfolioData";
+import { profile, projects } from "./portfolioData";
 import { absoluteUrl, siteConfig } from "./siteConfig";
 
 export function compactJsonLd(value) {
@@ -43,9 +43,7 @@ export function personSchema() {
       "@type": "CollegeOrUniversity",
       name: "University of San Francisco",
     },
-    knowsAbout: Array.from(
-      new Set([...siteConfig.topics, ...skillGroups.flatMap((group) => group.items)])
-    ),
+    knowsAbout: siteConfig.topics,
   };
 }
 
@@ -112,7 +110,8 @@ export function projectSchema(project) {
     return {
       ...base,
       applicationCategory: project.applicationCategory,
-      operatingSystem: project.operatingSystem || "Web",
+      operatingSystem: project.operatingSystem,
+      softwareRequirements: project.softwareRequirements,
     };
   }
 

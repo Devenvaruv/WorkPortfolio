@@ -40,19 +40,18 @@ REACT_APP_BING_SITE_VERIFICATION=...
 - `public/sitemap.xml`
 - `public/robots.txt`
 - `public/404.html`
-- `public/images/og-deven-varu.svg`
 
 `npm run build` runs this generator automatically through `prebuild`.
 
 ## Open Graph Image
 
-The current Open Graph image is a static SVG at:
+The current Open Graph image is a 1200 x 630 PNG at:
 
 ```text
-public/images/og-deven-varu.svg
+public/images/og-deven-varu.png
 ```
 
-It uses the warm dark palette, Lexend/Lexend Giga, and Share Tech Mono. Replace it with a 1200 x 630 PNG if a deployment or social preview tool does not support SVG previews well.
+It is referenced by default Open Graph and Twitter metadata as `https://devenvaru.com/images/og-deven-varu.png`.
 
 ## Replacing Screenshots
 

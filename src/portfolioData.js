@@ -9,7 +9,7 @@ export const profile = {
   headline:
     "I build production AI products with LLMs, multi-agent systems, A2A, voice agents, and computer vision.",
   summary:
-    "AI engineer and MS Computer Science candidate at the University of San Francisco. My work spans agent orchestration, voice AI, computer vision pipelines, retrieval systems, and full-stack infrastructure built with TypeScript, Python, React, Next.js, Java, AWS, GCP, and MongoDB.",
+    "AI engineer with an MS in Computer Science from the University of San Francisco. My work spans agent orchestration, voice AI, computer vision pipelines, retrieval systems, and full-stack infrastructure built with TypeScript, Python, React, Next.js, Java, AWS, GCP, and MongoDB.",
 };
 
 export const highlights = [
@@ -35,7 +35,6 @@ export const projects = [
     role: "Product engineer",
     schemaType: "SoftwareApplication",
     applicationCategory: "EducationalApplication",
-    operatingSystem: "Web",
     seoTitle: "InterviewWithAI - AI Coding Interview Practice | Deven Varu",
     seoDescription:
       "An AI-powered interview practice platform combining realistic voice interviews, coding problems, transcripts, code submissions, and structured performance feedback.",
@@ -66,11 +65,6 @@ export const projects = [
         body:
           "The product combines a voice-agent interview flow with coding questions and structured feedback so a practice session can include conversation, submitted code, transcript capture, and evaluation data.",
       },
-      {
-        heading: "Current limitations",
-        body:
-          "Dedicated screenshots and a full public walkthrough still need to be added to the portfolio media library.",
-      },
     ],
     related: ["codex-session-visualizer", "a2a-multi-agent-builder", "here2stay"],
   },
@@ -89,7 +83,7 @@ export const projects = [
     role: "Extension developer",
     schemaType: "SoftwareApplication",
     applicationCategory: "DeveloperApplication",
-    operatingSystem: "VS Code",
+    softwareRequirements: "Visual Studio Code",
     seoTitle: "Codex Session Visualizer - VS Code AI Agent Observability | Deven Varu",
     seoDescription:
       "A VS Code extension that visualizes Codex file activity, tool use, execution flow, prompts, and delegated sub-agent sessions.",
@@ -120,11 +114,6 @@ export const projects = [
         body:
           "The extension focuses on turning raw Codex session data into inspectable state: file activity, chronological logs, and parent/sub-agent relationships.",
       },
-      {
-        heading: "Current limitations",
-        body:
-          "The portfolio still needs a real screenshot showing the VS Code interface, session logs, file states, and graph view.",
-      },
     ],
     related: ["a2a-multi-agent-builder", "10-agent-board-game", "interview-with-ai"],
   },
@@ -143,7 +132,6 @@ export const projects = [
     role: "Full-stack AI engineer",
     schemaType: "SoftwareApplication",
     applicationCategory: "DeveloperApplication",
-    operatingSystem: "Web",
     seoTitle: "A2A Multi-Agent Builder | Deven Varu",
     seoDescription:
       "A platform for creating, versioning, and orchestrating dynamic multi-agent AI systems with prompt configuration, shared context, and execution logs.",
@@ -414,7 +402,6 @@ export const projects = [
     role: "Full-stack developer",
     schemaType: "WebApplication",
     applicationCategory: "CivicTechnology",
-    operatingSystem: "Web",
     seoTitle: "Here2Stay Interest Form - Bilingual Civic Tech RAG Portal | Deven Varu",
     seoDescription:
       "A bilingual intake portal for EBPREC with Google Sheets automation, resource packets, and a Pinecone/OpenAI housing-resource chatbot.",

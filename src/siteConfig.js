@@ -18,11 +18,12 @@ export const siteConfig = {
   email: profile.email,
   linkedin: profile.linkedin,
   github: profile.github,
-  ogImage: "/images/og-deven-varu.svg",
+  ogImage: "/images/og-deven-varu.png",
+  ogImageType: "image/png",
   ogImageWidth: 1200,
   ogImageHeight: 630,
   ogImageAlt:
-    "Deven Varu, AI Engineer building agents, voice AI, developer tools, and computer vision systems.",
+    "Open Graph image for Deven Varu, AI engineer building agents, voice AI, developer tools, and computer vision systems.",
   locale: "en_US",
   themeColor: "#11100e",
   keywords: [
@@ -31,7 +32,7 @@ export const siteConfig = {
     "Voice AI",
     "Computer Vision",
     "Agent-to-Agent Protocol",
-    "Developer Tools",
+    "AI Developer Tools",
     "San Francisco Bay Area",
   ],
   topics: [
@@ -41,7 +42,7 @@ export const siteConfig = {
     "Computer Vision",
     "Agent-to-Agent Protocol",
     "Retrieval-Augmented Generation",
-    "Developer Tools",
+    "AI Developer Tools",
     "Machine Learning",
   ],
   projectUrls: projects.map((project) => ({

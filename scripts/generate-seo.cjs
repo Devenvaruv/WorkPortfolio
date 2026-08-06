@@ -112,6 +112,7 @@ function pageHead({ title, description, canonical, jsonLd }) {
   <meta property="og:site_name" content="${escapeHtml(siteConfig.name)}" />
   <meta property="og:locale" content="${siteConfig.locale}" />
   <meta property="og:image" content="${escapeHtml(ogImage)}" />
+  <meta property="og:image:type" content="${siteConfig.ogImageType}" />
   <meta property="og:image:width" content="${siteConfig.ogImageWidth}" />
   <meta property="og:image:height" content="${siteConfig.ogImageHeight}" />
   <meta property="og:image:alt" content="${escapeHtml(siteConfig.ogImageAlt)}" />
@@ -170,10 +171,11 @@ function projectMedia(project) {
   }
 
   return `<figure class="media">
-    <div class="placeholder" aria-label="${escapeHtml(project.title)} screenshot placeholder">
+    <div class="placeholder">
       <strong>${escapeHtml(project.title)}</strong>
       <span class="meta">Project screenshot coming soon</span>
     </div>
+    <figcaption class="meta">Project screenshot coming soon</figcaption>
   </figure>`;
 }
 
@@ -219,7 +221,7 @@ function projectPage(project) {
     jsonLd: seo.projectPageSchema(project),
     body: `
       <nav class="crumbs" aria-label="Breadcrumb">
-        <a href="/">Home</a> / <a href="/projects/">Projects</a> / ${escapeHtml(project.title)}
+        <a href="/">Home</a> / <a href="/projects/">Projects</a> / <span aria-current="page">${escapeHtml(project.title)}</span>
       </nav>
       <article>
         <p class="eyebrow">${escapeHtml(project.eyebrow)} / ${escapeHtml(project.period)}</p>
@@ -347,26 +349,6 @@ Sitemap: ${absoluteUrl("/sitemap.xml")}
 `;
 }
 
-function ogImage() {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
-  <title id="title">Deven Varu - AI Engineer</title>
-  <desc id="desc">Warm dark Open Graph image for Deven Varu's AI engineering portfolio.</desc>
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#11100e"/>
-      <stop offset="1" stop-color="#1d1a16"/>
-    </linearGradient>
-  </defs>
-  <rect width="1200" height="630" fill="url(#bg)"/>
-  <rect x="70" y="82" width="1060" height="466" rx="14" fill="none" stroke="rgba(245,239,228,.16)"/>
-  <text x="90" y="150" fill="#d2b36b" font-family="Share Tech Mono, monospace" font-size="28">AI Engineer / San Francisco Bay Area</text>
-  <text x="88" y="288" fill="#f5efe4" font-family="Lexend Giga, Lexend, sans-serif" font-size="78" font-weight="700">Deven Varu</text>
-  <text x="92" y="370" fill="#e1d8ca" font-family="Lexend, sans-serif" font-size="38" font-weight="500">Agents, voice AI, developer tools,</text>
-  <text x="92" y="426" fill="#e1d8ca" font-family="Lexend, sans-serif" font-size="38" font-weight="500">and computer vision pipelines.</text>
-  <line x1="92" y1="486" x2="460" y2="486" stroke="#d2b36b" stroke-width="4"/>
-</svg>`;
-}
-
 function generate() {
   ensureDir(projectsDir);
   ensureDir(imagesDir);
@@ -379,7 +361,6 @@ function generate() {
   writeFile(path.join(publicDir, "404.html"), notFoundPage());
   writeFile(path.join(publicDir, "sitemap.xml"), sitemap());
   writeFile(path.join(publicDir, "robots.txt"), robots());
-  writeFile(path.join(imagesDir, "og-deven-varu.svg"), ogImage());
 }
 
 generate();
