@@ -6,6 +6,10 @@ const root = path.resolve(__dirname, "..");
 const publicDir = path.join(root, "public");
 const projectsDir = path.join(publicDir, "projects");
 const imagesDir = path.join(publicDir, "images");
+const resumeSourcePdf = path.join(root, "Deven V Resume.pdf");
+const legacyResumePublicPath = path.join(publicDir, "resume");
+const resumePublicPath = path.join(publicDir, "resume.pdf");
+const resumeBuildFallbackPath = path.join(root, "build", "resume.pdf");
 
 function loadExports(filePath, context = {}) {
   const source = fs.readFileSync(filePath, "utf8");
@@ -46,6 +50,13 @@ const seo = loadExports(path.join(root, "src", "seo.js"), {
 const { projects, profile } = data;
 const { siteConfig, absoluteUrl } = configExports;
 
+const portfolioSections = [
+  { group: "featured", title: "Featured Work", headingId: "featured-work" },
+  { group: "ai-systems", title: "AI Systems", headingId: "ai-systems" },
+  { group: "experiments", title: "Experiments", headingId: "experiments" },
+  { group: "earlier-work", title: "Earlier Work", headingId: "earlier-work" },
+];
+
 function ensureDir(dir) {
   fs.mkdirSync(dir, { recursive: true });
 }
@@ -53,6 +64,30 @@ function ensureDir(dir) {
 function writeFile(filePath, contents) {
   ensureDir(path.dirname(filePath));
   fs.writeFileSync(filePath, contents, "utf8");
+}
+
+function copyFile(sourcePath, destinationPath) {
+  ensureDir(path.dirname(destinationPath));
+  fs.copyFileSync(sourcePath, destinationPath);
+}
+
+function removeIfExists(filePath) {
+  if (fs.existsSync(filePath)) {
+    fs.rmSync(filePath, { recursive: true, force: true });
+  }
+}
+
+function syncResumePdf() {
+  removeIfExists(legacyResumePublicPath);
+
+  if (fs.existsSync(resumeSourcePdf)) {
+    copyFile(resumeSourcePdf, resumePublicPath);
+    return;
+  }
+
+  if (!fs.existsSync(resumePublicPath) && fs.existsSync(resumeBuildFallbackPath)) {
+    copyFile(resumeBuildFallbackPath, resumePublicPath);
+  }
 }
 
 function escapeHtml(value) {
@@ -133,7 +168,7 @@ function staticCss() {
 @font-face{font-family:'Lexend Giga';src:url('/fonts/LexendGiga-VariableFont_wght.ttf') format('truetype');font-weight:100 900;font-display:swap}
 @font-face{font-family:'Share Tech Mono';src:url('/fonts/ShareTechMono-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
 :root{color-scheme:dark;--bg:#11100e;--panel:#1a1815;--line:rgba(237,230,218,.14);--text:#f5efe4;--body:#e1d8ca;--muted:#c8beb0;--faint:#a79b8d;--accent:#d2b36b;--body-font:Lexend,ui-sans-serif,system-ui,sans-serif;--display-font:'Lexend Giga',Lexend,ui-sans-serif,system-ui,sans-serif;--mono:'Share Tech Mono','SFMono-Regular',Consolas,monospace}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body-font);line-height:1.65}a{color:var(--accent);text-underline-offset:.28em}a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}.shell{max-width:1180px;margin:0 auto;padding:1.1rem clamp(1rem,4vw,3rem) 4rem}.top{display:flex;justify-content:space-between;gap:1rem;align-items:center;border-bottom:1px solid var(--line);padding-bottom:1rem;margin-bottom:clamp(2.5rem,5vw,4.5rem)}.brand{color:var(--text);font-weight:700;text-decoration:none}.nav{display:flex;gap:1rem;flex-wrap:wrap}.nav a{color:var(--muted)}h1{font-size:clamp(2.35rem,5vw,4.8rem);line-height:1.04;margin:0 0 1rem;font-weight:700}h2{font-size:clamp(1.6rem,3vw,2.5rem);line-height:1.12;margin:2.5rem 0 .75rem}.lede{max-width:68ch;color:var(--body);font-size:1.08rem}.meta,.stack,.eyebrow,.crumbs{font-family:var(--mono);color:var(--faint)}.crumbs{margin-bottom:1.2rem}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.4rem 3rem}.project-list{display:grid;gap:1.1rem;margin-top:2rem}.project-list article,.media{border-top:1px solid var(--line);padding-top:1rem}.media{margin:2rem 0}.media video{width:100%;max-width:720px;aspect-ratio:16/10;object-fit:cover;border-radius:6px;background:var(--panel)}.placeholder{max-width:720px;aspect-ratio:16/10;display:grid;align-content:center;gap:.6rem;padding:1.5rem;border-radius:6px;background:linear-gradient(135deg,#1a1815,#24211d)}.placeholder strong{font-size:1.4rem}.section{max-width:820px}.links{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1rem}.related{display:grid;gap:.7rem;margin:1rem 0 0;padding:0;list-style:none}.footer{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem;color:var(--muted)}@media(max-width:760px){.top{align-items:flex-start;flex-direction:column}.grid{grid-template-columns:1fr}}`;
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body-font);line-height:1.65}a{color:var(--accent);text-underline-offset:.28em}a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}.shell{max-width:1180px;margin:0 auto;padding:1.1rem clamp(1rem,4vw,3rem) 4rem}.top{display:flex;justify-content:space-between;gap:1rem;align-items:center;border-bottom:1px solid var(--line);padding-bottom:1rem;margin-bottom:clamp(2.5rem,5vw,4.5rem)}.brand{color:var(--text);font-weight:700;text-decoration:none}.nav{display:flex;gap:1rem;flex-wrap:wrap}.nav a{color:var(--muted)}h1{font-size:clamp(2.35rem,5vw,4.8rem);line-height:1.04;margin:0 0 1rem;font-weight:700}h2{font-size:clamp(1.6rem,3vw,2.5rem);line-height:1.12;margin:2.5rem 0 .75rem}.lede{max-width:68ch;color:var(--body);font-size:1.08rem}.meta,.stack,.eyebrow,.crumbs{font-family:var(--mono);color:var(--faint)}.crumbs{margin-bottom:1.2rem}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.4rem 3rem}.project-list{display:grid;gap:1.1rem;margin-top:2rem}.project-list article,.media{border-top:1px solid var(--line);padding-top:1rem}.media{margin:2rem 0}.media video,.media img{width:100%;max-width:720px;aspect-ratio:16/10;object-fit:cover;border-radius:6px;background:var(--panel);display:block}.placeholder{max-width:720px;aspect-ratio:16/10;display:grid;align-content:center;gap:.6rem;padding:1.5rem;border-radius:6px;background:linear-gradient(135deg,#1a1815,#24211d)}.placeholder strong{font-size:1.4rem}.section{max-width:820px}.links{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1rem}.related{display:grid;gap:.7rem;margin:1rem 0 0;padding:0;list-style:none}.footer{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem;color:var(--muted)}@media(max-width:760px){.top{align-items:flex-start;flex-direction:column}.grid{grid-template-columns:1fr}}`;
 }
 
 function layout({ title, description, canonical, jsonLd, body }) {
@@ -162,10 +197,22 @@ function projectDisplayTitle(project) {
   return project.displayTitle || project.title;
 }
 
+function isImageMedia(media) {
+  return /\.(png|jpe?g|webp|gif|svg)$/i.test(media || "");
+}
+
 function projectMedia(project) {
   if (project.media) {
+    if (isImageMedia(project.media)) {
+      return `<figure class="media">
+      <img src="${escapeHtml(project.media)}" alt="${escapeHtml(project.title)} project preview" />
+      <figcaption class="meta">${escapeHtml(project.title)} project preview</figcaption>
+    </figure>`;
+    }
+
+    const poster = project.thumbnail ? ` poster="${escapeHtml(project.thumbnail)}"` : "";
     return `<figure class="media">
-      <video src="${escapeHtml(project.media)}" controls preload="metadata" aria-label="${escapeHtml(project.title)} project media preview"></video>
+      <video src="${escapeHtml(project.media)}"${poster} controls preload="metadata" aria-label="${escapeHtml(project.title)} project media preview"></video>
       <figcaption class="meta">${escapeHtml(project.title)} project media preview</figcaption>
     </figure>`;
   }
@@ -267,15 +314,23 @@ function projectsIndexPage() {
   const title = "AI Engineering Projects | Deven Varu";
   const description =
     "AI engineering projects across voice agents, multi-agent systems, developer tools, computer vision, retrieval systems, and full-stack products.";
-  const featured = projects.filter((project) =>
-    ["interview-with-ai", "codex-session-visualizer"].includes(project.slug)
-  );
-  const others = projects.filter((project) => !featured.includes(project));
   const renderProject = (project) => `<article>
     <h2><a href="/projects/${project.slug}/">${escapeHtml(projectDisplayTitle(project))}</a></h2>
     <p>${escapeHtml(project.summary)}</p>
     <p class="meta">${escapeHtml(project.period)} / ${escapeHtml(project.status)}</p>
   </article>`;
+  const renderSection = (section) => {
+    const sectionProjects = projects
+      .filter((project) => project.portfolioGroup === section.group)
+      .sort((a, b) => (a.portfolioOrder || 0) - (b.portfolioOrder || 0));
+
+    if (!sectionProjects.length) return "";
+
+    return `<section class="project-list" aria-labelledby="${section.headingId}">
+        <h2 id="${section.headingId}">${section.title}</h2>
+        ${sectionProjects.map(renderProject).join("")}
+      </section>`;
+  };
 
   return layout({
     title,
@@ -286,14 +341,7 @@ function projectsIndexPage() {
       <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / Projects</nav>
       <h1>Projects</h1>
       <p class="lede">${escapeHtml(description)}</p>
-      <section class="project-list" aria-labelledby="featured-projects">
-        <h2 id="featured-projects">Featured projects</h2>
-        ${featured.map(renderProject).join("")}
-      </section>
-      <section class="project-list" aria-labelledby="other-projects">
-        <h2 id="other-projects">Other projects</h2>
-        ${others.map(renderProject).join("")}
-      </section>`,
+      ${portfolioSections.map(renderSection).join("\n")}`,
   });
 }
 
@@ -355,6 +403,7 @@ function generate() {
 
   writeFile(path.join(publicDir, "index.html"), homepagePage());
   writeFile(path.join(projectsDir, "index.html"), projectsIndexPage());
+  syncResumePdf();
   projects.forEach((project) => {
     writeFile(path.join(projectsDir, project.slug, "index.html"), projectPage(project));
   });

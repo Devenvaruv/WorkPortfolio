@@ -3,15 +3,12 @@ import styled, { createGlobalStyle } from "styled-components";
 import { awards, experience, profile, projects, skillGroups } from "./portfolioData";
 import { profilePageSchema, safeJsonLd } from "./seo";
 
-const featuredTitles = ["InterviewWithAI", "Codex Session Visualizer"];
+const featuredTitles = ["InterviewWithAI", "Codex Session Visualizer", "CodeTown"];
 const additionalOrder = [
-  "Road Asset Detection with YOLO",
-  "Catalog Intelligence Automation",
   "A2A Multi-Agent Builder",
+  "Catalog Intelligence Automation",
+  "Road Asset Detection with YOLO",
   "10-Agent AI Board Game Simulation",
-  "Oakland Data Explorer",
-  "Here2Stay Interest Form",
-  "LLM-Powered Data Retrieval Chatbot",
 ];
 
 function App() {
@@ -272,10 +269,19 @@ function MediaPreview({ project, $hero, prefersReducedMotion }) {
   if (!project) return null;
 
   if (project.media) {
+    if (isImageMedia(project.media)) {
+      return (
+        <MediaFrame $hero={$hero}>
+          <img src={project.media} alt={`${project.title} project preview`} />
+        </MediaFrame>
+      );
+    }
+
     return (
       <MediaFrame $hero={$hero}>
         <video
           src={project.media}
+          poster={project.thumbnail}
           muted
           autoPlay={!prefersReducedMotion}
           loop={!prefersReducedMotion}
@@ -298,10 +304,19 @@ function MediaPreview({ project, $hero, prefersReducedMotion }) {
 }
 
 function InlineMedia({ project, prefersReducedMotion }) {
+  if (isImageMedia(project.media)) {
+    return (
+      <InlineFrame>
+        <img src={project.media} alt={`${project.title} project preview`} />
+      </InlineFrame>
+    );
+  }
+
   return (
     <InlineFrame>
       <video
         src={project.media}
+        poster={project.thumbnail}
         muted
         autoPlay={!prefersReducedMotion}
         loop={!prefersReducedMotion}
@@ -311,6 +326,10 @@ function InlineMedia({ project, prefersReducedMotion }) {
       />
     </InlineFrame>
   );
+}
+
+function isImageMedia(media) {
+  return /\.(png|jpe?g|webp|gif|svg)$/i.test(media || "");
 }
 
 function placeholderLine(project) {
@@ -818,7 +837,8 @@ const MediaFrame = styled.div`
   box-shadow: ${({ $hero }) =>
     $hero ? "0 28px 80px rgba(0, 0, 0, 0.28)" : "0 20px 50px rgba(0, 0, 0, 0.2)"};
 
-  video {
+  video,
+  img {
     width: 100%;
     height: 100%;
     display: block;
@@ -926,7 +946,8 @@ const InlineFrame = styled.div`
   border-radius: 5px;
   background: var(--panel);
 
-  video {
+  video,
+  img {
     width: 100%;
     height: 100%;
     object-fit: cover;

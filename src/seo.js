@@ -162,6 +162,8 @@ export function projectPageSchema(project) {
 
 export function projectsIndexSchema() {
   const path = "/projects/";
+  const visibleProjects = projects.filter((project) => project.portfolioGroup !== "hidden");
+
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -181,7 +183,7 @@ export function projectsIndexSchema() {
         name: "AI Engineering Projects | Deven Varu",
         description:
           "AI engineering projects across voice agents, multi-agent systems, developer tools, computer vision, retrieval systems, and full-stack products.",
-        mainEntity: projects.map((project) => ({
+        mainEntity: visibleProjects.map((project) => ({
           "@id": `${absoluteUrl(`/projects/${project.slug}/`)}#project`,
         })),
       },
