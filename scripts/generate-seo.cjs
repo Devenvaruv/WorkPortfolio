@@ -342,7 +342,7 @@ function homepagePage() {
 }
 
 function projectsIndexPage() {
-  const title = "AI Engineering Projects | Deven Varu";
+  const title = "Projects | Deven Varu";
   const description =
     "AI engineering projects across voice agents, multi-agent systems, developer tools, computer vision, retrieval systems, and full-stack products.";
   const renderProject = (project) => `<article>

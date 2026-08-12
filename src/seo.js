@@ -180,7 +180,7 @@ export function projectsIndexSchema() {
         "@type": "CollectionPage",
         "@id": `${absoluteUrl(path)}#webpage`,
         url: absoluteUrl(path),
-        name: "AI Engineering Projects | Deven Varu",
+        name: "Projects | Deven Varu",
         description:
           "AI engineering projects across voice agents, multi-agent systems, developer tools, computer vision, retrieval systems, and full-stack products.",
         mainEntity: visibleProjects.map((project) => ({

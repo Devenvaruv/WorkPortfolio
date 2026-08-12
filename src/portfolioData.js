@@ -40,7 +40,7 @@ export const projects = [
     role: "Product engineer",
     schemaType: "SoftwareApplication",
     applicationCategory: "EducationalApplication",
-    seoTitle: "InterviewWithAI - AI Coding Interview Practice | Deven Varu",
+    seoTitle: "InterviewWithAI | Deven Varu",
     seoDescription:
       "A real-time AI coding interview platform where a voice agent observes candidate coding, asks context-aware follow-up questions, and evaluates problem-solving.",
     summary:
@@ -112,7 +112,7 @@ export const projects = [
     schemaType: "SoftwareApplication",
     applicationCategory: "DeveloperApplication",
     softwareRequirements: "Visual Studio Code",
-    seoTitle: "Codex Session Visualizer - AI Agent Logs | Deven Varu",
+    seoTitle: "Codex Session Visualizer | Deven Varu",
     seoDescription:
       "A VS Code extension that reconstructs Codex coding sessions into file activity, readable execution traces, and multi-agent workflow graphs.",
     summary:
@@ -188,7 +188,7 @@ export const projects = [
     schemaType: "SoftwareApplication",
     applicationCategory: "DeveloperApplication",
     softwareRequirements: "Visual Studio Code",
-    seoTitle: "CodeTown - VS Code Project Visualization | Deven Varu",
+    seoTitle: "CodeTown | Deven Varu",
     seoDescription:
       "A VS Code extension that transforms JavaScript and TypeScript codebases into explorable 2D towns for understanding dependency structure.",
     summary:
@@ -564,7 +564,7 @@ export const projects = [
     organization: "Independent prototype",
     role: null,
     schemaType: "SoftwareSourceCode",
-    seoTitle: "QuantumViz - Single-Qubit Gate Visualization | Deven Varu",
+    seoTitle: "QuantumViz | Deven Varu",
     seoDescription:
       "A React, D3, and styled-components prototype for visualizing how common single-qubit gates move qubit states across a custom 2D diagram.",
     summary:
@@ -695,7 +695,7 @@ export const projects = [
     organization: "Pistachio",
     role: "Software Engineer Intern",
     schemaType: "CreativeWork",
-    seoTitle: "AI Catalog Intelligence Automation | Deven Varu",
+    seoTitle: "Catalog Intelligence Automation | Deven Varu",
     seoDescription:
       "An AI extraction pipeline that converts 20-200 page furniture catalogs into structured product records and linked product imagery.",
     summary:
@@ -784,7 +784,7 @@ export const projects = [
     organization: "Cisco HackAIThon",
     role: "Hackathon team collaborator",
     schemaType: "CreativeWork",
-    seoTitle: "Cisco HackAIThon Natural-Language SQL Chatbot | Deven Varu",
+    seoTitle: "Cisco HackAIThon Project | Deven Varu",
     seoDescription:
       "A first-place Cisco HackAIThon project that translated natural-language infrastructure questions into SQL and dashboard insights.",
     summary:
@@ -829,7 +829,7 @@ export const projects = [
     organization: "USF Innovation Summit",
     role: "Full-stack data visualization developer",
     schemaType: "SoftwareSourceCode",
-    seoTitle: "Oakland Environmental Data Explorer | Deven Varu",
+    seoTitle: "Oakland Data Explorer | Deven Varu",
     seoDescription:
       "An interactive dashboard for exploring Oakland satellite imagery, vegetation masks, PM2.5, traffic, and population overlays from 2016 to 2024.",
     summary:
@@ -876,7 +876,7 @@ export const projects = [
     role: "Full-stack developer",
     schemaType: "WebApplication",
     applicationCategory: "CivicTechnology",
-    seoTitle: "Here2Stay Civic Tech RAG Portal | Deven Varu",
+    seoTitle: "Here2Stay Interest Form | Deven Varu",
     seoDescription:
       "A bilingual intake portal for EBPREC with Google Sheets automation, resource packets, and a Pinecone/OpenAI housing-resource chatbot.",
     summary:

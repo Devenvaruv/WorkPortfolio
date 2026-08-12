@@ -6,7 +6,7 @@ export const SITE_URL = normalizeSiteUrl(
 
 export const siteConfig = {
   name: "Deven Varu",
-  defaultTitle: "Deven Varu - AI Engineer",
+  defaultTitle: "Deven Varu | AI Engineer",
   description:
     "AI engineer in the San Francisco Bay Area building voice AI products, multi-agent systems, developer tools, and computer vision pipelines.",
   defaultDescription:

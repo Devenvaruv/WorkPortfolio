@@ -107,6 +107,14 @@ test("project metadata has unique titles and descriptions", () => {
   });
 });
 
+test("page titles follow requested SERP naming convention", () => {
+  expect(siteConfig.name).toBe("Deven Varu");
+  expect(siteConfig.defaultTitle).toBe("Deven Varu | AI Engineer");
+  projects.forEach((project) => {
+    expect(project.seoTitle).toBe(`${project.displayTitle || project.title} | Deven Varu`);
+  });
+});
+
 test("JSON-LD helper emits valid script-safe JSON", () => {
   const schema = projectPageSchema(projects[0]);
   const serialized = safeJsonLd(schema);
@@ -138,8 +146,18 @@ test("generated homepage has complete crawl metadata", () => {
   expect(html).toContain(`<meta name="description" content="${siteConfig.description}" />`);
   expect(html).toContain(`<meta property="og:description" content="${siteConfig.description}" />`);
   expect(html).toContain('<link rel="canonical" href="https://devenvaru.com/" />');
+  expect(html).toContain("<title>Deven Varu | AI Engineer</title>");
   expect(jsonLd).toBeTruthy();
   expect(() => JSON.parse(jsonLd[1])).not.toThrow();
+});
+
+test("generated projects index uses requested title", () => {
+  const projectsPath = path.join(process.cwd(), "public", "projects", "index.html");
+  const html = fs.readFileSync(projectsPath, "utf8");
+
+  expect(html).toContain("<title>Projects | Deven Varu</title>");
+  expect(metaContent(html, "property", "og:title")).toBe("Projects | Deven Varu");
+  expect(metaContent(html, "name", "twitter:title")).toBe("Projects | Deven Varu");
 });
 
 test("generated pages have complete SEO metadata and valid internal references", () => {
