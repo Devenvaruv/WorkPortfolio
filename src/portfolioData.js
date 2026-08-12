@@ -9,7 +9,7 @@ export const profile = {
   headline:
     "I build production AI products with LLMs, multi-agent systems, A2A, voice agents, and computer vision.",
   summary:
-    "AI engineer with an MS in Computer Science from the University of San Francisco. My work spans agent orchestration, voice AI, computer vision pipelines, retrieval systems, and full-stack infrastructure built with TypeScript, Python, React, Next.js, Java, AWS, GCP, and MongoDB.",
+    "I'm an AI engineer focused on building systems where models interact with people, code, tools, and real-world data. My recent work spans real-time voice agents, multi-agent systems, AI developer tooling, and computer vision. I have an MS in Computer Science from the University of San Francisco and tend to work end-to-end, from agent and model behavior through backend infrastructure and product interfaces.",
 };
 
 export const highlights = [
@@ -42,43 +42,61 @@ export const projects = [
     applicationCategory: "EducationalApplication",
     seoTitle: "InterviewWithAI - AI Coding Interview Practice | Deven Varu",
     seoDescription:
-      "An AI-powered interview practice platform combining realistic voice interviews, coding problems, transcripts, code submissions, and structured performance feedback.",
+      "A real-time AI coding interview platform where a voice agent observes candidate coding, asks context-aware follow-up questions, and evaluates problem-solving.",
     summary:
-      "AI-powered interview practice platform for realistic voice interviews, coding problems, transcripts, and structured performance feedback.",
+      "Real-time AI coding interview platform where a voice agent observes a candidate's coding process, asks context-aware follow-up questions, and evaluates how they approach problems.",
     impact: [
-      "Built real-time AI interview conversations with Vapi voice agents.",
-      "Added a browser coding environment with Monaco Editor for technical interview practice.",
-      "Designed the backend for sessions, questions, transcripts, code submissions, and AI evaluations.",
+      "Built a real-time voice interview pipeline using Deepgram for speech-to-text, an LLM for reasoning, and Kokoro for text-to-speech.",
+      "Orchestrated interview behavior with Mastra, giving the agent access to conversation state, interview context, and the candidate's coding activity.",
+      "Built an integrated coding environment with Monaco Editor and Docker-based code execution, allowing candidates to write, run, and discuss code during the interview.",
+      "Designed the backend for interview sessions, transcripts, questions, code submissions, and structured AI evaluations.",
     ],
-    stack: ["Next.js", "React", "TypeScript", "NestJS", "Vapi", "Monaco Editor", "Supabase"],
+    stack: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "NestJS",
+      "Mastra",
+      "Deepgram",
+      "Kokoro",
+      "Monaco Editor",
+      "Docker",
+      "Supabase",
+    ],
     sections: [
       {
         heading: "Problem",
         body:
-          "Interview practice is more useful when speaking, coding, transcripts, and feedback happen in the same workflow instead of separate tools.",
+          "Most interview-practice tools separate coding, conversation, and feedback into different experiences. That makes it difficult to recreate the part of a real technical interview that matters most: explaining decisions while solving a problem and responding to questions that change based on what you actually do.\n\nInterviewWithAI brings those pieces into a single session so the interviewer can react to both the conversation and the candidate's coding process.",
       },
       {
         heading: "What I built",
-        items: [
-          "A voice interview practice flow using Vapi voice agents.",
-          "A browser coding environment with Monaco Editor for technical interview practice.",
-          "Backend models for sessions, questions, transcripts, code submissions, and AI evaluations.",
-        ],
+        body:
+          "I built the product end-to-end around a real-time AI interviewer.\n\nThe voice pipeline uses Deepgram to transcribe the candidate, an LLM to reason about the conversation and interview context, and Kokoro to generate the agent's speech. Mastra orchestrates those components and manages the context the interviewer needs to decide what to ask next.\n\nFor technical interviews, candidates work inside a browser-based Monaco Editor. Code can be executed inside a Docker container, allowing the interview experience to include writing, running, debugging, and discussing actual code rather than treating coding as a separate exercise.\n\nThe backend manages interview sessions, questions, transcripts, code submissions, and evaluation data used to generate structured feedback after the session.",
       },
       {
         heading: "How it works",
         body:
-          "The product combines a voice-agent interview flow with coding questions and structured feedback so a practice session can include conversation, submitted code, transcript capture, and evaluation data.",
+          "A session connects three parts of the system: the voice agent, coding environment, and interview state.",
+        items: [
+          "The candidate speaks and Deepgram converts the audio into text.",
+          "Mastra provides the LLM with the relevant conversation, interview context, and coding activity.",
+          "The LLM determines the interviewer's next response or follow-up question.",
+          "Kokoro converts that response back into speech for the candidate.",
+          "During coding questions, the candidate writes code in Monaco Editor and can execute it through the application's Docker-based execution environment.",
+          "Conversation transcripts, coding activity, submissions, and session data are stored for the evaluation pipeline.",
+          "After the interview, the system produces structured feedback based on the candidate's solution and how they approached the problem.",
+        ],
       },
     ],
-    related: ["codex-session-visualizer", "a2a-multi-agent-builder", "here2stay"],
+    related: ["codex-session-visualizer", "codetown", "a2a-multi-agent-builder"],
   },
   {
     id: "codex-session-visualizer",
     slug: "codex-session-visualizer",
     title: "Codex Session Visualizer",
     eyebrow: "AI developer tooling",
-    period: "Jul 2026",
+    period: "Jul 2026 - Present",
     status: "Extension",
     portfolioGroup: "featured",
     portfolioOrder: 2,
@@ -94,44 +112,66 @@ export const projects = [
     schemaType: "SoftwareApplication",
     applicationCategory: "DeveloperApplication",
     softwareRequirements: "Visual Studio Code",
-    seoTitle: "Codex Session Visualizer - VS Code AI Agent Observability | Deven Varu",
+    seoTitle: "Codex Session Visualizer - AI Agent Logs | Deven Varu",
     seoDescription:
-      "A VS Code extension that visualizes Codex file activity, tool use, execution flow, prompts, and delegated sub-agent sessions.",
+      "A VS Code extension that reconstructs Codex coding sessions into file activity, readable execution traces, and multi-agent workflow graphs.",
     summary:
-      "VS Code extension that visualizes how Codex explores, reads, edits, creates, and deletes files during AI coding sessions.",
+      "AI developer tool for making Codex coding sessions inspectable by turning agent activity into file states, readable execution traces, and multi-agent workflow graphs.",
+    caseStudySummary:
+      "A VS Code extension that makes AI coding-agent behavior inspectable by reconstructing Codex sessions into file activity, execution traces, and multi-agent workflow graphs.",
     impact: [
-      "Labels files and folders with Found, Read, Edited, Created, and Deleted activity states.",
-      "Parses raw Codex sessions into readable logs covering prompts, responses, tools, file operations, and execution flow.",
-      "Generates multi-agent graphs connecting the main session with delegated sub-agents.",
+      "Tracks how Codex interacts with a codebase using Create, Read, Update, Delete, and Found states directly in the VS Code file explorer.",
+      "Transforms raw session data into readable traces of prompts, responses, tool calls, file operations, and execution flow.",
+      "Visualizes parent and delegated sub-agent relationships, making multi-agent coding workflows easier to follow.",
     ],
-    stack: ["VS Code Extension API", "TypeScript", "Multi-agent Systems", "Developer Tools"],
+    caseStudyImpact: [
+      "Added file and folder activity states for Created, Read, Update, Deleted, and Found, making the agent's interaction with a repository visible directly inside VS Code.",
+      "Built readable session traces covering prompts, responses, tool calls, file operations, and execution flow instead of requiring developers to inspect raw session logs.",
+      "Reconstructed parent and sub-agent relationships to visualize how work is delegated across multi-agent Codex sessions.",
+      "Combined repository activity, chronological execution, and agent hierarchy into a single debugging and inspection workflow.",
+    ],
+    stack: ["VS Code Extension API", "TypeScript", "AI Agent Observability", "Multi-agent Systems"],
     sections: [
       {
         heading: "Problem",
         body:
-          "Raw AI coding sessions are difficult to inspect because prompts, tool calls, file operations, and delegated agents are spread across dense logs.",
+          "AI coding agents can make dozens of decisions during a single task: exploring directories, reading files, invoking tools, modifying code, running commands, and delegating work to other agents.\n\nThe final code diff shows what changed, but it does not explain how the agent arrived there.\n\nRaw session logs contain much of that information, but they are dense and difficult to follow. When multiple agents are involved, understanding which agent performed which work becomes even harder.\n\nCodex Session Visualizer turns that hidden execution history into something a developer can inspect directly inside the coding environment.",
       },
       {
         heading: "What I built",
-        items: [
-          "File and folder labels for Found, Read, Edited, Created, and Deleted activity states.",
-          "Readable session logs for prompts, responses, tools, file operations, and execution flow.",
-          "A graph view connecting a parent session with delegated sub-agent sessions.",
+        body:
+          "I built a VS Code extension that transforms raw Codex session activity into three complementary views of agent behavior.",
+        subsections: [
+          {
+            heading: "Repository activity",
+            body:
+              "Files and folders are labeled according to how the agent interacted with them:\n\nFound / Read / Edited / Created / Deleted\n\nThis provides a quick visual map of where the agent explored and where it actually made changes without requiring the developer to reconstruct that information from logs.",
+          },
+          {
+            heading: "Session execution",
+            body:
+              "The extension parses raw Codex sessions into a readable chronological trace containing the agent's prompts, responses, tool usage, file operations, and execution flow.\n\nInstead of treating the session as an opaque request followed by a code diff, the developer can inspect the sequence of actions that produced the result.",
+          },
+          {
+            heading: "Multi-agent workflows",
+            body:
+              "For sessions where Codex delegates work, the extension connects the main session with its sub-agent sessions in a graph.\n\nThis makes it possible to see where work was delegated, which agents participated, and how the overall session was structured.",
+          },
         ],
       },
       {
         heading: "Technical decisions",
         body:
-          "The extension focuses on turning raw Codex session data into inspectable state: file activity, chronological logs, and parent/sub-agent relationships.",
+          "The extension deliberately presents the same coding session from three different levels of abstraction.\n\nFile activity answers:\n\nWhere did the agent work?\n\nSession traces answer:\n\nWhat did the agent do, and in what order?\n\nAgent graphs answer:\n\nWhich agent did the work, and how was it delegated?\n\nRather than building a single massive log viewer, I separated those concerns so developers can move from a quick repository-level signal to increasingly detailed execution information when they need it.\n\nThe underlying Codex session data remains the source of evidence; the extension's job is to transform that evidence into representations that are easier to inspect while working inside VS Code.",
       },
     ],
-    related: ["a2a-multi-agent-builder", "10-agent-board-game", "interview-with-ai"],
+    related: ["codetown", "interview-with-ai", "a2a-multi-agent-builder"],
   },
   {
     id: "codetown",
     slug: "codetown",
     title: "CodeTown",
-    eyebrow: "Code visualization extension",
+    eyebrow: "Code visualization developer tool",
     period: "Jul 2026 - Present",
     status: "In development",
     portfolioGroup: "featured",
@@ -150,31 +190,70 @@ export const projects = [
     softwareRequirements: "Visual Studio Code",
     seoTitle: "CodeTown - VS Code Project Visualization | Deven Varu",
     seoDescription:
-      "A VS Code extension that turns a project codebase into a 2D top-down town for exploring file relationships through imports and exports.",
+      "A VS Code extension that transforms JavaScript and TypeScript codebases into explorable 2D towns for understanding dependency structure.",
     summary:
-      "VS Code extension that turns a project codebase into a 2D top-down town for exploring file relationships through imports and exports.",
+      "VS Code developer tool that turns JavaScript and TypeScript codebases into interactive 2D towns, making dependency structure easier to understand before changing unfamiliar code.",
+    caseStudySummary:
+      "A VS Code extension that transforms JavaScript and TypeScript codebases into explorable 2D towns, making file dependencies and codebase structure easier to understand before making changes.",
     impact: [
-      "Represents project code as a 2D top-down town.",
-      "Shows relationships between files through import and export connections.",
-      "Built as a Visual Studio Code extension with JavaScript and TypeScript.",
+      "Parses imports and exports into a dependency graph, representing files as buildings and groups of files as neighborhoods.",
+      "Encodes dependency strength visually through the environment, with larger areas representing larger code groups and wider roads representing more connections between them.",
+      "Lets developers explore large repositories through a navigable map, minimap, project overview, and direct links from buildings back to source files in VS Code.",
     ],
-    stack: ["VS Code Extension API", "JavaScript", "TypeScript", "Code Visualization"],
+    caseStudyImpact: [
+      "Parses project imports and exports into a dependency graph and transforms that graph into a spatial representation of the codebase.",
+      "Represents files as buildings, groups of files as neighborhoods, and dependencies as roads, making relationships visible without tracing imports manually.",
+      "Encodes dependency density into the visualization using single-, double-, and triple-lane roads based on the number of connections between areas of the codebase.",
+      "Provides a navigable project map with a minimap, project/dependency overview, legend, and direct navigation from buildings to their corresponding source files in VS Code.",
+    ],
+    stack: ["VS Code Extension API", "JavaScript", "TypeScript", "Dependency Graphs", "Code Visualization"],
     sections: [
       {
-        heading: "What it shows",
+        heading: "Problem",
+        body:
+          "Understanding an unfamiliar codebase usually starts with a folder tree, search, and repeatedly following imports from one file to another.\n\nThat works for individual files, but it becomes difficult to understand the larger structure of a project: which areas are tightly connected, which files belong to the same subsystem, and how far a change might propagate.\n\nFor example, before modifying authentication logic, a developer may need to determine which files participate in that subsystem and what other parts of the project depend on them.\n\nCodeTown turns those relationships into a spatial map so the structure can be understood visually before touching the code.",
+      },
+      {
+        heading: "What I built",
+        body:
+          "CodeTown analyzes a JavaScript or TypeScript project and builds a dependency graph from its import and export relationships.\n\nThat graph is transformed into a top-down town:",
         items: [
-          "A project codebase represented as a 2D top-down town.",
-          "File relationships based on import and export connections.",
-          "A Visual Studio Code extension interface for exploring those relationships.",
+          "Files become buildings.",
+          "Groups of related files become neighborhoods.",
+          "Import and export relationships become roads between areas.",
+          "Larger groups of code occupy more space in the town.",
+          "Stronger dependency relationships produce wider roads.",
+          "Single-lane roads represent fewer than 10 connections.",
+          "Double-lane roads represent 10-20 connections.",
+          "Triple-lane roads represent more than 20 connections.",
         ],
       },
       {
-        heading: "Current status",
+        heading: "How it works",
+        body: "When CodeTown is opened for a repository:",
+        items: [
+          "The extension scans the project's JavaScript and TypeScript files.",
+          "It parses import and export relationships between those files.",
+          "Those relationships are converted into a dependency graph.",
+          "A layout algorithm determines how the resulting buildings, neighborhoods, and connections should be positioned in the 2D environment.",
+          "Files are rendered as buildings and related groups of files form larger areas of the town.",
+          "Dependency counts determine the visual strength of roads connecting those areas.",
+          "The generated map can then be explored using the main town view, minimap, dependency information, and legend.",
+          "Selecting a file in the visualization opens the corresponding source file inside VS Code.",
+        ],
+      },
+      {
+        heading: "Technical challenge",
         body:
-          "CodeTown started in July 2026 and is currently being built as a Visual Studio Code extension.",
+          "The hardest part of CodeTown is not parsing imports. It is producing a layout that remains understandable as the dependency graph becomes more complicated.\n\nA codebase can contain many groups of files with relationships crossing between them. Simply drawing every connection produces a map that is technically accurate but difficult to read.\n\nThe layout therefore has to balance several competing goals: keeping related areas close together, leaving enough room for navigation, representing dependency relationships clearly, and preventing the generated town from becoming visually tangled as the project grows.\n\nDifferent repositories produce very different graph structures, so the layout system requires different parameters and positioning strategies rather than relying on one fixed arrangement.",
+      },
+      {
+        heading: "Why a town?",
+        body:
+          "The town metaphor gives otherwise abstract dependency information a spatial representation.\n\nInstead of remembering that several files scattered across a repository are strongly connected, a developer can see them occupying the same neighborhood. Instead of counting import relationships, the road connecting two areas communicates how strongly those parts of the project depend on one another.\n\nThe goal is not to replace the source tree or code editor. CodeTown provides another level of abstraction for answering a different question:\n\nHow is this codebase connected?\n\nThat becomes especially useful before modifying an unfamiliar subsystem, where understanding the surrounding dependencies can help identify which parts of the repository are likely to be affected.",
       },
     ],
-    related: ["codex-session-visualizer"],
+    related: ["codex-session-visualizer", "interview-with-ai", "a2a-multi-agent-builder"],
   },
   {
     id: "a2a-multi-agent-builder",
@@ -198,36 +277,87 @@ export const projects = [
     applicationCategory: "DeveloperApplication",
     seoTitle: "A2A Multi-Agent Builder | Deven Varu",
     seoDescription:
-      "A platform for creating, versioning, and orchestrating dynamic multi-agent AI systems with prompt configuration, shared context, and execution logs.",
+      "A platform for dynamically creating, configuring, and orchestrating specialized multi-agent AI teams without hardcoding each workflow.",
     summary:
-      "Platform for creating, versioning, and orchestrating multi-agent AI systems dynamically instead of hardcoding workflows.",
+      "Multi-agent platform for dynamically assembling, configuring, and orchestrating specialized AI agent teams instead of hardcoding each workflow.",
+    caseStudySummary:
+      "A platform for dynamically creating, configuring, and orchestrating specialized multi-agent AI teams without hardcoding each agent workflow into the application.",
     impact: [
-      "Designed an agent factory that assembles specialized teams at runtime.",
-      "Supported parallel and sequential execution with structured response aggregation.",
-      "Used MongoDB Atlas for prompts, agent configs, routing logic, shared context, execution logs, versioning, and rollback.",
+      "Built an agent factory that creates specialized teams at runtime from stored agent and prompt configurations.",
+      "Supports parallel and sequential execution, shared context, and structured aggregation of agent responses.",
+      "Added prompt and configuration versioning with rollback, backed by MongoDB Atlas.",
     ],
-    stack: ["A2A", "TypeScript", "MongoDB Atlas", "Prompt Versioning", "Agent Orchestration"],
+    caseStudyImpact: [
+      "Built an agent factory that assembles specialized agent teams at runtime from stored configurations.",
+      "Supported both parallel and sequential execution with structured aggregation of agent outputs.",
+      "Centralized agent definitions, prompts, routing logic, and shared context instead of embedding them directly in application code.",
+      "Added versioning and rollback for prompts and agent configurations using MongoDB Atlas.",
+      "Stored execution information and configuration history to make agent behavior easier to inspect and reproduce.",
+    ],
+    stack: ["A2A", "TypeScript", "MongoDB Atlas", "Agent Orchestration", "Prompt Versioning"],
     sections: [
       {
         heading: "Problem",
         body:
-          "Hardcoded agent workflows make it difficult to create, adjust, version, and roll back specialized multi-agent teams.",
+          "Multi-agent systems become difficult to evolve when agent definitions, prompts, routing rules, and execution order are hardcoded directly into the application.\n\nAdding a new specialist can require changing orchestration code. Updating a prompt can change system behavior without an easy way to compare versions or roll back. Different workflows may also require different combinations of agents even when they share the same underlying infrastructure.\n\nI wanted to separate what an agent is from how the application is coded, so agent teams could be assembled and changed dynamically.",
       },
       {
         heading: "What I built",
+        body:
+          "I built a configuration-driven system for creating and running specialized groups of agents.\n\nThe core of the platform is an agent factory. Instead of defining every agent directly inside a workflow, the system loads agent configurations and prompts and assembles the required team at runtime.\n\nEach agent can have its own role, instructions, configuration, and place within the larger workflow.\n\nThe orchestration layer supports both:",
         items: [
-          "An agent factory that assembles specialized teams at runtime.",
-          "Parallel and sequential execution modes with structured response aggregation.",
-          "MongoDB Atlas storage for prompts, agent configs, routing logic, shared context, execution logs, versioning, and rollback.",
+          "Parallel execution, when multiple specialists can work independently.",
+          "Sequential execution, when one agent's result becomes context for the next.",
         ],
+        after:
+          "Their outputs are then collected into structured responses for the calling workflow.\n\nMongoDB Atlas stores the system's prompts, agent configurations, routing information, shared context, execution data, and configuration history.",
+      },
+      {
+        heading: "How it works",
+        body: "A workflow begins by defining what kind of agent team it needs.",
+        items: [
+          "The system retrieves the relevant agent and prompt configurations.",
+          "The agent factory creates the required specialized agents at runtime.",
+          "The orchestration layer determines whether those agents should execute in parallel, sequentially, or through a combination of both.",
+          "Agents receive the context required for their part of the task.",
+          "Their responses are collected and normalized into structured results.",
+          "Shared information can be passed between agents as the workflow progresses.",
+          "Configuration and prompt versions are retained so changes can be tracked or rolled back.",
+        ],
+        after:
+          "The result is an orchestration system where changing the composition or behavior of an agent team does not necessarily require rewriting the underlying workflow implementation.",
       },
       {
         heading: "Technical focus",
         body:
-          "The project centered on dynamic agent configuration, prompt versioning, shared context, and execution observability.",
+          "The main design decision was to treat agent behavior as configuration rather than application structure.\n\nThat meant separating several concerns:",
+        subsections: [
+          {
+            heading: "Agent creation",
+            body: "Which specialists should exist for this workflow?",
+          },
+          {
+            heading: "Execution",
+            body: "Which agents can run independently, and which depend on previous results?",
+          },
+          {
+            heading: "Context",
+            body: "What information needs to be shared between agents?",
+          },
+          {
+            heading: "Configuration",
+            body: "Which prompts, routing rules, and agent settings produced this behavior?",
+          },
+          {
+            heading: "Versioning",
+            body: "Can a previous working configuration be restored when a change performs worse?",
+          },
+        ],
+        after:
+          "That architecture made the system less about one specific multi-agent workflow and more about the infrastructure required to create different teams on top of the same orchestration layer.",
       },
     ],
-    related: ["codex-session-visualizer", "10-agent-board-game", "interview-with-ai"],
+    related: ["10-agent-board-game", "codex-session-visualizer", "interview-with-ai"],
   },
   {
     id: "10-agent-board-game",
@@ -250,28 +380,78 @@ export const projects = [
     schemaType: "CreativeWork",
     seoTitle: "10-Agent AI Board Game Simulation | Deven Varu",
     seoDescription:
-      "A hierarchical multi-agent board game simulation with a Dungeon Master agent, player agents, dialogue/action sub-agents, and structured JSON actions.",
+      "A hierarchical multi-agent simulation where autonomous AI characters coordinate through a shared game world and delegated sub-agents.",
     summary:
-      "Hierarchical multi-agent system where autonomous AI characters play a custom board game through movement, dialogue, actions, and combat.",
+      "Hierarchical multi-agent simulation where autonomous characters delegate work to specialized agents while coordinating through a shared game world.",
+    caseStudySummary:
+      "A hierarchical multi-agent simulation where autonomous AI characters coordinate through a shared game world while delegating dialogue and actions to specialized sub-agents.",
     impact: [
-      "Combined one Dungeon Master agent, three player agents, and specialized dialogue/action sub-agents.",
-      "Generated structured JSON commands for movement, combat, and world actions.",
-      "Maintained shared game state while agents made personality-driven decisions.",
+      "Designed a hierarchy with one Dungeon Master, three player agents, and specialized dialogue and action sub-agents.",
+      "Used structured JSON actions to turn agent decisions into movement, combat, dialogue, and changes to the game world.",
+      "Maintained shared game state while each agent made independent, personality-driven decisions.",
     ],
-    stack: ["Multi-agent Systems", "Agent Orchestration", "Structured JSON", "Simulation"],
+    caseStudyImpact: [
+      "Designed a 10-agent hierarchy consisting of one Dungeon Master, three player agents, and specialized dialogue and action sub-agents.",
+      "Separated high-level character decisions from specialized execution, allowing player agents to delegate different kinds of behavior.",
+      "Converted agent decisions into structured JSON commands for movement, dialogue, combat, and world actions.",
+      "Maintained a shared game state while autonomous characters made independent decisions based on their roles and personalities.",
+    ],
+    stack: ["Multi-agent Systems", "Hierarchical Agents", "Agent Orchestration", "Structured JSON", "Simulation"],
     sections: [
+      {
+        heading: "Problem",
+        body:
+          "A multi-agent system becomes more interesting when agents are not simply generating independent responses.\n\nThey need to operate inside the same environment, reason from shared state, make their own decisions, delegate specialized work, and produce actions that another system can reliably execute.\n\nI used a board-game simulation as a controlled environment for exploring those problems.\n\nThe game provides clear state, rules, characters, movement, interactions, and consequences, making it possible to see how a hierarchy of agents behaves as the world changes.",
+      },
       {
         heading: "System design",
         body:
-          "The simulation combines a Dungeon Master agent, three player agents, and specialized dialogue/action sub-agents around a shared game state.",
+          "The system is organized into multiple levels of responsibility.\n\nAt the top is a Dungeon Master agent, responsible for the overall game world and progression.\n\nThree autonomous player agents represent individual characters. Each player maintains its own personality and makes high-level decisions based on the current game state.\n\nThose player agents can delegate specific behavior to specialized sub-agents, including agents responsible for:",
+        items: ["Dialogue", "Actions"],
+        after:
+          "This separates questions such as:\n\nWhat should my character do?\n\nfrom:\n\nHow should that decision be expressed or executed?\n\nThe complete hierarchy contains ten agents operating around the same game simulation.",
       },
       {
         heading: "What I built",
+        body:
+          "I built the orchestration and state system that allows these agents to participate in a shared world.\n\nPlayer agents receive relevant game state and determine what their character should do next.\n\nSpecialized sub-agents convert those intentions into dialogue or executable game actions.\n\nRather than allowing agents to return unrestricted text for gameplay decisions, actions are represented as structured JSON commands.\n\nThose commands can describe operations such as:",
         items: [
-          "Structured JSON commands for movement, combat, dialogue, and world actions.",
-          "Shared game-state updates while agents made personality-driven decisions.",
-          "A hierarchical agent setup separating high-level game direction from specialized action and dialogue behavior.",
+          "Movement",
+          "Combat",
+          "Dialogue",
+          "Interactions",
+          "Changes to the game world",
         ],
+        after:
+          "The simulation processes those actions and updates the shared state, which becomes context for the agents' next decisions.\n\nThis creates a loop:\n\nshared state -> agent decision -> delegated action -> structured command -> world update -> new shared state",
+      },
+      {
+        heading: "Why hierarchical agents?",
+        body:
+          "I didn't want every agent responsible for every part of a character's behavior.\n\nThe player agent operates at a higher level: it decides what the character wants to do.\n\nSpecialized agents handle narrower responsibilities such as generating dialogue or expressing the chosen action in the format expected by the simulation.\n\nThat separation made the system useful for exploring a broader multi-agent design question:\n\nWhen should one general agent do everything, and when should responsibility be delegated to specialized agents?\n\nThe board game provides a visible demonstration of that architecture because the results of delegation immediately affect a shared environment.",
+      },
+      {
+        heading: "Technical focus",
+        body: "The main challenges were coordination, state, and reliable agent output.",
+        subsections: [
+          {
+            heading: "Shared state",
+            body:
+              "Agents operate independently, but they cannot each have a different understanding of the game world. Actions therefore need to update a common state that subsequent decisions can use.",
+          },
+          {
+            heading: "Delegation",
+            body:
+              "High-level player agents determine intent while specialized agents handle narrower behaviors, creating explicit parent/sub-agent relationships.",
+          },
+          {
+            heading: "Structured actions",
+            body:
+              "Free-form model responses are not sufficient for operating a game engine. Agent decisions therefore need to become predictable structured commands that application logic can validate and execute.",
+          },
+        ],
+        after:
+          "Together, those pieces turn the project from a collection of AI characters into a functioning hierarchical multi-agent system.",
       },
     ],
     related: ["a2a-multi-agent-builder", "codex-session-visualizer", "interview-with-ai"],
@@ -287,7 +467,9 @@ export const projects = [
     portfolioOrder: 2,
     url: null,
     repositoryUrl: "https://github.com/Devenvaruv/PokemonXR",
-    media: null,
+    media: "/videos/Pokemon-mixed-reality-preview.mp4",
+    mediaWidth: 540,
+    mediaHeight: 540,
     visual: "xr",
     organization: "Independent experiment",
     role: null,
@@ -330,7 +512,9 @@ export const projects = [
     portfolioOrder: 3,
     url: null,
     repositoryUrl: "https://github.com/Devenvaruv/VRed",
-    media: null,
+    media: "/videos/VR-classroom-preview.mp4",
+    mediaWidth: 1024,
+    mediaHeight: 1024,
     visual: "vr",
     organization: "Independent experiment",
     role: null,
@@ -373,7 +557,9 @@ export const projects = [
     portfolioOrder: 4,
     url: null,
     repositoryUrl: "https://github.com/Devenvaruv/QuantumViz",
-    media: null,
+    media: "/videos/Quantum-viz-preview.mp4",
+    mediaWidth: 1920,
+    mediaHeight: 910,
     visual: "quantum",
     organization: "Independent prototype",
     role: null,
@@ -426,42 +612,76 @@ export const projects = [
     schemaType: "CreativeWork",
     seoTitle: "Road Asset Detection with YOLO | Deven Varu",
     seoDescription:
-      "A computer vision pipeline for detecting and mapping road infrastructure from stitched 360-degree roadway imagery.",
+      "A computer vision pipeline for detecting and mapping roadway infrastructure from stitched 360-degree imagery collected for Boone County.",
     summary:
-      "Computer vision pipeline for Boone County that detects and maps road infrastructure from stitched 360-degree roadway imagery.",
+      "Computer vision pipeline for detecting and mapping roadway infrastructure from stitched 360-degree imagery collected for Boone County.",
+    caseStudySummary:
+      "A computer vision pipeline for detecting and mapping roadway infrastructure from stitched 360-degree imagery collected for Boone County.",
     impact: [
-      "Evaluated YOLO, LaneNet, and DINOv2 on a 7,650-image dataset.",
-      "Trained YOLO models for lane markings, shoulders, barriers, streetlights, and other visually similar assets.",
-      "Built a 3D visualization and validation tool, improving accuracy to 92% mAP and reducing manual labeling.",
+      "Evaluated YOLO, LaneNet, and DINOv2 across a 7,650-image roadway dataset before building the final detection pipeline around YOLO.",
+      "Trained models to distinguish visually similar assets including lane markings, shoulders, barriers, and streetlights.",
+      "Built a 3D visualization and validation workflow for inspecting detections, reaching 92% mAP while reducing manual labeling work.",
     ],
-    stack: ["Python", "YOLOv8", "Roboflow", "AWS", "React", "Computer Vision"],
+    caseStudyImpact: [
+      "Evaluated YOLO, LaneNet, and DINOv2 across a 7,650-image roadway dataset to determine the most effective approach for detecting road infrastructure.",
+      "Trained YOLO models to distinguish visually similar assets including lane markings, shoulders, barriers, streetlights, and other roadway features.",
+      "Built a 3D visualization and validation tool for inspecting detections in the context of the roadway rather than reviewing predictions as isolated images.",
+      "Developed the resulting workflow to 92% mAP while reducing the amount of manual labeling required for roadway asset detection.",
+    ],
+    stack: ["Python", "YOLOv8", "Roboflow", "AWS", "Computer Vision"],
+    caseStudyStack: ["Python", "YOLOv8", "Roboflow", "AWS", "React", "Computer Vision"],
     sections: [
       {
-        heading: "Context",
+        heading: "Problem",
         body:
-          "This University of San Francisco research project supported Boone County roadway analysis using stitched 360-degree roadway imagery.",
+          "Boone County roadway imagery contains infrastructure that is useful for mapping and maintenance, but extracting those assets manually from thousands of stitched 360-degree images is expensive and time-consuming.\n\nThe computer vision problem is also more difficult than simply detecting visually distinct objects.\n\nMany roadway assets share similar shapes, colors, and surroundings. Lane markings, shoulders, barriers, and other infrastructure can appear differently depending on camera position, road geometry, lighting, distance, and image stitching.\n\nThe goal was to build a workflow that could identify these assets reliably enough to turn large collections of roadway imagery into usable infrastructure data.",
       },
       {
         heading: "What I built",
+        body:
+          "I worked on the computer vision pipeline from model evaluation through validation.\n\nThe project began by evaluating multiple approaches, including YOLO, LaneNet, and DINOv2, on a dataset containing 7,650 roadway images.\n\nBased on those experiments, the final detection workflow was built around YOLO, with models trained for multiple categories of road infrastructure.\n\nThe pipeline covered assets including:",
         items: [
-          "A computer vision pipeline for lane markings, shoulders, barriers, streetlights, and other visually similar road assets.",
-          "YOLO model training and evaluation alongside LaneNet and DINOv2 on a 7,650-image dataset.",
-          "A 3D visualization and validation tool for inspecting detections and reducing manual labeling.",
+          "Lane markings",
+          "Shoulders",
+          "Barriers",
+          "Streetlights",
+          "Other visually similar roadway features",
         ],
+        after:
+          "The work also extended beyond model training.\n\nI built a 3D visualization and validation tool that made it possible to inspect model detections in the context of the roadway and verify whether predicted infrastructure aligned with the underlying imagery.\n\nThat created a feedback loop between model predictions, human validation, and dataset improvement rather than treating model evaluation as a single offline metric.",
+      },
+      {
+        heading: "How it works",
+        body: "The workflow moves from raw roadway imagery to validated infrastructure detections.",
+        items: [
+          "Stitched 360-degree roadway imagery is prepared for the detection pipeline.",
+          "Trained YOLO models identify relevant infrastructure within the images.",
+          "Predictions are converted into structured detection results.",
+          "Those results are surfaced through the validation tooling so detections can be inspected in context.",
+          "Incorrect or uncertain detections can be identified and used to improve the dataset and subsequent model iterations.",
+          "Validated detections can then be used as part of the roadway mapping workflow.",
+        ],
+        after:
+          "This combination of model inference and validation tooling made the system more useful than a standalone object detector.",
+      },
+      {
+        heading: "Technical challenge",
+        body:
+          "A major challenge was distinguishing between visually similar roadway classes.\n\nRoad infrastructure does not always have clean visual boundaries, and the same asset can look substantially different depending on viewing angle, road conditions, image stitching, and distance from the camera.\n\nThat made the work as much about dataset quality and validation as model architecture.\n\nEvaluating multiple model approaches helped determine which direction was most practical, while the validation workflow provided a way to inspect where the model was succeeding or failing rather than relying only on aggregate metrics.",
       },
       {
         heading: "Result",
         body:
-          "The workflow improved accuracy to 92% mAP and reduced manual labeling work for road infrastructure detection.",
+          "The final workflow reached 92% mAP and reduced the amount of manual labeling required for roadway infrastructure detection.\n\nMore importantly, the project produced a complete workflow around the model:\n\nroadway imagery -> detection -> validation -> usable infrastructure data\n\nrather than stopping at a trained computer vision model.",
       },
     ],
-    related: ["oakland-data-explorer", "catalog-intelligence-automation", "cisco-hackaithon"],
+    related: ["catalog-intelligence-automation", "interview-with-ai"],
   },
   {
     id: "catalog-intelligence-automation",
     slug: "catalog-intelligence-automation",
     title: "Catalog Intelligence Automation",
-    eyebrow: "Applied LLM automation",
+    eyebrow: "Applied AI automation",
     period: "Pistachio Internship",
     status: "Shipped internally",
     portfolioGroup: "ai-systems",
@@ -472,42 +692,81 @@ export const projects = [
     mediaWidth: 1459,
     mediaHeight: 778,
     visual: "catalog",
-    organization: "Pistachio internship",
-    role: "Software engineer intern and team lead",
+    organization: "Pistachio",
+    role: "Software Engineer Intern",
     schemaType: "CreativeWork",
     seoTitle: "AI Catalog Intelligence Automation | Deven Varu",
     seoDescription:
-      "An AI pipeline that converts large furniture catalogs into structured product data and linked product imagery.",
+      "An AI extraction pipeline that converts 20-200 page furniture catalogs into structured product records and linked product imagery.",
     summary:
-      "AI pipeline that turns 20-200 page furniture catalogs into structured product data and linked product imagery.",
+      "AI extraction pipeline built during my Pistachio internship to turn 20-200 page furniture catalogs into structured product records and linked product imagery.",
+    caseStudySummary:
+      "An AI extraction pipeline built during my Pistachio internship to convert 20-200 page furniture catalogs into structured product records and linked product imagery.",
     impact: [
-      "Led a three-person team replacing manual catalog data entry with an AI extraction workflow.",
-      "Tested Gemini, OpenAI, Claude, and OCR tools before standardizing on OpenAI for reliable JSON output.",
-      "Added YOLO image detection to extract and connect catalog visuals with product records, reducing work from hours to minutes.",
+      "Led a three-person project team replacing hours of manual catalog entry with an automated extraction workflow.",
+      "Evaluated Gemini, OpenAI, Claude, and OCR approaches before standardizing on OpenAI for more reliable structured JSON extraction.",
+      "Added YOLO-based image detection to extract catalog visuals and associate them with the corresponding product records.",
     ],
-    stack: ["OpenAI", "OCR", "YOLO", "JSON Extraction", "Python", "Team Lead"],
+    caseStudyImpact: [
+      "Led a three-person project team replacing manual catalog data entry with an AI-assisted extraction workflow.",
+      "Evaluated Gemini, OpenAI, Claude, and OCR-based approaches to determine which produced the most reliable structured product data.",
+      "Standardized the extraction pipeline around OpenAI for structured JSON output.",
+      "Added YOLO-based image detection to extract product visuals from catalog pages and associate them with the corresponding product records.",
+      "Reduced supported catalog-processing workflows from hours of manual work to minutes.",
+    ],
+    stack: ["OpenAI", "OCR", "YOLO", "Python", "Structured Extraction"],
+    caseStudyStack: ["OpenAI", "OCR", "YOLO", "Python", "Structured JSON Extraction"],
     sections: [
       {
-        heading: "Context",
+        heading: "Problem",
         body:
-          "During the Pistachio internship, the project focused on replacing manual furniture catalog data entry for 20-200 page catalogs.",
+          "Furniture catalogs can contain hundreds of products spread across 20-200 pages, with product names, descriptions, dimensions, identifiers, pricing, and images embedded in layouts designed for people rather than software.\n\nAt Pistachio, turning those catalogs into usable product data required substantial manual work.\n\nThe challenge was not simply extracting text from a PDF. The system needed to turn semi-structured catalog pages into consistent product records while also identifying the correct product imagery and connecting it back to the extracted data.",
       },
       {
         heading: "What I built",
-        items: [
-          "A three-person team workflow for AI-assisted catalog extraction.",
-          "LLM and OCR evaluation across Gemini, OpenAI, Claude, and OCR tools.",
-          "Structured JSON extraction standardized on OpenAI for reliable output.",
-          "YOLO image detection to extract and connect catalog visuals with product records.",
+        body:
+          "During my Pistachio internship, I led a three-person team working on an automated catalog-ingestion pipeline.\n\nWe evaluated several approaches for extracting product information, including Gemini, OpenAI, Claude, and traditional OCR tools.\n\nThe goal was to determine which approach could most consistently take messy catalog content and return structured product information in a format the rest of the system could use.\n\nAfter testing the alternatives, we standardized the structured extraction workflow around OpenAI, which provided the most reliable JSON output for the supported catalogs.\n\nThe resulting pipeline converted catalog content into structured product records rather than leaving the output as raw OCR text.",
+      },
+      {
+        heading: "Connecting product data with images",
+        body:
+          "Text extraction solved only part of the problem.\n\nFurniture catalogs are highly visual, and each structured product record also needed to be associated with the correct product imagery.\n\nI added a YOLO-based computer vision stage that detected and extracted product images from catalog pages.\n\nThose extracted visuals could then be connected with the corresponding structured product records produced by the extraction pipeline.\n\nThat made the workflow multimodal:\n\ncatalog PDF -> product information + product imagery -> structured product dataset\n\nrather than treating text and images as separate manual processes.",
+      },
+      {
+        heading: "Technical approach",
+        body:
+          "The project involved combining multiple AI techniques instead of relying on a single model.",
+        subsections: [
+          {
+            heading: "Document extraction",
+            body:
+              "OCR and LLM-based approaches were evaluated for turning semi-structured catalog pages into usable product information.",
+          },
+          {
+            heading: "Structured output",
+            body:
+              "The extraction workflow produced JSON product records, allowing downstream systems to consume the result programmatically instead of requiring another manual cleanup step.",
+          },
+          {
+            heading: "Computer vision",
+            body: "YOLO was used to detect and extract product imagery from catalog pages.",
+          },
+          {
+            heading: "Product association",
+            body:
+              "The final workflow brought the extracted data and imagery together so each product could be represented as a structured record with its associated visual assets.",
+          },
         ],
+        after:
+          "The engineering challenge was therefore not simply \"run an LLM over a PDF.\" It was building a pipeline where several imperfect extraction steps produced a useful combined result.",
       },
       {
         heading: "Result",
         body:
-          "The workflow reduced catalog processing work from hours to minutes for the supported internal use case.",
+          "For the supported internal workflow, the system reduced catalog-processing work from hours to minutes.\n\nMore importantly, it replaced a largely manual process with a repeatable AI pipeline:\n\nlarge catalog -> extraction -> structured JSON -> image detection -> linked product records\n\nThe project gave me experience evaluating competing AI approaches against a real business requirement rather than choosing a model based only on benchmark performance.",
       },
     ],
-    related: ["road-asset-detection", "here2stay", "cisco-hackaithon"],
+    related: ["road-asset-detection", "interview-with-ai", "a2a-multi-agent-builder"],
   },
   {
     id: "cisco-hackaithon",
@@ -570,7 +829,7 @@ export const projects = [
     organization: "USF Innovation Summit",
     role: "Full-stack data visualization developer",
     schemaType: "SoftwareSourceCode",
-    seoTitle: "Oakland Data Explorer - Environmental Data Visualization | Deven Varu",
+    seoTitle: "Oakland Environmental Data Explorer | Deven Varu",
     seoDescription:
       "An interactive dashboard for exploring Oakland satellite imagery, vegetation masks, PM2.5, traffic, and population overlays from 2016 to 2024.",
     summary:
@@ -617,7 +876,7 @@ export const projects = [
     role: "Full-stack developer",
     schemaType: "WebApplication",
     applicationCategory: "CivicTechnology",
-    seoTitle: "Here2Stay Interest Form - Bilingual Civic Tech RAG Portal | Deven Varu",
+    seoTitle: "Here2Stay Civic Tech RAG Portal | Deven Varu",
     seoDescription:
       "A bilingual intake portal for EBPREC with Google Sheets automation, resource packets, and a Pinecone/OpenAI housing-resource chatbot.",
     summary:
@@ -675,24 +934,24 @@ export const experience = [
 export const skillGroups = [
   {
     name: "AI Systems",
-    items: ["LLMs", "RAG", "Voice Agents", "A2A", "Multi-agent Orchestration", "Prompt Versioning"],
+    items: ["LLMs", "Multi-agent Orchestration", "A2A", "Voice AI", "Mastra", "RAG", "Structured Outputs"],
+  },
+  {
+    name: "Software Engineering",
+    items: ["TypeScript", "Python", "Java", "React", "Next.js", "NestJS", "Node.js", "VS Code Extension API"],
   },
   {
     name: "Machine Learning",
-    items: ["YOLO", "PyTorch", "TensorFlow", "Scikit-Learn", "Pandas", "NumPy", "Computer Vision"],
-  },
-  {
-    name: "Product Engineering",
-    items: ["TypeScript", "React", "Next.js", "NestJS", "Node.js", "Java", "Python", "SQL"],
+    items: ["YOLOv8", "PyTorch", "TensorFlow", "Scikit-Learn", "Computer Vision", "Pandas", "NumPy"],
   },
   {
     name: "Infrastructure",
-    items: ["AWS", "GCP", "Docker", "Kubernetes", "CI/CD", "Terraform", "MongoDB Atlas", "Supabase"],
+    items: ["Docker", "AWS", "GCP", "MongoDB Atlas", "Supabase", "Railway"],
   },
 ];
 
 export const awards = [
-  "First Place - Cisco HackAIThon",
+  "1st Place - Cisco HackAIThon",
   "Innovation Summit Award - Oakland Geospatial Analysis Platform",
-  "First Place - 6th Annual Sustainability Design Challenge",
+  "1st Place - Sixth Annual Sustainability Design Challenge",
 ];

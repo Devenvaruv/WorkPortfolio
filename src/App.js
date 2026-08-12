@@ -80,16 +80,16 @@ function App() {
 
           <ProofNotes aria-label="Project proof points">
             <li>
-              <strong>92% mAP</strong>
-              <span>Road asset detection pipeline for stitched roadway imagery.</span>
+              <strong>Real-time AI</strong>
+              <span>Voice and coding experiences that respond to users as they work.</span>
             </li>
             <li>
-              <strong>1st place</strong>
-              <span>Cisco HackAIThon natural-language analytics project.</span>
+              <strong>Agent systems</strong>
+              <span>Multi-agent and A2A systems that coordinate tools, tasks, and specialized agents.</span>
             </li>
             <li>
-              <strong>4 A2A servers</strong>
-              <span>Client/server coordination work during the SnapLogic internship.</span>
+              <strong>Developer tools</strong>
+              <span>Interfaces that make AI-agent behavior and complex codebases easier to understand.</span>
             </li>
           </ProofNotes>
 
@@ -274,6 +274,7 @@ function usePrefersReducedMotion() {
 }
 
 function MediaPreview({ project, $hero, prefersReducedMotion }) {
+  const videoRef = usePlaybackRate($hero ? 2 : 1);
   if (!project) return null;
 
   if (project.media) {
@@ -301,13 +302,14 @@ function MediaPreview({ project, $hero, prefersReducedMotion }) {
         $mediaHeight={project.mediaHeight}
       >
         <video
+          ref={videoRef}
           src={project.media}
           poster={project.thumbnail}
           width={project.mediaWidth}
           height={project.mediaHeight}
           muted
           autoPlay={!prefersReducedMotion}
-          loop={!prefersReducedMotion}
+          loop={$hero || !prefersReducedMotion}
           playsInline
           preload="metadata"
           aria-label={`${project.title} project media preview`}
@@ -324,6 +326,18 @@ function MediaPreview({ project, $hero, prefersReducedMotion }) {
       </ProjectPlaceholder>
     </MediaFrame>
   );
+}
+
+function usePlaybackRate(playbackRate) {
+  const videoRef = React.useRef(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = playbackRate;
+    }
+  }, [playbackRate]);
+
+  return videoRef;
 }
 
 function InlineMedia({ project, prefersReducedMotion }) {
