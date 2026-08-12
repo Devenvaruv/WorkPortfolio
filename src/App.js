@@ -6,9 +6,9 @@ import { profilePageSchema, safeJsonLd } from "./seo";
 const featuredTitles = ["InterviewWithAI", "Codex Session Visualizer", "CodeTown"];
 const additionalOrder = [
   "A2A Multi-Agent Builder",
-  "Catalog Intelligence Automation",
-  "Road Asset Detection with YOLO",
   "10-Agent AI Board Game Simulation",
+  "Road Asset Detection with YOLO",
+  "Catalog Intelligence Automation",
 ];
 
 function App() {
@@ -19,6 +19,14 @@ function App() {
   const additionalProjects = additionalOrder
     .map((title) => projects.find((project) => project.title === title))
     .filter(Boolean);
+  const heroPreviewProject = featuredProjects[0]
+    ? {
+        ...featuredProjects[0],
+        media: "/videos/interviewwithai-home.mp4",
+        mediaWidth: 1512,
+        mediaHeight: 824,
+      }
+    : null;
 
   return (
     <>
@@ -63,7 +71,7 @@ function App() {
 
             <HeroMedia aria-label="Featured project preview">
               <MediaPreview
-                project={featuredProjects[0]}
+                project={heroPreviewProject}
                 $hero
                 prefersReducedMotion={prefersReducedMotion}
               />
@@ -271,17 +279,32 @@ function MediaPreview({ project, $hero, prefersReducedMotion }) {
   if (project.media) {
     if (isImageMedia(project.media)) {
       return (
-        <MediaFrame $hero={$hero}>
-          <img src={project.media} alt={`${project.title} project preview`} />
+        <MediaFrame
+          $hero={$hero}
+          $mediaWidth={project.mediaWidth}
+          $mediaHeight={project.mediaHeight}
+        >
+          <img
+            src={project.media}
+            width={project.mediaWidth}
+            height={project.mediaHeight}
+            alt={`${project.title} project preview`}
+          />
         </MediaFrame>
       );
     }
 
     return (
-      <MediaFrame $hero={$hero}>
+      <MediaFrame
+        $hero={$hero}
+        $mediaWidth={project.mediaWidth}
+        $mediaHeight={project.mediaHeight}
+      >
         <video
           src={project.media}
           poster={project.thumbnail}
+          width={project.mediaWidth}
+          height={project.mediaHeight}
           muted
           autoPlay={!prefersReducedMotion}
           loop={!prefersReducedMotion}
@@ -306,17 +329,30 @@ function MediaPreview({ project, $hero, prefersReducedMotion }) {
 function InlineMedia({ project, prefersReducedMotion }) {
   if (isImageMedia(project.media)) {
     return (
-      <InlineFrame>
-        <img src={project.media} alt={`${project.title} project preview`} />
+      <InlineFrame
+        $mediaWidth={project.mediaWidth}
+        $mediaHeight={project.mediaHeight}
+      >
+        <img
+          src={project.media}
+          width={project.mediaWidth}
+          height={project.mediaHeight}
+          alt={`${project.title} project preview`}
+        />
       </InlineFrame>
     );
   }
 
   return (
-    <InlineFrame>
+    <InlineFrame
+      $mediaWidth={project.mediaWidth}
+      $mediaHeight={project.mediaHeight}
+    >
       <video
         src={project.media}
         poster={project.thumbnail}
+        width={project.mediaWidth}
+        height={project.mediaHeight}
         muted
         autoPlay={!prefersReducedMotion}
         loop={!prefersReducedMotion}
@@ -570,7 +606,7 @@ const PrimaryLink = styled.a`
   max-width: 100%;
   min-height: 2.7rem;
   padding: 0 1rem;
-  border-radius: 6px;
+  border-radius: 8px;
   background: var(--accent);
   color: #17130a;
   font-weight: 750;
@@ -610,14 +646,14 @@ const TextLink = styled.a`
 const HeroMedia = styled.aside`
   min-width: 0;
   width: 100%;
-  max-width: min(520px, calc(100vw - 2rem));
+  max-width: min(572px, calc(100vw - 2rem));
   justify-self: end;
   align-self: stretch;
   display: flex;
   align-items: center;
 
   @media (max-width: 980px) {
-    max-width: 680px;
+    max-width: 748px;
   }
 `;
 
@@ -829,7 +865,8 @@ const ProjectLinks = styled.div`
 const MediaFrame = styled.div`
   position: relative;
   width: 100%;
-  aspect-ratio: ${({ $hero }) => ($hero ? "16 / 10" : "4 / 3")};
+  aspect-ratio: ${({ $mediaWidth, $mediaHeight, $hero }) =>
+    $mediaWidth && $mediaHeight ? `${$mediaWidth} / ${$mediaHeight}` : $hero ? "16 / 10" : "4 / 3"};
   min-height: 0;
   overflow: hidden;
   border-radius: 6px;
@@ -842,11 +879,13 @@ const MediaFrame = styled.div`
     width: 100%;
     height: 100%;
     display: block;
-    object-fit: cover;
+    object-fit: contain;
+    transform: scale(1.01);
   }
 
   @media (max-width: 520px) {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: ${({ $mediaWidth, $mediaHeight }) =>
+      $mediaWidth && $mediaHeight ? `${$mediaWidth} / ${$mediaHeight}` : "4 / 3"};
     min-height: 0;
   }
 `;
@@ -941,16 +980,18 @@ const AdditionalProject = styled.article`
 `;
 
 const InlineFrame = styled.div`
-  aspect-ratio: 4 / 3;
+  aspect-ratio: ${({ $mediaWidth, $mediaHeight }) =>
+    $mediaWidth && $mediaHeight ? `${$mediaWidth} / ${$mediaHeight}` : "4 / 3"};
   overflow: hidden;
-  border-radius: 5px;
+  border-radius: 8px;
   background: var(--panel);
 
   video,
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    transform: scale(1.01);
     display: block;
   }
 `;
