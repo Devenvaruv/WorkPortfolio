@@ -10,9 +10,14 @@ const additionalOrder = [
   "Road Asset Detection with YOLO",
   "Catalog Intelligence Automation",
 ];
+const THEME_STORAGE_KEY = "portfolio-theme";
+const DARK_THEME = "dark";
+const LIGHT_THEME = "light";
 
 function App() {
   const prefersReducedMotion = usePrefersReducedMotion();
+  const [theme, setTheme] = useStoredTheme();
+  const isLightTheme = theme === LIGHT_THEME;
   const featuredProjects = featuredTitles
     .map((title) => projects.find((project) => project.title === title))
     .filter(Boolean);
@@ -35,12 +40,25 @@ function App() {
       <SiteShell>
         <Header>
           <Brand href="#top">{profile.name}</Brand>
-          <Nav aria-label="Primary navigation">
-            <a href="/projects/">Projects</a>
-            <a href="#experience">Experience</a>
-            <a href="#skills">About / Skills</a>
-            <a href="#contact">Contact</a>
-          </Nav>
+          <NavBar>
+            <Nav aria-label="Primary navigation">
+              <a href="/projects/">Projects</a>
+              <a href="#experience">Experience</a>
+              <a href="#skills">About / Skills</a>
+              <a href="#contact">Contact</a>
+            </Nav>
+            <ThemeToggle
+              type="button"
+              aria-label={`Switch to ${isLightTheme ? "dark" : "white"} mode`}
+              aria-pressed={isLightTheme}
+              onClick={() => setTheme(isLightTheme ? DARK_THEME : LIGHT_THEME)}
+            >
+              <ToggleTrack $active={isLightTheme}>
+                <span />
+              </ToggleTrack>
+              <ToggleText>{isLightTheme ? "White" : "Dark"}</ToggleText>
+            </ThemeToggle>
+          </NavBar>
         </Header>
 
         <main id="top">
@@ -273,6 +291,39 @@ function usePrefersReducedMotion() {
   return reduced;
 }
 
+function useStoredTheme() {
+  const [theme, setTheme] = useState(() => {
+    if (typeof window === "undefined") return DARK_THEME;
+
+    try {
+      const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+      return storedTheme === LIGHT_THEME ? LIGHT_THEME : DARK_THEME;
+    } catch {
+      return DARK_THEME;
+    }
+  });
+
+  useEffect(() => {
+    const nextTheme = theme === LIGHT_THEME ? LIGHT_THEME : DARK_THEME;
+    const root = document.documentElement;
+
+    root.dataset.theme = nextTheme;
+    root.style.colorScheme = nextTheme;
+
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute("content", nextTheme === LIGHT_THEME ? "#ffffff" : "#11100e");
+
+    try {
+      window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+    } catch {
+      // Theme still applies for the current page if storage is unavailable.
+    }
+  }, [theme]);
+
+  return [theme, setTheme];
+}
+
 function MediaPreview({ project, $hero, prefersReducedMotion }) {
   const videoRef = usePlaybackRate($hero ? 2 : 1);
   if (!project) return null;
@@ -438,9 +489,40 @@ const GlobalStyle = createGlobalStyle`
     --faint: #a79b8d;
     --accent: #d2b36b;
     --accent-soft: rgba(201, 169, 99, 0.14);
+    --accent-contrast: #17130a;
+    --accent-hover: #d7b974;
+    --accent-visited: #e0c47e;
+    --band-bg: rgba(25, 23, 20, 0.58);
+    --header-bg: rgba(17, 16, 14, 0.88);
+    --strong-muted: #d9cfbd;
+    --shadow-soft: 0 20px 50px rgba(0, 0, 0, 0.2);
+    --shadow-strong: 0 28px 80px rgba(0, 0, 0, 0.28);
     --font-display: "Lexend Giga", "Lexend", ui-sans-serif, system-ui, sans-serif;
     --font-body: "Lexend", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     --font-mono: "Share Tech Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  }
+
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --bg: #ffffff;
+    --panel: #f4f1eb;
+    --panel-soft: #ebe6dc;
+    --line: #d8d0c2;
+    --line-soft: rgba(38, 35, 30, 0.15);
+    --text: #17130f;
+    --body: #39342c;
+    --muted: #5d5548;
+    --faint: #776d5e;
+    --accent: #8a6418;
+    --accent-soft: rgba(138, 100, 24, 0.08);
+    --accent-contrast: #ffffff;
+    --accent-hover: #735111;
+    --accent-visited: #6b4c13;
+    --band-bg: rgba(244, 241, 235, 0.72);
+    --header-bg: rgba(255, 255, 255, 0.9);
+    --strong-muted: #51493d;
+    --shadow-soft: 0 20px 50px rgba(40, 34, 24, 0.12);
+    --shadow-strong: 0 28px 80px rgba(40, 34, 24, 0.16);
   }
 
   * {
@@ -491,7 +573,7 @@ const SiteShell = styled.div`
   min-height: 100vh;
   overflow-x: hidden;
   background:
-    radial-gradient(circle at 68% 7%, rgba(210, 179, 107, 0.045), transparent 18rem),
+    radial-gradient(circle at 68% 7%, var(--accent-soft), transparent 18rem),
     var(--bg);
 `;
 
@@ -505,7 +587,7 @@ const Header = styled.header`
   gap: 1rem;
   padding: 1rem clamp(1rem, 4vw, 4rem);
   border-bottom: 1px solid var(--line-soft);
-  background: rgba(17, 16, 14, 0.88);
+  background: var(--header-bg);
   backdrop-filter: blur(12px);
 
   @media (max-width: 680px) {
@@ -520,6 +602,14 @@ const Brand = styled.a`
   font-size: 1rem;
   font-weight: 750;
   text-decoration: none;
+`;
+
+const NavBar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(0.75rem, 2vw, 1.45rem);
+  flex-wrap: wrap;
 `;
 
 const Nav = styled.nav`
@@ -622,18 +712,18 @@ const PrimaryLink = styled.a`
   padding: 0 1rem;
   border-radius: 8px;
   background: var(--accent);
-  color: #17130a;
+  color: var(--accent-contrast);
   font-weight: 750;
   text-decoration: none;
   transition: transform 160ms ease, background 160ms ease;
 
   &:hover {
-    background: #d7b974;
+    background: var(--accent-hover);
     transform: translateY(-1px);
   }
 
   &:visited {
-    color: #17130a;
+    color: var(--accent-contrast);
   }
 `;
 
@@ -720,7 +810,7 @@ const Section = styled.section`
 const Band = styled(Section)`
   border-top: 1px solid var(--line-soft);
   border-bottom: 1px solid var(--line-soft);
-  background: rgba(25, 23, 20, 0.58);
+  background: var(--band-bg);
 `;
 
 const SectionHeading = styled.div`
@@ -860,7 +950,7 @@ const ProjectLink = styled.a`
   }
 
   &:visited {
-    color: #e0c47e;
+    color: var(--accent-visited);
   }
 `;
 
@@ -886,7 +976,7 @@ const MediaFrame = styled.div`
   border-radius: 6px;
   background: var(--panel);
   box-shadow: ${({ $hero }) =>
-    $hero ? "0 28px 80px rgba(0, 0, 0, 0.28)" : "0 20px 50px rgba(0, 0, 0, 0.2)"};
+    $hero ? "var(--shadow-strong)" : "var(--shadow-soft)"};
 
   video,
   img {
@@ -902,6 +992,52 @@ const MediaFrame = styled.div`
       $mediaWidth && $mediaHeight ? `${$mediaWidth} / ${$mediaHeight}` : "4 / 3"};
     min-height: 0;
   }
+`;
+
+const ThemeToggle = styled.button`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 2.3rem;
+  padding: 0.25rem 0.7rem 0.25rem 0.35rem;
+  border: 1px solid var(--line-soft);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease, color 160ms ease;
+
+  &:hover {
+    border-color: var(--accent);
+  }
+`;
+
+const ToggleTrack = styled.span`
+  display: inline-flex;
+  align-items: center;
+  width: 2.15rem;
+  height: 1.22rem;
+  padding: 0.15rem;
+  border-radius: 999px;
+  background: ${({ $active }) => ($active ? "var(--accent)" : "var(--panel-soft)")};
+  transition: background 160ms ease;
+
+  span {
+    width: 0.92rem;
+    height: 0.92rem;
+    border-radius: 50%;
+    background: ${({ $active }) => ($active ? "#ffffff" : "var(--accent)")};
+    transform: translateX(${({ $active }) => ($active ? "0.92rem" : "0")});
+    transition: transform 160ms ease, background 160ms ease;
+  }
+`;
+
+const ToggleText = styled.span`
+  min-width: 2.65rem;
+  text-align: left;
 `;
 
 const ProjectPlaceholder = styled.div`
@@ -937,15 +1073,15 @@ const PlaceholderDetail = styled.span`
 
 function placeholderTone(type) {
   if (type === "code") {
-    return "linear-gradient(135deg, #191b1f, #24221d)";
+    return "linear-gradient(135deg, var(--panel), var(--panel-soft))";
   }
   if (type === "voice" || type === "rag") {
-    return "linear-gradient(135deg, #1d1a16, #262218)";
+    return "linear-gradient(135deg, var(--panel), var(--panel-soft))";
   }
   if (type === "vision" || type === "geo") {
-    return "linear-gradient(135deg, #181b1e, #24231d)";
+    return "linear-gradient(135deg, var(--panel), var(--panel-soft))";
   }
-  return "linear-gradient(135deg, #1a1815, #24211d)";
+  return "linear-gradient(135deg, var(--panel), var(--panel-soft))";
 }
 
 const AdditionalGrid = styled.div`
@@ -1060,7 +1196,7 @@ const TimelineBody = styled.div`
   strong {
     display: block;
     margin-top: 0.25rem;
-    color: #d9cfbd;
+    color: var(--strong-muted);
   }
 
   p {
