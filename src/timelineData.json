@@ -41,13 +41,10 @@
       "column": 1,
       "originYear": "2023",
       "originColor": "#8B5CF6",
-      "start": { "year": "2023", "month": "Jan", "offset": -0.2 },
+      "start": { "year": "2023", "month": "Jan", "offset": -1 },
       "end": { "year": "2023", "month": "Mar", "offset": 0.88 },
       "continuesFromBefore": true,
-      "continueLabel": "Freelance Engineering",
-      "content": {
-        "heading": "Frontend Engineer"
-      }
+      "continueLabel": "freelance frontend engineer"
     },
     {
       "id": "here2stay",
@@ -66,9 +63,9 @@
         "body": "Bilingual intake portal for EBPREC with resident submissions, resource delivery, housing assistance, and a RAG chatbot."
       },
       "endMilestone": {
-        "heading": "Final Development",
+        "heading": "Final Development, Handover, Report",
         "date": "Dec 2024",
-        "meta": "Project completion"
+        "meta": "Project wrap"
       }
     },
     {
@@ -167,7 +164,7 @@
       "url": "https://youtube.com/shorts/58rc0pd9YUY",
       "content": {
         "heading": "VR Classroom",
-        "date": "Sep - Nov 2025",
+        "date": "Sep - Nov 2025 - YouTube",
         "meta": "Personal Project / Virtual Reality",
         "body": "Immersive virtual classroom exploring learning, interaction, and shared educational experiences in 3D."
       }
@@ -197,8 +194,8 @@
       "end": { "year": "2025", "month": "Oct", "offset": 0.88 },
       "url": "https://www.linkedin.com/in/deven-v/overlay/Honor/1907676117/treasury/?profileId=ACoAAEGq-iAB6K1JBLNgv1a6ivcsINjH9F-XVOk",
       "content": {
-        "heading": "Oakland Geo Platform",
-        "date": "Oct 2025 / $400 Award",
+        "heading": "Oakland Geo Platform - $400 Award",
+        "date": "Oct 2025",
         "meta": "Innovation Summit / $400 Award",
         "body": "Presented the Oakland Geospatial Analysis Platform and received a $400 award."
       }
@@ -214,7 +211,7 @@
       "url": "https://youtube.com/shorts/VxwmoDxesyo",
       "content": {
         "heading": "Pokemon MR",
-        "date": "Jan 2026",
+        "date": "Jan 2026 - YouTube",
         "meta": "Personal Experiment / Mixed Reality",
         "body": "Mixed-reality experience bringing interactive Pokemon characters and gameplay elements into the physical environment."
       }
@@ -246,7 +243,7 @@
       "url": "https://youtu.be/RUBz4VQ3cHA",
       "content": {
         "heading": "10-Agent Board Game",
-        "date": "Feb - Mar 2026",
+        "date": "Feb - Mar 2026 - YouTube",
         "meta": "Independent Experiment / Multi-Agent Systems",
         "body": "Hierarchical multi-agent game simulation with autonomous characters, specialized agents, structured actions, and shared state."
       }
@@ -262,7 +259,7 @@
       "url": "https://youtube.com/shorts/kAU6vJK4Kxg",
       "content": {
         "heading": "Peg Battle",
-        "date": "Apr - Jun 2026",
+        "date": "Apr - Jun 2026 - YouTube",
         "meta": "Personal Project / Game Development",
         "body": "Game experiment with two Peggle-like boards competing against each other."
       }
@@ -276,10 +273,10 @@
       "start": { "year": "2026", "month": "Feb", "offset": 0.08 },
       "end": { "year": "2026", "month": "Sep", "offset": 0.95 },
       "content": {
-        "heading": "Freelance Engineering",
+        "heading": "AI Engineer",
         "date": "Feb 2026 - Present",
-        "meta": "Freelance / Ongoing",
-        "body": "Ongoing freelance engineering work continuing through September 2026."
+        "meta": "AI Engineering / Ongoing",
+        "body": "Ongoing AI engineering work continuing through September 2026."
       }
     },
     {
@@ -309,7 +306,7 @@
       "url": "https://www.devenvaru.com/projects/codex-session-visualizer/",
       "content": {
         "heading": "Codex Visualizer",
-        "date": "Jul 2026",
+        "date": "Jul 2026 - VS Code Extension",
         "meta": "Independent Project / VS Code Extension",
         "body": "Reconstructs Codex coding sessions into inspectable file activity, execution traces, and multi-agent workflow graphs."
       }
@@ -325,8 +322,8 @@
       "url": "https://www.devenvaru.com/projects/codetown/",
       "content": {
         "heading": "CodeTown",
-        "date": "Aug 2026",
-        "meta": "Independent Project / Developer Tool",
+        "date": "Aug 2026 - VS Code Extension",
+        "meta": "Independent Project / VS Code Extension",
         "body": "VS Code tool that turns JavaScript and TypeScript codebases into interactive 2D towns showing files and dependency relationships."
       }
     },
@@ -354,7 +351,7 @@
       "start": { "year": "2026", "month": "Aug", "offset": 0.05 },
       "end": { "year": "2026", "month": "Sep", "offset": 0.95 },
       "content": {
-        "heading": "Callable Bug Fix",
+        "heading": "Callable - Bug Fix",
         "date": "Aug 2026 - Present",
         "meta": "Open Source / Ongoing",
         "body": "Ongoing open-source bug-fix contributions."
