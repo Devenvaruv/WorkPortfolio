@@ -1,0 +1,364 @@
+{
+  "design": {
+    "width": 1400,
+    "screenHeight": 900,
+    "columnCount": 7,
+    "columnWidth": 200,
+    "rectangleWidth": 168,
+    "rectangleInset": 16
+  },
+  "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+  "screens": [
+    {
+      "year": "2023",
+      "name": "Red",
+      "color": "#FF1A1A",
+      "figma": { "x": 0, "y": 0, "width": 1400, "height": 900 }
+    },
+    {
+      "year": "2024",
+      "name": "Orange",
+      "color": "#FF7A00",
+      "figma": { "x": 0, "y": 900, "width": 1400, "height": 900 }
+    },
+    {
+      "year": "2025",
+      "name": "Yellow",
+      "color": "#D8B800",
+      "figma": { "x": 0, "y": 1800, "width": 1400, "height": 900 }
+    },
+    {
+      "year": "2026",
+      "name": "Green",
+      "color": "#00D85B",
+      "figma": { "x": 0, "y": 2700, "width": 1400, "height": 900 }
+    }
+  ],
+  "rectangles": [
+    {
+      "id": "freelance-2023",
+      "name": "Freelance Engineering",
+      "column": 1,
+      "originYear": "2023",
+      "originColor": "#8B5CF6",
+      "start": { "year": "2023", "month": "Jan", "offset": -0.2 },
+      "end": { "year": "2023", "month": "Mar", "offset": 0.88 },
+      "continuesFromBefore": true,
+      "continueLabel": "Freelance Engineering",
+      "content": {
+        "heading": "Frontend Engineer"
+      }
+    },
+    {
+      "id": "here2stay",
+      "name": "Here2Stay Interest Form",
+      "column": 1,
+      "originYear": "2023",
+      "originColor": "#FF1A1A",
+      "start": { "year": "2023", "month": "Jul", "offset": 0.1 },
+      "end": { "year": "2024", "month": "Dec", "offset": 0.9 },
+      "continueLabel": "Here2Stay",
+      "url": "https://interest-form.vercel.app/",
+      "content": {
+        "heading": "USF Research",
+        "date": "Jul 2023 - Dec 2024",
+        "meta": "Here2Stay / Full-Stack",
+        "body": "Bilingual intake portal for EBPREC with resident submissions, resource delivery, housing assistance, and a RAG chatbot."
+      },
+      "endMilestone": {
+        "heading": "Final Development",
+        "date": "Dec 2024",
+        "meta": "Project completion"
+      }
+    },
+    {
+      "id": "sustainability-challenge",
+      "name": "USF Sustainability Challenge",
+      "column": 3,
+      "originYear": "2023",
+      "originColor": "#FF1A1A",
+      "start": { "year": "2023", "month": "Nov", "offset": 0.12 },
+      "end": { "year": "2023", "month": "Nov", "offset": 0.88 },
+      "content": {
+        "heading": "Env Sustain Hackathon Winner",
+        "date": "Nov 2023",
+        "meta": "Competition Winner",
+        "body": "Winner of the USF Sustainability Challenge."
+      }
+    },
+    {
+      "id": "boone-road-assets",
+      "name": "Boone County Road Asset Detection",
+      "column": 2,
+      "originYear": "2024",
+      "originColor": "#FF7A00",
+      "start": { "year": "2024", "month": "Jun", "offset": 0.1 },
+      "end": { "year": "2025", "month": "Dec", "offset": 0.88 },
+      "continueLabel": "Road Asset Detection",
+      "url": "https://www.devenvaru.com/projects/road-asset-detection/",
+      "content": {
+        "heading": "USF Research",
+        "date": "Jun 2024 - Dec 2025",
+        "meta": "Road Asset Detection / Computer Vision",
+        "body": "Roadway asset detection research with dataset development, YOLO models, evaluation, and infrastructure visualization."
+      },
+      "endMilestone": {
+        "heading": "Research Wrap",
+        "date": "Dec 2025",
+        "meta": "Final research period"
+      }
+    },
+    {
+      "id": "quantumviz",
+      "name": "QuantumViz",
+      "column": 3,
+      "originYear": "2024",
+      "originColor": "#FF7A00",
+      "start": { "year": "2024", "month": "Jun", "offset": 0.18 },
+      "end": { "year": "2024", "month": "Aug", "offset": 0.86 },
+      "url": "https://www.devenvaru.com/projects/quantumviz/",
+      "content": {
+        "heading": "QuantumViz",
+        "date": "Summer 2024",
+        "meta": "Research / React / D3",
+        "body": "Interactive quantum visualization for exploring how single-qubit gates transform qubit states."
+      }
+    },
+    {
+      "id": "pistachio-internship",
+      "name": "Pistachio Software Engineer Intern",
+      "column": 4,
+      "originYear": "2024",
+      "originColor": "#FF7A00",
+      "start": { "year": "2024", "month": "Jun", "offset": 0.08 },
+      "end": { "year": "2024", "month": "Aug", "offset": 0.92 },
+      "url": "https://www.devenvaru.com/projects/catalog-intelligence-automation/",
+      "content": {
+        "heading": "Pistachio",
+        "date": "Jun - Aug 2024",
+        "meta": "Software Engineer Intern / AI Automation",
+        "body": "Catalog intelligence automation with LLM evaluation, extraction, image detection, and product-image linking."
+      }
+    },
+    {
+      "id": "cisco-hackathon",
+      "name": "Cisco Hackathon",
+      "column": 5,
+      "originYear": "2024",
+      "originColor": "#FF7A00",
+      "start": { "year": "2024", "month": "Nov", "offset": 0.12 },
+      "end": { "year": "2024", "month": "Nov", "offset": 0.88 },
+      "url": "https://www.linkedin.com/in/deven-v/overlay/Honor/1907415710/treasury/?profileId=ACoAAEGq-iAB6K1JBLNgv1a6ivcsINjH9F-XVOk",
+      "content": {
+        "heading": "Cisco Hackathon Winner",
+        "date": "Nov 2024",
+        "meta": "Hackathon Winner",
+        "body": "Winner project using LLM-to-SQL for querying and visualizing device metrics."
+      }
+    },
+    {
+      "id": "vr-classroom",
+      "name": "VR Classroom",
+      "column": 3,
+      "originYear": "2025",
+      "originColor": "#FFE600",
+      "start": { "year": "2025", "month": "Sep", "offset": 0.08 },
+      "end": { "year": "2025", "month": "Nov", "offset": 0.9 },
+      "url": "https://youtube.com/shorts/58rc0pd9YUY",
+      "content": {
+        "heading": "VR Classroom",
+        "date": "Sep - Nov 2025",
+        "meta": "Personal Project / Virtual Reality",
+        "body": "Immersive virtual classroom exploring learning, interaction, and shared educational experiences in 3D."
+      }
+    },
+    {
+      "id": "snaplogic-internship",
+      "name": "SnapLogic Software Engineer Intern",
+      "column": 4,
+      "originYear": "2025",
+      "originColor": "#FFE600",
+      "start": { "year": "2025", "month": "Sep", "offset": 0.08 },
+      "end": { "year": "2025", "month": "Dec", "offset": 0.9 },
+      "content": {
+        "heading": "SnapLogic",
+        "date": "Sep - Dec 2025",
+        "meta": "Software Engineer Intern / A2A Protocol",
+        "body": "Implemented A2A protocol capabilities in Java with client/server components, Snaps, pipelines, and multi-agent workflow validation."
+      }
+    },
+    {
+      "id": "oakland-geospatial-bot",
+      "name": "Oakland Geospatial Analysis Platform",
+      "column": 5,
+      "originYear": "2025",
+      "originColor": "#FFE600",
+      "start": { "year": "2025", "month": "Oct", "offset": 0.12 },
+      "end": { "year": "2025", "month": "Oct", "offset": 0.88 },
+      "url": "https://www.linkedin.com/in/deven-v/overlay/Honor/1907676117/treasury/?profileId=ACoAAEGq-iAB6K1JBLNgv1a6ivcsINjH9F-XVOk",
+      "content": {
+        "heading": "Oakland Geo Platform",
+        "date": "Oct 2025 / $400 Award",
+        "meta": "Innovation Summit / $400 Award",
+        "body": "Presented the Oakland Geospatial Analysis Platform and received a $400 award."
+      }
+    },
+    {
+      "id": "pokemon-mixed-reality",
+      "name": "Pokemon Mixed Reality",
+      "column": 1,
+      "originYear": "2026",
+      "originColor": "#00D85B",
+      "start": { "year": "2026", "month": "Jan", "offset": 0.12 },
+      "end": { "year": "2026", "month": "Jan", "offset": 0.88 },
+      "url": "https://youtube.com/shorts/VxwmoDxesyo",
+      "content": {
+        "heading": "Pokemon MR",
+        "date": "Jan 2026",
+        "meta": "Personal Experiment / Mixed Reality",
+        "body": "Mixed-reality experience bringing interactive Pokemon characters and gameplay elements into the physical environment."
+      }
+    },
+    {
+      "id": "a2a-multi-agent-builder",
+      "name": "A2A Multi-Agent Builder",
+      "column": 2,
+      "originYear": "2026",
+      "originColor": "#00D85B",
+      "start": { "year": "2026", "month": "Jan", "offset": 0.08 },
+      "end": { "year": "2026", "month": "Mar", "offset": 0.9 },
+      "url": "https://www.devenvaru.com/projects/a2a-multi-agent-builder/",
+      "content": {
+        "heading": "A2A Builder",
+        "date": "Jan - Mar 2026",
+        "meta": "Independent Project / Multi-Agent Systems",
+        "body": "System for dynamically creating, configuring, and orchestrating specialized AI agent teams."
+      }
+    },
+    {
+      "id": "ten-agent-board-game",
+      "name": "10-Agent AI Board Game Simulation",
+      "column": 3,
+      "originYear": "2026",
+      "originColor": "#00D85B",
+      "start": { "year": "2026", "month": "Feb", "offset": 0.08 },
+      "end": { "year": "2026", "month": "Mar", "offset": 0.9 },
+      "url": "https://youtu.be/RUBz4VQ3cHA",
+      "content": {
+        "heading": "10-Agent Board Game",
+        "date": "Feb - Mar 2026",
+        "meta": "Independent Experiment / Multi-Agent Systems",
+        "body": "Hierarchical multi-agent game simulation with autonomous characters, specialized agents, structured actions, and shared state."
+      }
+    },
+    {
+      "id": "peg-battle",
+      "name": "Peg Battle",
+      "column": 4,
+      "originYear": "2026",
+      "originColor": "#00D85B",
+      "start": { "year": "2026", "month": "Apr", "offset": 0.08 },
+      "end": { "year": "2026", "month": "Jun", "offset": 0.9 },
+      "url": "https://youtube.com/shorts/kAU6vJK4Kxg",
+      "content": {
+        "heading": "Peg Battle",
+        "date": "Apr - Jun 2026",
+        "meta": "Personal Project / Game Development",
+        "body": "Game experiment with two Peggle-like boards competing against each other."
+      }
+    },
+    {
+      "id": "freelance-2026",
+      "name": "Freelance Engineering",
+      "column": 5,
+      "originYear": "2026",
+      "originColor": "#00D85B",
+      "start": { "year": "2026", "month": "Feb", "offset": 0.08 },
+      "end": { "year": "2026", "month": "Sep", "offset": 0.95 },
+      "content": {
+        "heading": "Freelance Engineering",
+        "date": "Feb 2026 - Present",
+        "meta": "Freelance / Ongoing",
+        "body": "Ongoing freelance engineering work continuing through September 2026."
+      }
+    },
+    {
+      "id": "interview-with-ai",
+      "name": "InterviewWithAI",
+      "column": 1,
+      "originYear": "2026",
+      "originColor": "#00D85B",
+      "start": { "year": "2026", "month": "Jun", "offset": 0.05 },
+      "end": { "year": "2026", "month": "Sep", "offset": 0.95 },
+      "url": "https://interviewithai.com/",
+      "content": {
+        "heading": "InterviewWithAI",
+        "date": "Jun 2026 - Present",
+        "meta": "Independent Product / Live",
+        "body": "Real-time AI coding interview platform with voice interviews, coding environment, agent orchestration, sandboxed execution, and structured feedback."
+      }
+    },
+    {
+      "id": "codex-session-visualizer",
+      "name": "Codex Session Visualizer",
+      "column": 2,
+      "originYear": "2026",
+      "originColor": "#00D85B",
+      "start": { "year": "2026", "month": "Jul", "offset": 0.05 },
+      "end": { "year": "2026", "month": "Jul", "offset": 0.95 },
+      "url": "https://www.devenvaru.com/projects/codex-session-visualizer/",
+      "content": {
+        "heading": "Codex Visualizer",
+        "date": "Jul 2026",
+        "meta": "Independent Project / VS Code Extension",
+        "body": "Reconstructs Codex coding sessions into inspectable file activity, execution traces, and multi-agent workflow graphs."
+      }
+    },
+    {
+      "id": "codetown",
+      "name": "CodeTown",
+      "column": 3,
+      "originYear": "2026",
+      "originColor": "#00D85B",
+      "start": { "year": "2026", "month": "Aug", "offset": 0.05 },
+      "end": { "year": "2026", "month": "Aug", "offset": 0.95 },
+      "url": "https://www.devenvaru.com/projects/codetown/",
+      "content": {
+        "heading": "CodeTown",
+        "date": "Aug 2026",
+        "meta": "Independent Project / Developer Tool",
+        "body": "VS Code tool that turns JavaScript and TypeScript codebases into interactive 2D towns showing files and dependency relationships."
+      }
+    },
+    {
+      "id": "cognee-brand-ambassador",
+      "name": "Cognee Brand Ambassador",
+      "column": 4,
+      "originYear": "2026",
+      "originColor": "#00D85B",
+      "start": { "year": "2026", "month": "Aug", "offset": 0.05 },
+      "end": { "year": "2026", "month": "Sep", "offset": 0.95 },
+      "content": {
+        "heading": "Cognee Brand Ambassador",
+        "date": "Aug 2026 - Present",
+        "meta": "Developer Community / Hackathon",
+        "body": "Represented Cognee at a developer event and helped participants get started with the technology."
+      }
+    },
+    {
+      "id": "callable-open-source",
+      "name": "Callable Open-Source Contributions",
+      "column": 6,
+      "originYear": "2026",
+      "originColor": "#00D85B",
+      "start": { "year": "2026", "month": "Aug", "offset": 0.05 },
+      "end": { "year": "2026", "month": "Sep", "offset": 0.95 },
+      "content": {
+        "heading": "Callable Bug Fix",
+        "date": "Aug 2026 - Present",
+        "meta": "Open Source / Ongoing",
+        "body": "Ongoing open-source bug-fix contributions."
+      }
+    }
+  ]
+}

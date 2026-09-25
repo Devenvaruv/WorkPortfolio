@@ -5,6 +5,7 @@ const vm = require("vm");
 const root = path.resolve(__dirname, "..");
 const publicDir = path.join(root, "public");
 const projectsDir = path.join(publicDir, "projects");
+const timelineDir = path.join(publicDir, "timeline");
 const imagesDir = path.join(publicDir, "images");
 const resumeSourcePdf = path.join(root, "Deven V Resume.pdf");
 const legacyResumePublicPath = path.join(publicDir, "resume");
@@ -49,6 +50,7 @@ const seo = loadExports(path.join(root, "src", "seo.js"), {
 
 const { projects, profile } = data;
 const { siteConfig, absoluteUrl } = configExports;
+const timelineData = JSON.parse(fs.readFileSync(path.join(root, "src", "timelineData.json"), "utf8"));
 
 const portfolioSections = [
   { group: "featured", title: "Featured Work", headingId: "featured-work" },
@@ -122,7 +124,15 @@ function verificationMeta() {
   return tags.join("\n  ");
 }
 
-function pageHead({ title, description, canonical, jsonLd, robots = "index,follow", ogType = "website" }) {
+function pageHead({
+  title,
+  description,
+  canonical,
+  jsonLd,
+  robots = "index,follow",
+  ogType = "website",
+  extraCss = "",
+}) {
   const ogImage = absoluteUrl(siteConfig.ogImage);
   const verificationTags = verificationMeta();
 
@@ -159,7 +169,7 @@ function pageHead({ title, description, canonical, jsonLd, robots = "index,follo
   <script type="application/ld+json">${seo.safeJsonLd(jsonLd)}</script>
   <title>${escapeHtml(title)}</title>
   <script>${initialThemeScript()}</script>
-  <style>${staticCss()}</style>
+  <style>${staticCss()}${extraCss}</style>
 </head>`;
 }
 
@@ -190,6 +200,7 @@ function layout({ title, description, canonical, jsonLd, body, robots, ogType })
       <div class="top-actions">
         <nav class="nav" aria-label="Primary navigation">
           <a href="/projects/">Projects</a>
+          <a href="/timeline">Timeline</a>
           <a href="/#experience">Experience</a>
           <a href="/#skills">About / Skills</a>
           <a href="/#contact">Contact</a>
@@ -393,6 +404,230 @@ function projectsIndexPage() {
   });
 }
 
+function timelineStaticCss() {
+  return `
+html,body{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,body::-webkit-scrollbar{width:0;height:0;display:none}body{margin:0;overflow-x:hidden;background:#11100e;color:#fff}.timeline-stage{position:relative;width:100vw;min-height:${timelineData.screens.length * 100}svh;overflow:hidden;isolation:isolate}.timeline-screen{position:relative;width:100vw;height:100svh;overflow:hidden;background:repeating-linear-gradient(to bottom,transparent 0,transparent calc(100% / 12 - 1px),rgba(255,255,255,.14) calc(100% / 12 - 1px),rgba(255,255,255,.14) calc(100% / 12)),repeating-linear-gradient(to bottom,transparent 0,transparent calc(100% / 12),rgba(255,255,255,.045) calc(100% / 12),rgba(255,255,255,.045) calc(100% / 6)),var(--screen-color)}.month-ticks{position:absolute;inset:0 auto 0 1.43%;z-index:2;display:grid;grid-template-rows:repeat(12,1fr);width:.86%;pointer-events:none}.month-ticks span{align-self:center;width:100%;height:3px;border-radius:999px;background:rgba(255,255,255,.18)}.month-labels{position:absolute;inset:0 2.42% 0 auto;z-index:4;display:grid;grid-template-rows:repeat(12,1fr);width:2.72%;min-width:34px;pointer-events:none}.month-labels span{align-self:center;color:rgba(255,255,255,.56);font-size:clamp(.6rem,.93vw,.82rem);font-weight:500;line-height:1;text-align:right}.year-label{position:absolute;right:2.42%;bottom:.67%;z-index:5;width:5.72%;min-width:70px;color:rgba(255,255,255,.86);font-size:clamp(.82rem,1.43vw,1.25rem);font-weight:650;line-height:1.2;text-align:right}.glass-arrow{position:absolute;right:2.14%;z-index:6;display:grid;width:clamp(38px,3.86vw,54px);height:clamp(38px,3.86vw,54px);padding:0;place-items:center;border:0;background:transparent;opacity:.9;cursor:pointer;text-decoration:none}.glass-arrow.up{top:2.3%}.glass-arrow.down{bottom:5.78%}.glass-arrow.dimmed{opacity:.55;pointer-events:none}.glass-arrow span{display:block;width:78%;height:68%;clip-path:polygon(50% 0,100% 44%,73% 44%,73% 100%,27% 100%,27% 44%,0 44%);background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(255,255,255,.28) 58%,rgba(255,255,255,.72)),rgba(255,255,255,.34);filter:drop-shadow(0 9px 10px rgba(0,0,0,.14));box-shadow:inset 2px 2px 4px rgba(255,255,255,.8),inset -3px -4px 7px rgba(255,255,255,.24);backdrop-filter:blur(20px) saturate(1.18)}.glass-arrow.down span{transform:rotate(180deg)}.rectangle-overlay{position:absolute;inset:0;z-index:3;pointer-events:none}.glass-rect{position:absolute;left:var(--rect-left);top:var(--rect-top);width:var(--rect-width);height:var(--rect-height);min-width:42px;min-height:72px;overflow:hidden;border:1.5px solid rgba(255,255,255,.68);border-radius:clamp(14px,1.72vw,24px);background:linear-gradient(135deg,rgba(255,255,255,.38),rgba(var(--origin-rgb),.68) 38%,rgba(0,0,0,.18)),var(--origin-color);box-shadow:16px 0 30px rgba(0,0,0,.16),0 10px 24px rgba(0,0,0,.12),inset -5px -6px 10px rgba(255,255,255,.5),inset 4px 5px 10px rgba(255,255,255,.38);opacity:.95;backdrop-filter:blur(68px) saturate(1.25)}.glass-rect:before{content:"";position:absolute;inset:-8% -26%;background:radial-gradient(ellipse at 46% calc(18% + var(--wave-offset)),rgba(255,255,255,.24),transparent 26%),radial-gradient(ellipse at 56% calc(42% + var(--wave-offset)),rgba(255,255,255,.16),transparent 28%),linear-gradient(104deg,transparent 14%,rgba(255,255,255,.16) 38%,rgba(var(--origin-rgb),.94) 50%,transparent 73%);filter:blur(9px);opacity:.82;transform:skewY(-11deg)}.glass-rect:after{content:"";position:absolute;inset:10px 12px 12px 10px;border-radius:inherit;background:linear-gradient(to bottom,rgba(255,255,255,.52),transparent 11%),linear-gradient(to right,rgba(255,255,255,.62),transparent 8%,transparent 88%,rgba(255,255,255,.32)),radial-gradient(circle at 78% 9%,rgba(255,255,255,.36),transparent 14%);mix-blend-mode:screen;pointer-events:none}.rect-text{position:relative;z-index:2;display:grid;gap:clamp(.45rem,1.3vw,.8rem);width:calc(100% - 24px);margin:clamp(3.4rem,6vw,4.5rem) auto 0;padding:clamp(.75rem,1.4vw,1rem) .45rem;border-radius:16px;background:rgba(115,0,0,.18);text-align:center;text-shadow:0 1px 8px rgba(80,0,0,.34)}.rect-text h1{margin:0;color:#fff;font-size:clamp(.78rem,2.14vw,1.9rem);font-weight:800;line-height:1.1}.rect-text p{margin:0 auto;max-width:16ch;color:rgba(255,255,255,.94);font-size:clamp(.48rem,.93vw,.82rem);line-height:1.32}@media(max-width:680px){.month-ticks{left:12px;width:10px}.month-labels,.year-label,.glass-arrow{right:12px}.glass-rect{border-width:1px}.rect-text{width:calc(100% - 12px);margin-top:2.6rem;padding-inline:.25rem}}`;
+}
+
+function timelineLifeStaticCss() {
+  return `.column-atmosphere{position:absolute;inset:0;z-index:1;pointer-events:none;mix-blend-mode:screen}.column-atmosphere span{position:absolute;top:0;bottom:0;left:var(--column-left);width:var(--column-width);overflow:hidden;opacity:.62;background:linear-gradient(to right,transparent 0,rgba(var(--column-rgb),.08) 18%,rgba(255,255,255,.075) 50%,rgba(var(--column-rgb),.08) 82%,transparent 100%)}.column-atmosphere span:before,.column-atmosphere span:after{content:"";position:absolute;inset:-18% 9%;border-radius:999px;pointer-events:none}.column-atmosphere span:before{background:radial-gradient(ellipse at 50% 8%,rgba(255,255,255,.22),transparent 17%),radial-gradient(ellipse at 50% 46%,rgba(var(--column-rgb),.22),transparent 24%),radial-gradient(ellipse at 50% 88%,rgba(255,255,255,.12),transparent 18%);filter:blur(18px);animation:columnBreath 9s ease-in-out infinite;animation-delay:var(--column-delay)}.column-atmosphere span:after{background:linear-gradient(108deg,transparent 0,transparent 34%,rgba(255,255,255,.16) 44%,rgba(var(--column-rgb),.16) 51%,transparent 62%,transparent 100%);filter:blur(10px);opacity:.42;animation:columnGlint 13s ease-in-out infinite;animation-delay:calc(var(--column-delay) - 1.5s)}.rect-text{z-index:4;gap:clamp(.12rem,.42vw,.32rem);width:calc(100% - 18px);max-height:calc(100% - 18px);margin:9px auto 0;padding:clamp(.36rem,.72vw,.62rem) clamp(.32rem,.72vw,.56rem);overflow:hidden;border-radius:clamp(10px,1.14vw,16px);background:rgba(30,20,12,.18);text-align:left;text-shadow:0 1px 8px rgba(0,0,0,.24);backdrop-filter:blur(10px)}.rect-text h1{font-size:clamp(.54rem,1.02vw,.98rem);line-height:1.08;overflow-wrap:break-word;word-break:normal}.rect-text time,.rect-text strong{display:block;color:rgba(255,255,255,.8);font-size:clamp(.42rem,.62vw,.64rem);font-weight:700;line-height:1.12;overflow-wrap:break-word;word-break:normal}.rect-text strong{color:rgba(255,255,255,.7);font-weight:650}.rect-text p{display:-webkit-box;margin:0;max-width:none;color:rgba(255,255,255,.88);font-size:clamp(.42rem,.68vw,.68rem);line-height:1.22;overflow:hidden;overflow-wrap:break-word;word-break:normal;-webkit-box-orient:vertical;-webkit-line-clamp:5}.end-milestone{position:absolute;left:9px;right:9px;bottom:9px;z-index:4;display:grid;gap:.12rem;padding:clamp(.34rem,.66vw,.58rem);overflow:hidden;border-radius:clamp(10px,1vw,15px);background:rgba(30,20,12,.2);color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.24);backdrop-filter:blur(10px)}.end-milestone h2{margin:0;font-size:clamp(.52rem,.92vw,.9rem);line-height:1.08}.end-milestone time,.end-milestone span{color:rgba(255,255,255,.78);font-size:clamp(.4rem,.58vw,.6rem);font-weight:700;line-height:1.12}.end-milestone span{color:rgba(255,255,255,.68)}.glass-rect{animation:rectangleFloat 8s ease-in-out infinite;animation-delay:var(--rect-delay)}.glass-rect:before{animation:liquidWave 10s ease-in-out infinite;animation-delay:var(--rect-delay)}.glass-rect:after{animation:rimPulse 6.8s ease-in-out infinite;animation-delay:calc(var(--rect-delay) - .8s)}.glass-rect:hover{box-shadow:18px 0 34px rgba(0,0,0,.18),0 16px 34px rgba(var(--origin-rgb),.28),inset -5px -6px 10px rgba(255,255,255,.58),inset 4px 5px 12px rgba(255,255,255,.44)}@keyframes columnBreath{0%,100%{transform:translate3d(0,-2.5%,0) scaleY(1);opacity:.5}50%{transform:translate3d(0,2.5%,0) scaleY(1.035);opacity:.86}}@keyframes columnGlint{0%,100%{transform:translate3d(calc(var(--column-sway) * -13%),-1.5%,0) skewY(-8deg);opacity:.24}48%,58%{transform:translate3d(calc(var(--column-sway) * 14%),1.5%,0) skewY(-8deg);opacity:.58}}@keyframes rectangleFloat{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-.42%,0)}}@keyframes liquidWave{0%,100%{transform:translate3d(-2%,-1%,0) skewY(-11deg);opacity:.72}50%{transform:translate3d(3%,1.5%,0) skewY(-8deg);opacity:.94}}@keyframes rimPulse{0%,100%{opacity:.74;transform:translate3d(0,0,0)}50%{opacity:1;transform:translate3d(0,-.8%,0)}}@media(max-width:760px){.rect-text{width:calc(100% - 10px);margin-top:5px;padding-inline:.25rem}.rect-text strong,.rect-text p{display:none}.end-milestone{left:5px;right:5px;bottom:5px}.end-milestone span{display:none}}@media(prefers-reduced-motion:reduce){.column-atmosphere span:before,.column-atmosphere span:after,.glass-rect,.glass-rect:before,.glass-rect:after{animation:none}}`;
+}
+
+function timelineNavigationStaticCss() {
+  return `body{--travel-start:118%;--travel-end:-118%}body.timeline-up{--travel-start:-118%;--travel-end:118%}body.timeline-transitioning:before,body.timeline-transitioning:after{content:"";position:fixed;inset:-14vh -8vw;z-index:30;pointer-events:none}body.timeline-transitioning:before{background:linear-gradient(to bottom,transparent 0,rgba(255,255,255,.08) 23%,rgba(255,255,255,.34) 47%,rgba(255,255,255,.13) 61%,transparent 100%);filter:blur(.5px);mix-blend-mode:screen;animation:carryoverGlassWash 1050ms cubic-bezier(.22,1,.36,1)}body.timeline-transitioning:after{background:radial-gradient(ellipse at 50% 42%,rgba(255,255,255,.18),transparent 38%),linear-gradient(90deg,transparent 0,rgba(255,255,255,.08) 18%,rgba(255,255,255,.16) 50%,rgba(255,255,255,.08) 82%,transparent 100%);mix-blend-mode:overlay;animation:carryoverBloom 1050ms ease-out}.timeline-stage.timeline-transitioning{animation:stageTravelDepth 1050ms cubic-bezier(.22,1,.36,1)}.timeline-screen:after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,rgba(255,255,255,.18),transparent 38%),linear-gradient(to bottom,transparent,rgba(255,255,255,.12),transparent);opacity:0;mix-blend-mode:soft-light}.timeline-screen.is-arriving:after{animation:targetYearArrival 1050ms cubic-bezier(.22,1,.36,1)}@keyframes carryoverGlassWash{0%{transform:translate3d(0,var(--travel-start),0) skewY(-5deg);opacity:0}18%{opacity:.86}100%{transform:translate3d(0,var(--travel-end),0) skewY(-5deg);opacity:0}}@keyframes carryoverBloom{0%,100%{opacity:0;transform:scaleY(.94)}42%{opacity:1;transform:scaleY(1)}}@keyframes stageTravelDepth{0%,100%{filter:saturate(1) brightness(1);transform:scale(1)}38%{filter:saturate(1.18) brightness(1.04);transform:scale(1.006)}}@keyframes targetYearArrival{0%{opacity:0;transform:scaleY(.94)}52%{opacity:1;transform:scaleY(1)}100%{opacity:0;transform:scaleY(1.04)}}@media(prefers-reduced-motion:reduce){body.timeline-transitioning:before,body.timeline-transitioning:after,.timeline-stage.timeline-transitioning,.timeline-screen.is-arriving:after{animation:none;opacity:0}}`;
+}
+
+function timelineContinuationStaticCss() {
+  return `.continue-marker{position:absolute;top:var(--continue-top);left:9px;right:9px;z-index:5;padding:.28rem .38rem;overflow:hidden;border-radius:999px;background:rgba(255,255,255,.2);color:rgba(255,255,255,.9);font-size:clamp(.38rem,.58vw,.58rem);font-weight:800;line-height:1;text-align:center;text-overflow:ellipsis;text-shadow:0 1px 8px rgba(0,0,0,.24);text-transform:lowercase;white-space:nowrap;backdrop-filter:blur(12px) saturate(1.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.34),0 6px 14px rgba(0,0,0,.12)}@media(max-width:760px){.continue-marker{left:5px;right:5px;padding-inline:.24rem}}`;
+}
+
+function timelineLinkStaticCss() {
+  return `.glass-rect{color:inherit;text-decoration:none}.glass-rect[href]{pointer-events:auto;cursor:pointer}`;
+}
+
+function timelineNavigationScript() {
+  return `(function(){var timer;function cleanup(stage,target){document.body.classList.remove('timeline-transitioning','timeline-up','timeline-down');if(stage)stage.classList.remove('timeline-transitioning');if(target)target.classList.remove('is-arriving');}function setup(){var stage=document.querySelector('.timeline-stage');var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;document.querySelectorAll('.glass-arrow[href^="#year-"]').forEach(function(link){link.addEventListener('click',function(event){var id=link.getAttribute('href');var target=document.querySelector(id);if(!target)return;event.preventDefault();if(timer)window.clearTimeout(timer);var direction=link.classList.contains('up')?'up':'down';cleanup(stage,document.querySelector('.timeline-screen.is-arriving'));if(!reduce){document.body.classList.add('timeline-transitioning','timeline-'+direction);if(stage)stage.classList.add('timeline-transitioning');target.classList.add('is-arriving');}target.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});window.history.replaceState(null,'',id);timer=window.setTimeout(function(){cleanup(stage,target);},reduce?0:1050);});});}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',setup);}else{setup();}})();`;
+}
+
+function hexToRgb(hex) {
+  const value = parseInt(hex.replace("#", ""), 16);
+  return {
+    r: (value >> 16) & 255,
+    g: (value >> 8) & 255,
+    b: value & 255,
+  };
+}
+
+function timelineRectangleStyle(rect, visibleHeight, index) {
+  const geometry = timelineRectangleGeometry(rect);
+  const clampedHeight = Math.min(
+    geometry.height,
+    Math.max(0, visibleHeight - geometry.y)
+  );
+  const rgb = hexToRgb(rect.originColor);
+  return [
+    `--rect-left:${(geometry.x / timelineData.design.width) * 100}%`,
+    `--rect-top:${(geometry.y / visibleHeight) * 100}%`,
+    `--rect-width:${(geometry.width / timelineData.design.width) * 100}%`,
+    `--rect-height:${(clampedHeight / visibleHeight) * 100}%`,
+    `--origin-color:${rect.originColor}`,
+    `--origin-rgb:${rgb.r},${rgb.g},${rgb.b}`,
+    `--wave-offset:${index * 17}%`,
+    `--rect-delay:${index * -0.72}s`,
+  ].join(";");
+}
+
+function timelineRectangleGeometry(rect) {
+  if (rect.figma) return rect.figma;
+
+  const y = timelineDatePosition(rect.start);
+  const endY = timelineDatePosition(rect.end);
+  const minHeight = timelineData.design.screenHeight * 0.075;
+
+  return {
+    x: (rect.column - 1) * timelineData.design.columnWidth + timelineData.design.rectangleInset,
+    y,
+    width: timelineData.design.rectangleWidth,
+    height: Math.max(minHeight, endY - y),
+  };
+}
+
+function timelineContinuationMarkers(rect, visibleHeight) {
+  const geometry = timelineRectangleGeometry(rect);
+  const clampedHeight = Math.min(
+    geometry.height,
+    Math.max(0, visibleHeight - geometry.y)
+  );
+  const startIndex = timelineData.screens.findIndex((screen) => screen.year === rect.start.year);
+  const endIndex = timelineData.screens.findIndex((screen) => screen.year === rect.end.year);
+
+  if (startIndex < 0 || endIndex <= startIndex || clampedHeight <= 0) {
+    if (!rect.continuesFromBefore || clampedHeight <= 0) {
+      return [];
+    }
+  }
+
+  const markers = [];
+
+  if (rect.continuesFromBefore) {
+    markers.push({
+      year: "before",
+      top: Math.min(96, Math.max(2, ((0 - geometry.y) / clampedHeight) * 100 + 1.4)),
+      label: rect.continueLabel || (rect.content && rect.content.heading) || rect.name,
+    });
+  }
+
+  markers.push(
+    ...timelineData.screens.slice(startIndex + 1, endIndex + 1).map((screen) => {
+      const screenIndex = timelineData.screens.findIndex((item) => item.year === screen.year);
+      const boundaryY = screenIndex * timelineData.design.screenHeight;
+      const top = ((boundaryY - geometry.y) / clampedHeight) * 100;
+
+      return {
+        year: screen.year,
+        top: Math.min(96, Math.max(2, top + 1.4)),
+        label: rect.continueLabel || (rect.content && rect.content.heading) || rect.name,
+      };
+    })
+  );
+
+  return markers;
+}
+
+function timelineDatePosition(point) {
+  const screenIndex = timelineData.screens.findIndex((screen) => screen.year === point.year);
+  const monthIndex = timelineData.months.indexOf(point.month);
+
+  if (screenIndex < 0 || monthIndex < 0) return 0;
+
+  const monthHeight = timelineData.design.screenHeight / timelineData.months.length;
+  return (
+    screenIndex * timelineData.design.screenHeight +
+    monthIndex * monthHeight +
+    (point.offset || 0) * monthHeight
+  );
+}
+
+function timelineColumnStyle(index) {
+  const rectForColumn = timelineData.rectangles.find((rect) => rect.column === index + 1);
+  const color =
+    (rectForColumn && rectForColumn.originColor) ||
+    timelineData.screens[index % timelineData.screens.length].color;
+  const rgb = hexToRgb(color);
+  const left =
+    (index * timelineData.design.columnWidth / timelineData.design.width) * 100;
+  const width =
+    (timelineData.design.columnWidth / timelineData.design.width) * 100;
+
+  return [
+    `--column-left:${left}%`,
+    `--column-width:${width}%`,
+    `--column-rgb:${rgb.r},${rgb.g},${rgb.b}`,
+    `--column-delay:${index * -1.35}s`,
+    `--column-sway:${index % 2 === 0 ? 1 : -1}`,
+  ].join(";");
+}
+
+function timelinePage() {
+  const title = "Rainbow Carryover Timeline | Deven Varu";
+  const description =
+    "A vertical rainbow carryover timeline with liquid-glass rectangles spanning months and years.";
+  const visibleHeight = timelineData.screens.length * timelineData.design.screenHeight;
+  const monthLabels = timelineData.months
+    .map((month) => `<span>${escapeHtml(month)}</span>`)
+    .join("");
+  const monthTicks = timelineData.months.map(() => "<span></span>").join("");
+  const screens = timelineData.screens
+    .map((screen, index) => {
+      const previousScreen = timelineData.screens[index - 1];
+      const nextScreen = timelineData.screens[index + 1];
+      const previousArrow = previousScreen
+        ? `<a class="glass-arrow up" href="#year-${escapeHtml(previousScreen.year)}" aria-label="Previous year from ${escapeHtml(screen.year)}"><span></span></a>`
+        : `<span class="glass-arrow up dimmed" aria-label="Previous year from ${escapeHtml(screen.year)}" aria-disabled="true"><span></span></span>`;
+      const nextArrow = nextScreen
+        ? `<a class="glass-arrow down" href="#year-${escapeHtml(nextScreen.year)}" aria-label="Next year from ${escapeHtml(screen.year)}"><span></span></a>`
+        : `<span class="glass-arrow down dimmed" aria-label="Next year from ${escapeHtml(screen.year)}" aria-disabled="true"><span></span></span>`;
+
+      return `<section id="year-${escapeHtml(screen.year)}" class="timeline-screen" style="--screen-color:${escapeHtml(screen.color)}" aria-label="${escapeHtml(screen.year)} timeline screen">
+        <div class="month-ticks" aria-hidden="true">${monthTicks}</div>
+        <div class="month-labels" aria-label="${escapeHtml(screen.year)} months">${monthLabels}</div>
+        <div class="year-label">${escapeHtml(screen.year)}</div>
+        ${previousArrow}
+        ${nextArrow}
+      </section>`;
+    })
+    .join("");
+  const columns = Array.from({ length: timelineData.design.columnCount }, (_, index) =>
+    `<span style="${timelineColumnStyle(index)}"></span>`
+  ).join("");
+  const rectangles = timelineData.rectangles
+    .filter((rect) => timelineRectangleGeometry(rect).y < visibleHeight)
+    .map((rect, index) => {
+      const isCompact = timelineRectangleGeometry(rect).height < 150;
+      const content = rect.content ? `<div class="rect-text">
+          <h1>${escapeHtml(rect.content.heading)}</h1>
+          ${rect.content.date ? `<time>${escapeHtml(rect.content.date)}</time>` : ""}
+          ${rect.content.meta && !isCompact ? `<strong>${escapeHtml(rect.content.meta)}</strong>` : ""}
+          ${!isCompact ? `<p>${escapeHtml(rect.content.body)}</p>` : ""}
+        </div>` : "";
+      const endMilestone = rect.endMilestone && !isCompact ? `<div class="end-milestone">
+          <h2>${escapeHtml(rect.endMilestone.heading)}</h2>
+          <time>${escapeHtml(rect.endMilestone.date)}</time>
+          ${rect.endMilestone.meta ? `<span>${escapeHtml(rect.endMilestone.meta)}</span>` : ""}
+        </div>` : "";
+      const continuationMarkers = timelineContinuationMarkers(rect, visibleHeight)
+        .map(
+          (marker) =>
+            `<div class="continue-marker" style="--continue-top:${marker.top}%">continue: ${escapeHtml(marker.label)}</div>`
+        )
+        .join("");
+      const tagName = rect.url ? "a" : "article";
+      const href = rect.url
+        ? ` href="${escapeHtml(rect.url)}" target="_blank" rel="noreferrer"`
+        : "";
+      const labelPrefix = rect.url ? "Open " : "";
+      return `<${tagName} class="glass-rect"${href} style="${timelineRectangleStyle(rect, visibleHeight, index)}" aria-label="${labelPrefix}${escapeHtml(rect.name)}">${content}${continuationMarkers}${endMilestone}</${tagName}>`;
+    })
+    .join("");
+
+  return `${pageHead({
+    title,
+    description,
+    canonical: absoluteUrl("/timeline"),
+    jsonLd: seo.profilePageSchema(),
+    extraCss: timelineStaticCss() + timelineLifeStaticCss() + timelineNavigationStaticCss() + timelineContinuationStaticCss() + timelineLinkStaticCss(),
+  })}
+<body>
+  <main class="timeline-stage" aria-label="Rainbow carryover timeline">
+    ${screens}
+    <div class="column-atmosphere" aria-hidden="true">${columns}</div>
+    <div class="rectangle-overlay" aria-label="Carryover glass rectangles">${rectangles}</div>
+  </main>
+  <script>${timelineNavigationScript()}</script>
+</body>
+</html>`;
+}
+
 function notFoundPage() {
   return layout({
     title: "Page not found | Deven Varu",
@@ -413,6 +648,7 @@ function sitemap() {
   const urls = [
     { loc: absoluteUrl("/"), priority: "1.0" },
     { loc: absoluteUrl("/projects/"), priority: "0.9" },
+    { loc: absoluteUrl("/timeline"), priority: "0.6" },
     ...projects.map((project) => ({
       loc: absoluteUrl(`/projects/${project.slug}/`),
       priority: ["interview-with-ai", "codex-session-visualizer"].includes(project.slug)
@@ -453,6 +689,7 @@ function generate() {
 
   writeFile(path.join(publicDir, "index.html"), homepagePage());
   writeFile(path.join(projectsDir, "index.html"), projectsIndexPage());
+  writeFile(path.join(timelineDir, "index.html"), timelinePage());
   syncResumePdf();
   projects.forEach((project) => {
     writeFile(path.join(projectsDir, project.slug, "index.html"), projectPage(project));

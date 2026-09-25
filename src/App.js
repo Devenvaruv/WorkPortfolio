@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { awards, experience, profile, projects, skillGroups } from "./portfolioData";
 import { profilePageSchema, safeJsonLd } from "./seo";
+import TimelinePage from "./TimelinePage";
 
 const featuredTitles = ["InterviewWithAI", "Codex Session Visualizer", "CodeTown"];
 const additionalOrder = [
@@ -17,6 +18,8 @@ const LIGHT_THEME = "light";
 function App() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const [theme, setTheme] = useStoredTheme();
+  const pathName =
+    typeof window === "undefined" ? "/" : window.location.pathname.replace(/\/+$/, "") || "/";
   const isLightTheme = theme === LIGHT_THEME;
   const featuredProjects = featuredTitles
     .map((title) => projects.find((project) => project.title === title))
@@ -33,6 +36,15 @@ function App() {
       }
     : null;
 
+  if (pathName === "/timeline") {
+    return (
+      <>
+        <GlobalStyle />
+        <TimelinePage />
+      </>
+    );
+  }
+
   return (
     <>
       <GlobalStyle />
@@ -43,6 +55,7 @@ function App() {
           <NavBar>
             <Nav aria-label="Primary navigation">
               <a href="/projects/">Projects</a>
+              <a href="/timeline">Timeline</a>
               <a href="#experience">Experience</a>
               <a href="#skills">About / Skills</a>
               <a href="#contact">Contact</a>
