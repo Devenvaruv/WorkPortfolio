@@ -62,11 +62,43 @@
         "meta": "Here2Stay / Full-Stack",
         "body": "Bilingual intake portal for EBPREC with resident submissions, resource delivery, housing assistance, and a RAG chatbot."
       },
-      "endMilestone": {
-        "heading": "Final Development, Handover, Report",
-        "date": "Dec 2024",
-        "meta": "Project wrap"
-      }
+      "milestones": [
+        {
+          "point": { "year": "2023", "month": "Jul", "offset": 0.5 },
+          "date": "July 2023",
+          "heading": "Initial Intake Form"
+        },
+        {
+          "point": { "year": "2023", "month": "Sep", "offset": 0.5 },
+          "date": "September 2023",
+          "heading": "Three-Page Redesign"
+        },
+        {
+          "point": { "year": "2024", "month": "Feb", "offset": 0.5 },
+          "date": "February 2024",
+          "heading": "Simplified Intake"
+        },
+        {
+          "point": { "year": "2024", "month": "Apr", "offset": 0.5 },
+          "date": "April 2024",
+          "heading": "Automated Data Organization"
+        },
+        {
+          "point": { "year": "2024", "month": "Jul", "offset": 0.5 },
+          "date": "July 2024",
+          "heading": "Spanish Language Support"
+        },
+        {
+          "point": { "year": "2024", "month": "Nov", "offset": 0.5 },
+          "date": "November 2024",
+          "heading": "AI Resource Chatbot"
+        },
+        {
+          "point": { "year": "2024", "month": "Dec", "offset": 0.5 },
+          "date": "December 2024",
+          "heading": "Project Concludes"
+        }
+      ]
     },
     {
       "id": "sustainability-challenge",
@@ -99,11 +131,48 @@
         "meta": "Road Asset Detection / Computer Vision",
         "body": "Roadway asset detection research with dataset development, YOLO models, evaluation, and infrastructure visualization."
       },
-      "endMilestone": {
-        "heading": "Research Wrap",
-        "date": "Dec 2025",
-        "meta": "Final research period"
-      }
+      "milestones": [
+        {
+          "point": { "year": "2024", "month": "Jun", "offset": 0.5 },
+          "date": "June 2024",
+          "heading": "Initial Detection Pipeline"
+        },
+        {
+          "point": { "year": "2024", "month": "Sep", "offset": 0.5 },
+          "date": "September 2024",
+          "heading": "Model Exploration"
+        },
+        {
+          "point": { "year": "2024", "month": "Dec", "offset": 0.5 },
+          "date": "December 2024",
+          "heading": "Dataset Expansion"
+        },
+        {
+          "point": { "year": "2025", "month": "Feb", "offset": 0.5 },
+          "date": "February 2025",
+          "heading": "Reducing False Positives"
+        },
+        {
+          "point": { "year": "2025", "month": "Mar", "offset": 0.5 },
+          "date": "March 2025",
+          "heading": "3D Validation Tool"
+        },
+        {
+          "point": { "year": "2025", "month": "Jul", "offset": 0.5 },
+          "date": "July 2025",
+          "heading": "Specialized Detection Models"
+        },
+        {
+          "point": { "year": "2025", "month": "Oct", "offset": 0.5 },
+          "date": "October 2025",
+          "heading": "Integrated Detection & Validation"
+        },
+        {
+          "point": { "year": "2025", "month": "Dec", "offset": 0.5 },
+          "date": "December 2025",
+          "heading": "Final Research Outcome"
+        }
+      ]
     },
     {
       "id": "quantumviz",
@@ -276,7 +345,7 @@
         "heading": "AI Engineer",
         "date": "Feb 2026 - Present",
         "meta": "AI Engineering / Ongoing",
-        "body": "Ongoing AI engineering work continuing through September 2026."
+        "body": "Ongoing projects."
       }
     },
     {

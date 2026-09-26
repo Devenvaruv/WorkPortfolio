@@ -410,7 +410,7 @@ html,body{scrollbar-width:none;-ms-overflow-style:none}html::-webkit-scrollbar,b
 }
 
 function timelineLifeStaticCss() {
-  return `.column-atmosphere{position:absolute;inset:0;z-index:1;pointer-events:none;mix-blend-mode:screen}.column-atmosphere span{position:absolute;top:0;bottom:0;left:var(--column-left);width:var(--column-width);overflow:hidden;opacity:.62;background:linear-gradient(to right,transparent 0,rgba(var(--column-rgb),.08) 18%,rgba(255,255,255,.075) 50%,rgba(var(--column-rgb),.08) 82%,transparent 100%)}.column-atmosphere span:before,.column-atmosphere span:after{content:"";position:absolute;inset:-18% 9%;border-radius:999px;pointer-events:none}.column-atmosphere span:before{background:radial-gradient(ellipse at 50% 8%,rgba(255,255,255,.22),transparent 17%),radial-gradient(ellipse at 50% 46%,rgba(var(--column-rgb),.22),transparent 24%),radial-gradient(ellipse at 50% 88%,rgba(255,255,255,.12),transparent 18%);filter:blur(18px);animation:columnBreath 9s ease-in-out infinite;animation-delay:var(--column-delay)}.column-atmosphere span:after{background:linear-gradient(108deg,transparent 0,transparent 34%,rgba(255,255,255,.16) 44%,rgba(var(--column-rgb),.16) 51%,transparent 62%,transparent 100%);filter:blur(10px);opacity:.42;animation:columnGlint 13s ease-in-out infinite;animation-delay:calc(var(--column-delay) - 1.5s)}.rect-text{z-index:4;gap:clamp(.12rem,.42vw,.32rem);width:calc(100% - 18px);max-height:calc(100% - 18px);margin:9px auto 0;padding:clamp(.36rem,.72vw,.62rem) clamp(.32rem,.72vw,.56rem);overflow:hidden;border-radius:clamp(10px,1.14vw,16px);background:rgba(30,20,12,.18);text-align:left;text-shadow:0 1px 8px rgba(0,0,0,.24);backdrop-filter:blur(10px)}.rect-text h1{font-size:clamp(.54rem,1.02vw,.98rem);line-height:1.08;overflow-wrap:break-word;word-break:normal}.rect-text time,.rect-text strong{display:block;color:rgba(255,255,255,.8);font-size:clamp(.42rem,.62vw,.64rem);font-weight:700;line-height:1.12;overflow-wrap:break-word;word-break:normal}.rect-text strong{color:rgba(255,255,255,.7);font-weight:650}.rect-text p{display:-webkit-box;margin:0;max-width:none;color:rgba(255,255,255,.88);font-size:clamp(.42rem,.68vw,.68rem);line-height:1.22;overflow:hidden;overflow-wrap:break-word;word-break:normal;-webkit-box-orient:vertical;-webkit-line-clamp:5}.end-milestone{position:absolute;left:9px;right:9px;bottom:9px;z-index:4;display:grid;gap:.12rem;padding:clamp(.34rem,.66vw,.58rem);overflow:hidden;border-radius:clamp(10px,1vw,15px);background:rgba(30,20,12,.2);color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.24);backdrop-filter:blur(10px)}.end-milestone h2{margin:0;font-size:clamp(.52rem,.92vw,.9rem);line-height:1.08}.end-milestone time,.end-milestone span{color:rgba(255,255,255,.78);font-size:clamp(.4rem,.58vw,.6rem);font-weight:700;line-height:1.12}.end-milestone span{color:rgba(255,255,255,.68)}.glass-rect{animation:rectangleFloat 8s ease-in-out infinite;animation-delay:var(--rect-delay)}.glass-rect:before{animation:liquidWave 10s ease-in-out infinite;animation-delay:var(--rect-delay)}.glass-rect:after{animation:rimPulse 6.8s ease-in-out infinite;animation-delay:calc(var(--rect-delay) - .8s)}.glass-rect:hover{box-shadow:18px 0 34px rgba(0,0,0,.18),0 16px 34px rgba(var(--origin-rgb),.28),inset -5px -6px 10px rgba(255,255,255,.58),inset 4px 5px 12px rgba(255,255,255,.44)}@keyframes columnBreath{0%,100%{transform:translate3d(0,-2.5%,0) scaleY(1);opacity:.5}50%{transform:translate3d(0,2.5%,0) scaleY(1.035);opacity:.86}}@keyframes columnGlint{0%,100%{transform:translate3d(calc(var(--column-sway) * -13%),-1.5%,0) skewY(-8deg);opacity:.24}48%,58%{transform:translate3d(calc(var(--column-sway) * 14%),1.5%,0) skewY(-8deg);opacity:.58}}@keyframes rectangleFloat{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-.42%,0)}}@keyframes liquidWave{0%,100%{transform:translate3d(-2%,-1%,0) skewY(-11deg);opacity:.72}50%{transform:translate3d(3%,1.5%,0) skewY(-8deg);opacity:.94}}@keyframes rimPulse{0%,100%{opacity:.74;transform:translate3d(0,0,0)}50%{opacity:1;transform:translate3d(0,-.8%,0)}}@media(max-width:760px){.rect-text{width:calc(100% - 10px);margin-top:5px;padding-inline:.25rem}.rect-text strong,.rect-text p{display:none}.end-milestone{left:5px;right:5px;bottom:5px}.end-milestone span{display:none}}@media(prefers-reduced-motion:reduce){.column-atmosphere span:before,.column-atmosphere span:after,.glass-rect,.glass-rect:before,.glass-rect:after{animation:none}}`;
+  return `.column-atmosphere{position:absolute;inset:0;z-index:1;pointer-events:none;mix-blend-mode:screen}.column-atmosphere span{position:absolute;top:0;bottom:0;left:var(--column-left);width:var(--column-width);overflow:hidden;opacity:.62;background:linear-gradient(to right,transparent 0,rgba(var(--column-rgb),.08) 18%,rgba(255,255,255,.075) 50%,rgba(var(--column-rgb),.08) 82%,transparent 100%)}.column-atmosphere span:before,.column-atmosphere span:after{content:"";position:absolute;inset:-18% 9%;border-radius:999px;pointer-events:none}.column-atmosphere span:before{background:radial-gradient(ellipse at 50% 8%,rgba(255,255,255,.22),transparent 17%),radial-gradient(ellipse at 50% 46%,rgba(var(--column-rgb),.22),transparent 24%),radial-gradient(ellipse at 50% 88%,rgba(255,255,255,.12),transparent 18%);filter:blur(18px);animation:columnBreath 9s ease-in-out infinite;animation-delay:var(--column-delay)}.column-atmosphere span:after{background:linear-gradient(108deg,transparent 0,transparent 34%,rgba(255,255,255,.16) 44%,rgba(var(--column-rgb),.16) 51%,transparent 62%,transparent 100%);filter:blur(10px);opacity:.42;animation:columnGlint 13s ease-in-out infinite;animation-delay:calc(var(--column-delay) - 1.5s)}.rect-text{z-index:4;gap:clamp(.12rem,.42vw,.32rem);width:calc(100% - 18px);max-height:calc(100% - 18px);margin:9px auto 0;padding:clamp(.36rem,.72vw,.62rem) clamp(.32rem,.72vw,.56rem);overflow:hidden;border-radius:clamp(10px,1.14vw,16px);background:rgba(30,20,12,.18);text-align:left;text-shadow:0 1px 8px rgba(0,0,0,.24);backdrop-filter:blur(10px)}.rect-text h1{font-size:clamp(.54rem,1.02vw,.98rem);line-height:1.08;overflow-wrap:break-word;word-break:normal}.rect-text time,.rect-text strong{display:block;color:rgba(255,255,255,.8);font-size:clamp(.42rem,.62vw,.64rem);font-weight:700;line-height:1.12;overflow-wrap:break-word;word-break:normal}.rect-text strong{color:rgba(255,255,255,.7);font-weight:650}.rect-text p{display:-webkit-box;margin:0;max-width:none;color:rgba(255,255,255,.88);font-size:clamp(.42rem,.68vw,.68rem);line-height:1.22;overflow:hidden;overflow-wrap:break-word;word-break:normal;-webkit-box-orient:vertical;-webkit-line-clamp:5}.end-milestone{position:absolute;left:9px;right:9px;bottom:9px;z-index:4;display:grid;gap:.12rem;padding:clamp(.34rem,.66vw,.58rem);overflow:hidden;border-radius:clamp(10px,1vw,15px);background:rgba(30,20,12,.2);color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.24);backdrop-filter:blur(10px)}.end-milestone h2{margin:0;font-size:clamp(.52rem,.92vw,.9rem);line-height:1.08}.end-milestone time,.end-milestone span{color:rgba(255,255,255,.78);font-size:clamp(.4rem,.58vw,.6rem);font-weight:700;line-height:1.12}.end-milestone span{color:rgba(255,255,255,.68)}.glass-rect{animation:rectangleFloat 8s ease-in-out infinite;animation-delay:var(--rect-delay)}.glass-rect:before{inset:6px 8px 8px 7px;z-index:3;border-radius:inherit;background:radial-gradient(ellipse at 35% 24%,rgba(255,255,255,.34),transparent 20%),radial-gradient(ellipse at 72% 68%,rgba(255,255,255,.18),transparent 26%),linear-gradient(115deg,transparent 0%,rgba(255,255,255,.18) 28%,rgba(var(--origin-rgb),.26) 49%,rgba(255,255,255,.12) 64%,transparent 100%);background-size:160% 160%,150% 150%,190% 100%;mix-blend-mode:screen;opacity:.56;animation:glassCurrent 7.8s ease-in-out infinite;animation-delay:calc(var(--rect-delay) - .35s)}.glass-rect:after{animation:rimPulse 6.8s ease-in-out infinite;animation-delay:calc(var(--rect-delay) - .8s)}.glass-rect:hover{box-shadow:18px 0 34px rgba(0,0,0,.18),0 16px 34px rgba(var(--origin-rgb),.28),inset -5px -6px 10px rgba(255,255,255,.58),inset 4px 5px 12px rgba(255,255,255,.44)}@keyframes columnBreath{0%,100%{transform:translate3d(0,-2.5%,0) scaleY(1);opacity:.5}50%{transform:translate3d(0,2.5%,0) scaleY(1.035);opacity:.86}}@keyframes columnGlint{0%,100%{transform:translate3d(calc(var(--column-sway) * -13%),-1.5%,0) skewY(-8deg);opacity:.24}48%,58%{transform:translate3d(calc(var(--column-sway) * 14%),1.5%,0) skewY(-8deg);opacity:.58}}@keyframes rectangleFloat{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-.42%,0)}}@keyframes liquidWave{0%,100%{transform:translate3d(-2%,-1%,0) skewY(-11deg);opacity:.72}50%{transform:translate3d(3%,1.5%,0) skewY(-8deg);opacity:.94}}@keyframes glassCurrent{0%,100%{background-position:8% 14%,88% 76%,-34% 50%;transform:translate3d(-1.2%,-.8%,0) skewY(-4deg);opacity:.42}46%{background-position:58% 42%,38% 28%,94% 50%;transform:translate3d(1.5%,1%,0) skewY(-1deg);opacity:.72}}@keyframes rimPulse{0%,100%{opacity:.74;transform:translate3d(0,0,0)}50%{opacity:1;transform:translate3d(0,-.8%,0)}}@media(max-width:760px){.rect-text{width:calc(100% - 10px);margin-top:5px;padding-inline:.25rem}.rect-text strong,.rect-text p{display:none}.end-milestone{left:5px;right:5px;bottom:5px}.end-milestone span{display:none}}@media(prefers-reduced-motion:reduce){.column-atmosphere span:before,.column-atmosphere span:after,.glass-rect,.glass-rect:before,.glass-rect:after{animation:none}}`;
 }
 
 function timelineNavigationStaticCss() {
@@ -423,6 +423,10 @@ function timelineContinuationStaticCss() {
 
 function timelineLinkStaticCss() {
   return `.glass-rect{color:inherit;text-decoration:none}.glass-rect[href]{pointer-events:auto;cursor:pointer}`;
+}
+
+function timelineMilestoneStaticCss() {
+  return `.rect-text.has-milestones{align-content:start;gap:.08rem;width:calc(100% - 26px);padding-block:clamp(.24rem,.48vw,.42rem)}.rect-text.has-milestones h1{font-size:clamp(.48rem,.86vw,.82rem)}.rect-text.has-milestones time,.rect-text.has-milestones strong{font-size:clamp(.34rem,.48vw,.5rem)}.milestone-track{position:absolute;inset:0;z-index:5;margin:0;padding:0;list-style:none;pointer-events:none}.milestone-track li{position:absolute;top:var(--milestone-top);left:9px;right:9px;transform:translateY(var(--milestone-shift));display:grid;gap:.08rem;padding:clamp(.24rem,.5vw,.42rem);border-radius:clamp(8px,.86vw,12px);background:rgba(30,20,12,.2);text-shadow:0 1px 8px rgba(0,0,0,.24);backdrop-filter:blur(10px);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 7px 16px rgba(0,0,0,.12)}.milestone-track time{color:rgba(255,255,255,.66);font-size:clamp(.34rem,.48vw,.5rem);font-weight:800;line-height:1;text-transform:uppercase}.milestone-track h2{margin:0;color:#fff;font-size:clamp(.48rem,.78vw,.78rem);font-weight:850;line-height:1.05;overflow-wrap:break-word}.milestone-track p{display:block;margin:0;color:rgba(255,255,255,.76);font-size:clamp(.34rem,.5vw,.52rem);line-height:1.16;overflow:hidden;-webkit-line-clamp:unset}@media(max-width:760px){.milestone-track li{left:5px;right:5px}.milestone-track p{display:none}}`;
 }
 
 function timelineNavigationScript() {
@@ -473,6 +477,10 @@ function timelineRectangleGeometry(rect) {
 }
 
 function timelineContinuationMarkers(rect, visibleHeight) {
+  if (rect.milestones) {
+    return [];
+  }
+
   const geometry = timelineRectangleGeometry(rect);
   const clampedHeight = Math.min(
     geometry.height,
@@ -502,7 +510,6 @@ function timelineContinuationMarkers(rect, visibleHeight) {
       const screenIndex = timelineData.screens.findIndex((item) => item.year === screen.year);
       const boundaryY = screenIndex * timelineData.design.screenHeight;
       const top = ((boundaryY - geometry.y) / clampedHeight) * 100;
-
       return {
         year: screen.year,
         top: Math.min(96, Math.max(2, top + 1.4)),
@@ -526,6 +533,30 @@ function timelineDatePosition(point) {
     monthIndex * monthHeight +
     (point.offset || 0) * monthHeight
   );
+}
+
+function timelineMilestoneStyle(rect, milestone, visibleHeight) {
+  const geometry = timelineRectangleGeometry(rect);
+  const clampedHeight = Math.min(
+    geometry.height,
+    Math.max(0, visibleHeight - geometry.y)
+  );
+  const point = milestone.point || parseMilestoneDate(milestone.date);
+  const rawTop =
+    clampedHeight > 0 ? ((timelineDatePosition(point) - geometry.y) / clampedHeight) * 100 : 0;
+  const top = Math.min(97.5, Math.max(5.5, rawTop));
+  const shift = rawTop > 91 ? "-100%" : rawTop < 8 ? "0" : "-50%";
+
+  return `--milestone-top:${top}%;--milestone-shift:${shift}`;
+}
+
+function parseMilestoneDate(date) {
+  const [month, year] = String(date).split(" ");
+  return {
+    year,
+    month: month ? month.slice(0, 3) : timelineData.months[0],
+    offset: 0.5,
+  };
 }
 
 function timelineColumnStyle(index) {
@@ -584,11 +615,22 @@ function timelinePage() {
     .filter((rect) => timelineRectangleGeometry(rect).y < visibleHeight)
     .map((rect, index) => {
       const isCompact = timelineRectangleGeometry(rect).height < 150;
-      const content = rect.content ? `<div class="rect-text">
+      const milestones = rect.milestones && !isCompact ? `<ul class="milestone-track">
+          ${rect.milestones
+            .map(
+              (milestone) => `<li style="${timelineMilestoneStyle(rect, milestone, visibleHeight)}">
+            <time>${escapeHtml(milestone.date)}</time>
+            <h2>${escapeHtml(milestone.heading)}</h2>
+            ${milestone.description ? `<p>${escapeHtml(milestone.description)}</p>` : ""}
+          </li>`
+            )
+            .join("")}
+        </ul>` : "";
+      const content = rect.content ? `<div class="rect-text${rect.milestones ? " has-milestones" : ""}">
           <h1>${escapeHtml(rect.content.heading)}</h1>
           ${rect.content.date ? `<time>${escapeHtml(rect.content.date)}</time>` : ""}
           ${rect.content.meta && !isCompact ? `<strong>${escapeHtml(rect.content.meta)}</strong>` : ""}
-          ${!isCompact ? `<p>${escapeHtml(rect.content.body)}</p>` : ""}
+          ${!isCompact && !rect.milestones ? `<p>${escapeHtml(rect.content.body)}</p>` : ""}
         </div>` : "";
       const endMilestone = rect.endMilestone && !isCompact ? `<div class="end-milestone">
           <h2>${escapeHtml(rect.endMilestone.heading)}</h2>
@@ -606,7 +648,7 @@ function timelinePage() {
         ? ` href="${escapeHtml(rect.url)}" target="_blank" rel="noreferrer"`
         : "";
       const labelPrefix = rect.url ? "Open " : "";
-      return `<${tagName} class="glass-rect"${href} style="${timelineRectangleStyle(rect, visibleHeight, index)}" aria-label="${labelPrefix}${escapeHtml(rect.name)}">${content}${continuationMarkers}${endMilestone}</${tagName}>`;
+      return `<${tagName} class="glass-rect"${href} style="${timelineRectangleStyle(rect, visibleHeight, index)}" aria-label="${labelPrefix}${escapeHtml(rect.name)}">${content}${milestones}${continuationMarkers}${endMilestone}</${tagName}>`;
     })
     .join("");
 
@@ -615,7 +657,7 @@ function timelinePage() {
     description,
     canonical: absoluteUrl("/timeline"),
     jsonLd: seo.profilePageSchema(),
-    extraCss: timelineStaticCss() + timelineLifeStaticCss() + timelineNavigationStaticCss() + timelineContinuationStaticCss() + timelineLinkStaticCss(),
+    extraCss: timelineStaticCss() + timelineLifeStaticCss() + timelineNavigationStaticCss() + timelineContinuationStaticCss() + timelineLinkStaticCss() + timelineMilestoneStaticCss(),
   })}
 <body>
   <main class="timeline-stage" aria-label="Rainbow carryover timeline">

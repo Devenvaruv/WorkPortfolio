@@ -209,12 +209,26 @@ function TimelinePage() {
                   <span className="liquid-glass-fill" aria-hidden="true" />
                 </ClientLiquidGlass>
                 {rect.content && (
-                  <RectangleText $compact={isCompact}>
+                  <RectangleText $compact={isCompact} $hasMilestones={Boolean(rect.milestones)}>
                     <h1>{rect.content.heading}</h1>
                     {rect.content.date && <time>{rect.content.date}</time>}
                     {rect.content.meta && <strong>{rect.content.meta}</strong>}
-                    {!isCompact && <p>{rect.content.body}</p>}
+                    {!isCompact && !rect.milestones && <p>{rect.content.body}</p>}
                   </RectangleText>
+                )}
+                {!isCompact && rect.milestones && (
+                  <MilestoneTrack>
+                    {rect.milestones.map((milestone) => (
+                      <li
+                        key={`${milestone.date}-${milestone.heading}`}
+                        style={milestoneStyle(rect, milestone, visibleHeight)}
+                      >
+                        <time>{milestone.date}</time>
+                        <h2>{milestone.heading}</h2>
+                        {milestone.description && <p>{milestone.description}</p>}
+                      </li>
+                    ))}
+                  </MilestoneTrack>
                 )}
                 {continuationMarkers.map((marker) => (
                   <ContinuationMarker
@@ -291,6 +305,10 @@ function columnStyle(index) {
 }
 
 function rectangleContinuationMarkers(rect, visibleHeight) {
+  if (rect.milestones) {
+    return [];
+  }
+
   const { design, screens } = timelineData;
   const geometry = rectangleGeometry(rect);
   const clampedHeight = Math.min(
@@ -322,7 +340,6 @@ function rectangleContinuationMarkers(rect, visibleHeight) {
     .map((screen) => {
       const boundaryY = screens.findIndex((item) => item.year === screen.year) * design.screenHeight;
       const top = ((boundaryY - geometry.y) / clampedHeight) * 100;
-
       return {
         year: screen.year,
         top: Math.min(96, Math.max(2, top + 1.4)),
@@ -352,6 +369,33 @@ function rectangleStyle(rect, visibleHeight, index) {
     "--origin-rgb": `${rgb.r}, ${rgb.g}, ${rgb.b}`,
     "--wave-offset": `${index * 17}%`,
     "--rect-delay": `${index * -0.72}s`,
+  };
+}
+
+function milestoneStyle(rect, milestone, visibleHeight) {
+  const geometry = rectangleGeometry(rect);
+  const clampedHeight = Math.min(
+    geometry.height,
+    Math.max(0, visibleHeight - geometry.y)
+  );
+  const point = milestone.point || parseMilestoneDate(milestone.date);
+  const rawTop =
+    clampedHeight > 0 ? ((datePosition(point) - geometry.y) / clampedHeight) * 100 : 0;
+  const top = Math.min(97.5, Math.max(5.5, rawTop));
+
+  return {
+    "--milestone-top": `${top}%`,
+    "--milestone-shift":
+      rawTop > 91 ? "-100%" : rawTop < 8 ? "0" : "-50%",
+  };
+}
+
+function parseMilestoneDate(date) {
+  const [month, year] = String(date).split(" ");
+  return {
+    year,
+    month: month ? month.slice(0, 3) : timelineData.months[0],
+    offset: 0.5,
   };
 }
 
@@ -893,6 +937,24 @@ const GlassRectangle = styled.article`
     animation-delay: var(--rect-delay);
   }
 
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 6px 8px 8px 7px;
+    z-index: 3;
+    border-radius: inherit;
+    background:
+      radial-gradient(ellipse at 35% 24%, rgba(255, 255, 255, 0.34), transparent 20%),
+      radial-gradient(ellipse at 72% 68%, rgba(255, 255, 255, 0.18), transparent 26%),
+      linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.18) 28%, rgba(var(--origin-rgb), 0.26) 49%, rgba(255, 255, 255, 0.12) 64%, transparent 100%);
+    background-size: 160% 160%, 150% 150%, 190% 100%;
+    mix-blend-mode: screen;
+    opacity: 0.56;
+    pointer-events: none;
+    animation: glassCurrent 7.8s ease-in-out infinite;
+    animation-delay: calc(var(--rect-delay) - 0.35s);
+  }
+
   &::after {
     content: "";
     position: absolute;
@@ -937,6 +999,21 @@ const GlassRectangle = styled.article`
     50% {
       transform: translate3d(2.2%, 1.2%, 0) skewY(-5deg);
       opacity: 0.9;
+    }
+  }
+
+  @keyframes glassCurrent {
+    0%,
+    100% {
+      background-position: 8% 14%, 88% 76%, -34% 50%;
+      transform: translate3d(-1.2%, -0.8%, 0) skewY(-4deg);
+      opacity: 0.42;
+    }
+
+    46% {
+      background-position: 58% 42%, 38% 28%, 94% 50%;
+      transform: translate3d(1.5%, 1%, 0) skewY(-1deg);
+      opacity: 0.72;
     }
   }
 
@@ -1034,12 +1111,96 @@ const RectangleText = styled.div`
       }
     `}
 
+  ${({ $hasMilestones }) =>
+    $hasMilestones &&
+    `
+      align-content: start;
+      gap: 0.08rem;
+      width: calc(100% - 26px);
+      padding-block: clamp(0.24rem, 0.48vw, 0.42rem);
+
+      h1 {
+        font-size: clamp(0.48rem, 0.86vw, 0.82rem);
+      }
+
+      time,
+      strong {
+        font-size: clamp(0.34rem, 0.48vw, 0.5rem);
+      }
+    `}
+
   @media (max-width: 760px) {
     width: calc(100% - 10px);
     margin-top: 5px;
     padding-inline: 0.25rem;
 
     strong,
+    p {
+      display: none;
+    }
+  }
+`;
+
+const MilestoneTrack = styled.ul`
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+
+  li {
+    position: absolute;
+    top: var(--milestone-top);
+    left: 9px;
+    right: 9px;
+    transform: translateY(var(--milestone-shift));
+    display: grid;
+    gap: 0.08rem;
+    padding: clamp(0.24rem, 0.5vw, 0.42rem);
+    border-radius: clamp(8px, 0.86vw, 12px);
+    background: rgba(30, 20, 12, 0.2);
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.24);
+    backdrop-filter: blur(10px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      0 7px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  time {
+    color: rgba(255, 255, 255, 0.66);
+    font-size: clamp(0.34rem, 0.48vw, 0.5rem);
+    font-weight: 800;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    margin: 0;
+    color: #ffffff;
+    font-size: clamp(0.48rem, 0.78vw, 0.78rem);
+    font-weight: 850;
+    line-height: 1.05;
+    overflow-wrap: break-word;
+  }
+
+  p {
+    display: block;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.76);
+    font-size: clamp(0.34rem, 0.5vw, 0.52rem);
+    line-height: 1.16;
+    overflow: hidden;
+    -webkit-line-clamp: unset;
+  }
+
+  @media (max-width: 760px) {
+    li {
+      left: 5px;
+      right: 5px;
+    }
+
     p {
       display: none;
     }
